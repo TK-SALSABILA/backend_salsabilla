@@ -4,6 +4,7 @@ import org.school.backend.adapters.datasources.StudentDataSource;
 import org.school.backend.adapters.datasources.repository.StudentLogsRepository;
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
+import org.school.backend.adapters.dto.StudentRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,5 +26,10 @@ public class StudentDataSourceImpl implements StudentDataSource {
     @Override
     public Optional<StudentDetails> findById(Object id){
         return studentLogsRepository.findById(id);
+    }
+
+    @Override
+    public void create(StudentRequest record){
+         studentLogsRepository.create(record);
     }
 }

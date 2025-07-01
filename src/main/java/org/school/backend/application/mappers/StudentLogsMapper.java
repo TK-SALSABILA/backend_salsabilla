@@ -10,6 +10,7 @@ public class StudentLogsMapper {
     public static StudentsLogsOutputDto toDto(StudentModel entity) {
         return new StudentsLogsOutputDto(entity);
     }
+
     public static List<StudentsLogsOutputDto> toListDto(List<StudentModel> entities) {
         List<StudentsLogsOutputDto> studerRecordDto = new ArrayList<>();
         entities.forEach((entity) -> studerRecordDto.add(new StudentsLogsOutputDto(entity)));

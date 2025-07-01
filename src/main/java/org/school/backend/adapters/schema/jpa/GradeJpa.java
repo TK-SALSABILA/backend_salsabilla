@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.school.backend.application.dto.GradeDto;
 
 @Entity
 @Getter
@@ -33,7 +34,10 @@ public class GradeJpa {
             String academicYear,
             Integer studentId
     ){
-        this.academicYear =academicYear;
+        this.academicYear = academicYear;
         this.gradeLevel = gradeLevel;
+        this.studentId = studentId;
     }
+
+
 }

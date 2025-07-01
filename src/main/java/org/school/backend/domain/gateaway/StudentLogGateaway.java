@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface StudentLogGateaway {
     Optional<List<StudentModel>> findAll(int page, int rpp);
     Optional<StudentModel> findById(Object id);
-
+    void create(StudentModel record);
 }

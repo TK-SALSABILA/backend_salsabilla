@@ -1,10 +1,15 @@
 package org.school.backend.adapters.datasources.repository;
 
+import jakarta.transaction.Transactional;
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
+import org.school.backend.adapters.dto.StudentRequest;
+import org.school.backend.adapters.schema.jpa.GradeJpa;
+import org.school.backend.adapters.schema.jpa.ParentJpa;
 import org.school.backend.adapters.schema.jpa.StudentLogJpa;
 import org.school.backend.application.dto.GradeDto;
+import org.school.backend.application.dto.ParentDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,17 +22,20 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
     final ApplicationConfigProperties applicationConfigProperties;
     final JpaStudentLogsRepository jpaStudentLogsRepository;
     final JpaGradeRepository jpaGradeRepository;
+    final JpaParentRepository jpaParentRepository;
     final  ElasticSearchRepository elasticSearchRepository;
 
     public StudentLogsRepositoryImpl(
             ApplicationConfigProperties applicationConfigProperties,
             final JpaStudentLogsRepository jpaStudentLogsRepository,
             final JpaGradeRepository jpaGradeRepository,
+            final JpaParentRepository jpaParentRepository,
             ElasticSearchRepository elasticSearchRepository
     ){
         this.applicationConfigProperties =applicationConfigProperties;
         this.jpaStudentLogsRepository = jpaStudentLogsRepository;
         this.jpaGradeRepository = jpaGradeRepository;
+        this.jpaParentRepository = jpaParentRepository;
         this.elasticSearchRepository = elasticSearchRepository;
     }
 
@@ -99,7 +107,6 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
             case "postgresql" -> {
                 Optional<StudentLogJpa> resultJpa = jpaStudentLogsRepository.findById((Integer) id);
-//                Optional<GradeJpa> resultGrade = jpaGradeRepository.findByStudentId(resultJpa.get().getId());
                 if (resultJpa.isPresent()) {
                     StudentLogJpa studentJpa = resultJpa.get();
                     studentDetails = new StudentDetails();
@@ -123,7 +130,55 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
             default -> throw new IllegalArgumentException("Unsupported database: " + applicationConfigProperties.getDatabaseDefault());
         }
 
-        return Optional.ofNullable(studentDetails);
+        return Optional.of(studentDetails);
+    }
+
+    @Override
+    @Transactional
+    public void create(StudentRequest record){
+        if (applicationConfigProperties.getDatabaseDefault().toLowerCase().equals("postgresql")) {
+            StudentLogJpa studentData = new StudentLogJpa(
+                    record.getFullName(),
+                    record.getNickName(),
+                    record.getNik(),
+                    record.getGender(),
+                    record.getDateBirth(),
+                    record.getBirthOrder(),
+                    record.getTribe(),
+                    record.getAddress(),
+                    record.getHeight(),
+                    record.getWeight()
+            );
+            jpaStudentLogsRepository.save(studentData);
+
+            GradeDto gradeDto = record.getGradeClass();
+            GradeJpa gradeData = new GradeJpa(
+                    gradeDto.gradeLevel(),
+                    gradeDto.academicYear(),
+                    studentData.getId()
+            );
+            jpaGradeRepository.save(gradeData);
+
+            ParentDto parentDto = record.getParent();
+            ParentJpa parentData = new ParentJpa(
+                    parentDto.fatherName(),
+                    parentDto.fatherDateBirth(),
+                    parentDto.fatherNik(),
+                    parentDto.fatherEducation(),
+                    parentDto.fatherJob(),
+                    parentDto.motherName(),
+                    parentDto.motherDateBirth(),
+                    parentDto.motherNik(),
+                    parentDto.motherEducation(),
+                    parentDto.phone(),
+                    parentDto.fullAddress(),
+                    parentDto.postalCode(),
+                    studentData.getId()
+            );
+            jpaParentRepository.save(parentData);
+        } else {
+            throw new IllegalArgumentException("Unsupported database: " + applicationConfigProperties.getDatabaseDefault());
+        }
     }
 
 

@@ -1,5 +1,7 @@
 package org.school.backend.adapters.controller;
 
+import org.school.backend.adapters.dto.StudentRequest;
+import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.usecases.StudentLogsUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,11 @@ public class StudentLogController extends BaseController{
     @RequestMapping(value = "student/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> findById(@PathVariable("id") Integer id){
         return responseDefault.build(studentRecordService.findById(id).get(), timeStamp,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "student/create", method = RequestMethod.POST)
+    public ResponseEntity<?> create(@RequestBody StudentRequestDto record){
+        studentRecordService.create(record);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Student record created successfully");
     }
 }

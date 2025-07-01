@@ -1,6 +1,8 @@
 package org.school.backend.application.usecases.impl;
 
+import org.school.backend.adapters.mapper.StudentRequestMapper;
 import org.school.backend.application.dto.StudentDetailsDto;
+import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 import org.school.backend.application.exception.StudentDataNotFoundException;
 import org.school.backend.application.mappers.StudentDetailMapper;
@@ -30,5 +32,11 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
     public Optional<StudentDetailsDto> findById(Integer id){
         Optional<StudentModel> studentModel = Optional.ofNullable(this.studentLogGateaway.findById(id)).orElseThrow(StudentDataNotFoundException::new);
         return Optional.of(StudentDetailMapper.toDto(studentModel.get()));
+    }
+
+    @Override
+    public void create(StudentRequestDto record){
+        StudentModel studentRecord = StudentRequestMapper.toModel(record);
+        this.studentLogGateaway.create(studentRecord);
     }
 }

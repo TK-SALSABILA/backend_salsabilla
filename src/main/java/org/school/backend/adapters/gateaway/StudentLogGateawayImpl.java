@@ -5,11 +5,10 @@ import org.school.backend.domain.gateaway.StudentLogGateaway;
 import org.school.backend.domain.model.StudentModel;
 import org.springframework.stereotype.Component;
 
-import static org.school.backend.adapters.mapper.StudentRecordEntityMapper.convertModelToEntity;
-import static org.school.backend.adapters.mapper.StudentRecordEntityMapper.convertModelsToEntity;
-
 import java.util.List;
 import java.util.Optional;
+
+import static org.school.backend.adapters.mapper.StudentRecordEntityMapper.*;
 
 @Component
 public class StudentLogGateawayImpl implements StudentLogGateaway {
@@ -28,5 +27,10 @@ public class StudentLogGateawayImpl implements StudentLogGateaway {
     @Override
     public Optional<StudentModel> findById(Object id){
         return convertModelToEntity(studentRecordDataSource.findById(id));
+    }
+
+    @Override
+    public void create(StudentModel record){
+        studentRecordDataSource.create(convertEntityToModel(record));
     }
 }

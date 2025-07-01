@@ -2,7 +2,9 @@ package org.school.backend.adapters.mapper;
 
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
+import org.school.backend.adapters.dto.StudentRequest;
 import org.school.backend.application.mappers.GradeMapper;
+import org.school.backend.application.mappers.ParentMapper;
 import org.school.backend.domain.model.GradeModel;
 import org.school.backend.domain.model.StudentModel;
 
@@ -12,14 +14,21 @@ import java.util.Optional;
 
 public interface StudentRecordEntityMapper {
 
-    static StudentLogs convertEntityToModel(final StudentModel entity){
-        return StudentLogs.builder()
+    static StudentRequest convertEntityToModel(final StudentModel entity){
+        return StudentRequest.builder()
                 .fullName(entity.fullName())
                 .nickName(entity.nickName())
                 .nik(entity.nik())
                 .gender(entity.gender())
                 .dateBirth(entity.dateBirth())
-                .birthOrder(entity.birthOrder()).build();
+                .birthOrder(entity.birthOrder())
+                .tribe(entity.tribe())
+                .address(entity.address())
+                .height(entity.height())
+                .weight(entity.weight())
+                .gradeClass(GradeMapper.toDto(entity.gradeClass()))
+                .parent(ParentMapper.toDto(entity.parent()))
+                .build();
     }
 
     static List<StudentModel> convertModelsToEntity(final List<StudentLogs> recordEntities){

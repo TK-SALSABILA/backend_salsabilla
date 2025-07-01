@@ -1,15 +1,16 @@
-package org.school.backend.application.dto;
+package org.school.backend.application.dto.request;
 
+import org.school.backend.application.dto.GradeDto;
+import org.school.backend.application.dto.ParentDto;
 import org.school.backend.application.mappers.GradeMapper;
-import org.school.backend.domain.model.GradeModel;
+import org.school.backend.application.mappers.ParentMapper;
 import org.school.backend.domain.model.StudentModel;
 
 import java.io.Serializable;
 
 import static org.school.backend.application.utils.DateTimeFormatterConfig.toStringFormat;
 
-public record StudentDetailsDto(
-        Integer id,
+public record StudentRequestDto(
         String fullName,
         String nickName,
         String nik,
@@ -20,11 +21,12 @@ public record StudentDetailsDto(
         String address,
         String height,
         String weight,
-        GradeDto gradeClass
+        GradeDto gradeClass,
+        ParentDto parent
 ) implements Serializable {
-    public StudentDetailsDto(StudentModel entity) {
+
+    public StudentRequestDto(StudentModel entity){
         this(
-                entity.id(),
                 entity.fullName(),
                 entity.nickName(),
                 entity.nik(),
@@ -35,7 +37,8 @@ public record StudentDetailsDto(
                 entity.address(),
                 entity.height(),
                 entity.weight(),
-                GradeMapper.toDto(entity.gradeClass())
+                GradeMapper.toDto( entity.gradeClass()),
+                ParentMapper.toDto(entity.parent())
         );
     }
 }
