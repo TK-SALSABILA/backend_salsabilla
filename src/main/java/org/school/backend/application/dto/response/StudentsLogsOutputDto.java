@@ -5,13 +5,15 @@ import org.school.backend.domain.model.StudentModel;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import static org.school.backend.application.utils.DateTimeFormatterConfig.toStringFormat;
+
 public record StudentsLogsOutputDto(
         Integer id,
         String fullName,
         String nickName,
         String nik,
         String gender,
-        LocalDateTime dateBirth,
+        String dateBirth,
         String birthOrder
 ) implements Serializable {
 
@@ -22,7 +24,7 @@ public record StudentsLogsOutputDto(
                 studentRecordModel.nickName(),
                 studentRecordModel.nik(),
                 studentRecordModel.gender(),
-                studentRecordModel.dateBirth(),
+                toStringFormat(studentRecordModel.dateBirth()),
                 studentRecordModel.birthOrder()
         );
     }

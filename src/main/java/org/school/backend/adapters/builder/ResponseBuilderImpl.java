@@ -1,17 +1,17 @@
 package org.school.backend.adapters.builder;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
-import org.pt.flightbooking.adapters.dto.Meta;
-import org.pt.flightbooking.adapters.dto.Response;
+
+import org.school.backend.adapters.dto.Meta;
+import org.school.backend.adapters.dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Component
 public class ResponseBuilderImpl implements ResponseBuilder {

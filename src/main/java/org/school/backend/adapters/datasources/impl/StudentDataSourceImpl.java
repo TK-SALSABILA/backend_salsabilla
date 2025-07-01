@@ -4,10 +4,12 @@ import org.school.backend.adapters.datasources.StudentDataSource;
 import org.school.backend.adapters.datasources.repository.StudentLogsRepository;
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class StudentDataSourceImpl implements StudentDataSource {
     final StudentLogsRepository studentLogsRepository;
 

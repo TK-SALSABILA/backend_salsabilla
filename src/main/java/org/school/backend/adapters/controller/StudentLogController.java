@@ -15,14 +15,14 @@ public class StudentLogController extends BaseController{
         this.studentRecordService = studentRecordService;
     }
 
-    @RequestMapping(value = "student/record", method = RequestMethod.GET, headers = "application/json")
+    @RequestMapping(value = "student/record", method = RequestMethod.GET)
     public ResponseEntity<?> findAll(@RequestParam(name = "page", defaultValue = "0") int page,
                                      @RequestParam(name = "rpp", defaultValue = "1") int rpp){
         return responseDefault.build(studentRecordService.findAll(rpp,page).get(),timeStamp, HttpStatus.OK);
 
     }
 
-    @RequestMapping(value = "student/{id}", method = RequestMethod.GET, headers = "application/json")
+    @RequestMapping(value = "student/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> findById(@PathVariable("id") Integer id){
         return responseDefault.build(studentRecordService.findById(id).get(), timeStamp,HttpStatus.OK);
     }

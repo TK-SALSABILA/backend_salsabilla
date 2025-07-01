@@ -18,6 +18,4 @@ public record StudentModel(
         GradeModel gradeClass,
         ParentModel parent
 ) implements Serializable {
-
-
 }

@@ -1,7 +1,9 @@
 package org.school.backend.application.usecases.impl;
 
+import org.school.backend.application.dto.StudentDetailsDto;
 import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 import org.school.backend.application.exception.StudentDataNotFoundException;
+import org.school.backend.application.mappers.StudentDetailMapper;
 import org.school.backend.application.mappers.StudentLogsMapper;
 import org.school.backend.application.usecases.StudentLogsUseCase;
 import org.school.backend.domain.gateaway.StudentLogGateaway;
@@ -14,8 +16,8 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
 
     private final StudentLogGateaway studentLogGateaway;
 
-    public StudentLogsUseCaseImpl(final StudentLogGateaway repository){
-        this.studentLogGateaway = repository;
+    public StudentLogsUseCaseImpl(final StudentLogGateaway studentLogGateaway){
+        this.studentLogGateaway = studentLogGateaway;
     }
 
     @Override
@@ -25,8 +27,8 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
     }
 
     @Override
-    public Optional<StudentsLogsOutputDto> findById(Integer id){
+    public Optional<StudentDetailsDto> findById(Integer id){
         Optional<StudentModel> studentModel = Optional.ofNullable(this.studentLogGateaway.findById(id)).orElseThrow(StudentDataNotFoundException::new);
-        return Optional.of(StudentLogsMapper.toDto(studentModel.get()));
+        return Optional.of(StudentDetailMapper.toDto(studentModel.get()));
     }
 }

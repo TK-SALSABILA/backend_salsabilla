@@ -15,4 +15,8 @@ public class GradeMapper {
         entities.forEach((entity) -> graderModelDto.add(new GradeDto(entity)));
         return graderModelDto;
     }
+
+    public static GradeModel toGradeModel(GradeDto dto) {
+        return new GradeModel(dto.gradeLevel(), dto.academicYear());
+    }
 }

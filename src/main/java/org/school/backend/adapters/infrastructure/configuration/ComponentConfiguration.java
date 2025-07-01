@@ -16,15 +16,15 @@ public class ComponentConfiguration {
     @Autowired
     StudentLogGateaway studentRecordsRepository;
 
-    @Autowired
-    GradeLogGateAway graderRecordsRepository;
+//    @Autowired
+//    GradeLogGateAway graderRecordsRepository;
 
     @Bean
     public StudentLogsUseCase studentService(){
         return new StudentLogsUseCaseImpl(studentRecordsRepository);
     }
 
-    @Bean
-    public GradeUseCase gradeService(){return new GradeUseCaseImpl(graderRecordsRepository);
-    }
+//    @Bean
+//    public GradeUseCase gradeService(){return new GradeUseCaseImpl(graderRecordsRepository);
+//    }
 }

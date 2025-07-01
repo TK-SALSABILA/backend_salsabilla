@@ -2,6 +2,8 @@ package org.school.backend.adapters.mapper;
 
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
+import org.school.backend.application.mappers.GradeMapper;
+import org.school.backend.domain.model.GradeModel;
 import org.school.backend.domain.model.StudentModel;
 
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public interface StudentRecordEntityMapper {
                     entity.get().address,
                     entity.get().height,
                     entity.get().weight,
-                    null,
+                    GradeMapper.toGradeModel(entity.get().gradeClass),
                     null
             ));
         } else {

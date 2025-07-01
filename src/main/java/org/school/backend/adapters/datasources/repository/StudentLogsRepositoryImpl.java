@@ -3,7 +3,6 @@ package org.school.backend.adapters.datasources.repository;
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
-import org.school.backend.adapters.schema.jpa.GradeJpa;
 import org.school.backend.adapters.schema.jpa.StudentLogJpa;
 import org.school.backend.application.dto.GradeDto;
 import org.springframework.stereotype.Component;
@@ -100,7 +99,7 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
             case "postgresql" -> {
                 Optional<StudentLogJpa> resultJpa = jpaStudentLogsRepository.findById((Integer) id);
-                Optional<GradeJpa> resultGrade = jpaGradeRepository.findByStudentId(resultJpa.get().getId());
+//                Optional<GradeJpa> resultGrade = jpaGradeRepository.findByStudentId(resultJpa.get().getId());
                 if (resultJpa.isPresent()) {
                     StudentLogJpa studentJpa = resultJpa.get();
                     studentDetails = new StudentDetails();
@@ -112,9 +111,11 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
                     studentDetails.birthOrder = studentJpa.getBirthOrder();
                     studentDetails.tribe = studentJpa.getTribe();
                     studentDetails.address = studentJpa.getAddress();
+                    studentDetails.height = studentJpa.getHeight();
+                    studentDetails.weight = studentJpa.getWeight();
 
                     academicGrades = jpaGradeRepository.findByStudentId(studentJpa.getId());
-                    studentDetails.academic = academicGrades;
+                    studentDetails.gradeClass = academicGrades;
                 } else {
                     return Optional.empty();
                 }
