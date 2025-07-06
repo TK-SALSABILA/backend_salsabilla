@@ -1,6 +1,5 @@
 package org.school.backend.adapters.builder;
 
-import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

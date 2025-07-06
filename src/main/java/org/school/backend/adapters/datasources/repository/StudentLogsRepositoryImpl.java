@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.school.backend.application.utils.DateTimeFormatterConfig.parseDate;
+
 @Component
 public class StudentLogsRepositoryImpl implements StudentLogsRepository{
 
@@ -162,14 +164,18 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
             ParentDto parentDto = record.getParent();
             ParentJpa parentData = new ParentJpa(
                     parentDto.fatherName(),
-                    parentDto.fatherDateBirth(),
+                    parseDate(parentDto.fatherDateBirth()),
                     parentDto.fatherNik(),
                     parentDto.fatherEducation(),
                     parentDto.fatherJob(),
+                    parentDto.fatherCitizen(),
+                    parentDto.fatherIncome(),
                     parentDto.motherName(),
-                    parentDto.motherDateBirth(),
+                    parseDate(parentDto.motherDateBirth()),
                     parentDto.motherNik(),
                     parentDto.motherEducation(),
+                    parentDto.motherCitizen(),
+                    parentDto.motherIncome(),
                     parentDto.phone(),
                     parentDto.fullAddress(),
                     parentDto.postalCode(),

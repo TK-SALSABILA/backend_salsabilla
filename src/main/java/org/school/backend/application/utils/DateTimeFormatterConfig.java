@@ -24,7 +24,12 @@ public class DateTimeFormatterConfig {
         if (dateStr == null || dateStr.isEmpty()) {
             return null;
         }
-        return LocalDateTime.parse(dateStr);
+        try {
+            return LocalDateTime.parse(dateStr);
+        } catch (Exception e) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return LocalDateTime.parse(dateStr, formatter);
+        }
     }
 
 

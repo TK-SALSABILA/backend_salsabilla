@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -25,7 +26,8 @@ public class ParentJpa {
     private String fatherName;
 
     @Column(name = "FATHER_DATE_BIRTH")
-    private  LocalDate fatherDateBirth;
+    private  LocalDateTime fatherDateBirth;
+
     @Column(name = "FATHER_NIK")
     private String fatherNik;
 
@@ -35,17 +37,29 @@ public class ParentJpa {
     @Column(name = "FATHER_JOB")
     private String fatherJob;
 
+    @Column(name = "FATHER_CITIZEN")
+    private String fatherCitizen;
+
+    @Column(name = "FATHER_INCOME")
+    private Long fatherIncome;
+
     @Column(name = "MOTHER_NAME")
     private String motherName;
 
     @Column(name = "MOTHER_DATE_BIRTH")
-    private LocalDate motherDateBirth;
+    private LocalDateTime motherDateBirth;
 
     @Column(name = "MOTHER_NIK")
     private String motherNik;
 
     @Column(name = "MOTHER_EDUCATION")
     private String motherEducation;
+
+    @Column(name = "MOTHER_CITIZEN")
+    private String motherCitizen;
+
+    @Column(name = "MOTHER_INCOME")
+    private Long motherIncome;
 
     @Column(name = "PHONE")
     private String phone;
@@ -61,14 +75,18 @@ public class ParentJpa {
 
     public ParentJpa(
             String fatherName,
-            LocalDate fatherDateBirth,
+            LocalDateTime fatherDateBirth,
             String fatherNik,
             String fatherEducation,
             String fatherJob,
+            String fatherCitizen,
+            Long fatherIncome,
             String motherName,
-            LocalDate motherDateBirth,
+            LocalDateTime motherDateBirth,
             String motherNik,
             String motherEducation,
+            String motherCitizen,
+            Long motherIncome,
             String phone,
             String fullAddress,
             String postalCode,
@@ -79,14 +97,19 @@ public class ParentJpa {
         this.fatherNik = fatherNik;
         this.fatherEducation = fatherEducation;
         this.fatherJob = fatherJob;
+        this.fatherCitizen =fatherCitizen;
+        this.fatherIncome = fatherIncome;
         this.motherName = motherName;
         this.motherDateBirth = motherDateBirth;
         this.motherNik = motherNik;
         this.motherEducation = motherEducation;
+        this.motherCitizen = motherCitizen;
+        this.motherIncome = motherIncome;
         this.phone = phone;
         this.fullAddress = fullAddress;
         this.postalCode = postalCode;
         this.studentId = studentId;
     }
+
 }
 
