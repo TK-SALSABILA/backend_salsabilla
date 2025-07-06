@@ -2,9 +2,10 @@ package org.school.backend.domain.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record StudentModel(
-        Integer id,
+        UUID id,
         String fullName,
         String nickName,
         String nik,

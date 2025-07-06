@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.school.backend.application.dto.GradeDto;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -27,12 +29,12 @@ public class GradeJpa {
     private String academicYear;
 
     @Column(name = "STUDENT_ID")
-    private Integer studentId;
+    private UUID studentId;
 
     public GradeJpa(
             String gradeLevel,
             String academicYear,
-            Integer studentId
+            UUID studentId
     ){
         this.academicYear = academicYear;
         this.gradeLevel = gradeLevel;

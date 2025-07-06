@@ -6,6 +6,7 @@ import org.school.backend.adapters.schema.jpa.ParentJpa;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class ParentRepositoryImpl implements ParentRepository{
@@ -24,7 +25,7 @@ public class ParentRepositoryImpl implements ParentRepository{
         ParentLogs parentLogs;
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case "postgresql" -> {
-                Optional<ParentJpa> resultJpa = jpaParentRepository.findByStudentId((Integer) studentId);
+                Optional<ParentJpa> resultJpa = jpaParentRepository.findByStudentId((UUID) studentId);
                 parentLogs = new ParentLogs(
                         resultJpa.get().getFatherName(),
                         resultJpa.get().getFatherDateBirth(),

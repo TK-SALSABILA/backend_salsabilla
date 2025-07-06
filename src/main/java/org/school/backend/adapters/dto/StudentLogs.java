@@ -3,6 +3,7 @@ package org.school.backend.adapters.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Builder
 @Getter
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class StudentLogs {
 
-    public Integer id;
+    public UUID id;
     public String fullName;
     public String nickName;
     public String nik;

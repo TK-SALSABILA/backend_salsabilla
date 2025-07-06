@@ -4,11 +4,12 @@ import org.school.backend.domain.model.StudentModel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.school.backend.application.utils.DateTimeFormatterConfig.toStringFormat;
 
 public record StudentsLogsOutputDto(
-        Integer id,
+        UUID id,
         String fullName,
         String nickName,
         String nik,

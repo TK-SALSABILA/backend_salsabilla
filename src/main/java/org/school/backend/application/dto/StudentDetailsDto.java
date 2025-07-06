@@ -5,11 +5,12 @@ import org.school.backend.domain.model.GradeModel;
 import org.school.backend.domain.model.StudentModel;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import static org.school.backend.application.utils.DateTimeFormatterConfig.toStringFormat;
 
 public record StudentDetailsDto(
-        Integer id,
+        UUID id,
         String fullName,
         String nickName,
         String nik,

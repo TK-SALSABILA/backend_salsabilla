@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,9 +18,10 @@ import java.time.LocalDateTime;
 @Table(name = "STUDENT", schema="public")
 public class StudentLogJpa {
     @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "ID",columnDefinition = "uuid", updatable = false,nullable = false)
+    @GeneratedValue
+    @UuidGenerator
+    private UUID id;
 
     @Column(name = "FULL_NAME")
     private String fullName;

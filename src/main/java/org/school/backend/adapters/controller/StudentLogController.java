@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/v1")
 public class StudentLogController extends BaseController{
@@ -25,7 +27,7 @@ public class StudentLogController extends BaseController{
     }
 
     @RequestMapping(value = "student/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> findById(@PathVariable("id") Integer id){
+    public ResponseEntity<?> findById(@PathVariable("id") UUID id){
         return responseDefault.build(studentRecordService.findById(id).get(), timeStamp,HttpStatus.OK);
     }
 

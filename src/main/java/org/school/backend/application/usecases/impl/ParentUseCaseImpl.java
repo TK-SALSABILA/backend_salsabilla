@@ -8,6 +8,7 @@ import org.school.backend.domain.gateaway.ParentLogGateaway;
 import org.school.backend.domain.model.ParentModel;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class ParentUseCaseImpl implements ParentUseCase {
 
@@ -18,7 +19,7 @@ public class ParentUseCaseImpl implements ParentUseCase {
     }
 
     @Override
-    public Optional<ParentDto> findByStudentId(Integer id){
+    public Optional<ParentDto> findByStudentId(UUID id){
         Optional<ParentModel> parentModel = Optional.ofNullable(this.parentLogGateaway.findByStudentId(id).orElseThrow(ParentDataNotFoundException::new));
         return Optional.of(ParentMapper.toDto(parentModel.get()));
     }

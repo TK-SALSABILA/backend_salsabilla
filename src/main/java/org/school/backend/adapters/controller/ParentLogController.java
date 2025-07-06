@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/v1")
 public class ParentLogController extends BaseController{
@@ -19,7 +21,7 @@ public class ParentLogController extends BaseController{
     }
 
     @RequestMapping(value = "parent/{studentId}", method = RequestMethod.GET)
-    public ResponseEntity<?> findByStudentId(@PathVariable("studentId") Integer studentId){
+    public ResponseEntity<?> findByStudentId(@PathVariable("studentId") UUID studentId){
         return  responseDefault.build(parentService.findByStudentId(studentId).get(),timeStamp, HttpStatus.OK);
     }
 

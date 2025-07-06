@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @Transactional
 public interface JpaGradeRepository extends JpaRepository<GradeJpa, Integer> {
-    GradeDto findByStudentId(Integer studentId);
+    GradeDto findByStudentId(UUID studentId);
 }

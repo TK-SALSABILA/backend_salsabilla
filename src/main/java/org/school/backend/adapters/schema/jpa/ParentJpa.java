@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -71,7 +72,7 @@ public class ParentJpa {
     private String postalCode;
 
     @Column(name = "STUDENT_ID")
-    private Integer studentId;
+    private UUID studentId;
 
     public ParentJpa(
             String fatherName,
@@ -90,7 +91,7 @@ public class ParentJpa {
             String phone,
             String fullAddress,
             String postalCode,
-            Integer studentId
+            UUID studentId
     ) {
         this.fatherName = fatherName;
         this.fatherDateBirth = fatherDateBirth;

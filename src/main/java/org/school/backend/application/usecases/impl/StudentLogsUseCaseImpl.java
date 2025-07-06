@@ -13,6 +13,7 @@ import org.school.backend.domain.model.StudentModel;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
 
@@ -29,7 +30,7 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
     }
 
     @Override
-    public Optional<StudentDetailsDto> findById(Integer id){
+    public Optional<StudentDetailsDto> findById(UUID id){
         Optional<StudentModel> studentModel = Optional.ofNullable(this.studentLogGateaway.findById(id)).orElseThrow(StudentDataNotFoundException::new);
         return Optional.of(StudentDetailMapper.toDto(studentModel.get()));
     }

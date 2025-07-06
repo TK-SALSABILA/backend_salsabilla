@@ -56,16 +56,16 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
                             entity.getDateBirth(),
                             entity.getBirthOrder()
                     )));
-            case "elasticsearch" -> elasticSearchRepository.findAll()
-                    .forEach(entity-> results.add(new StudentLogs(
-                            entity.getId(),
-                            entity.getFullName(),
-                            entity.getNickName(),
-                            entity.getNik(),
-                            entity.getGender(),
-                            entity.getDateBirth(),
-                            entity.getBirthOrder()
-                    )));
+//            case "elasticsearch" -> elasticSearchRepository.findAll()
+//                    .forEach(entity-> results.add(new StudentLogs(
+//                            entity.getId(),
+//                            entity.getFullName(),
+//                            entity.getNickName(),
+//                            entity.getNik(),
+//                            entity.getGender(),
+//                            entity.getDateBirth(),
+//                            entity.getBirthOrder()
+//                    )));
             default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
         }
         return  results;
@@ -86,16 +86,16 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
                             entity.getDateBirth(),
                             entity.getBirthOrder()
                     )));
-            case "elasticsearch" -> elasticSearchRepository.findAll()
-                    .forEach(entity-> results.add(new StudentLogs(
-                            entity.getId(),
-                            entity.getFullName(),
-                            entity.getNickName(),
-                            entity.getNik(),
-                            entity.getGender(),
-                            entity.getDateBirth(),
-                            entity.getBirthOrder()
-                    )));
+//            case "elasticsearch" -> elasticSearchRepository.findAll()
+//                    .forEach(entity-> results.add(new StudentLogs(
+//                            entity.getId(),
+//                            entity.getFullName(),
+//                            entity.getNickName(),
+//                            entity.getNik(),
+//                            entity.getGender(),
+//                            entity.getDateBirth(),
+//                            entity.getBirthOrder()
+//                    )));
             default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
         }
         return  results;
