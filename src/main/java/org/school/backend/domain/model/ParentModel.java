@@ -13,15 +13,16 @@ public record ParentModel(
         String fatherJob,
         String fatherCitizen,
         Long fatherIncome,
+        String fatherAddress,
+        String fatherPhone,
         String motherName,
         LocalDateTime motherDateBirth,
         String motherNik,
         String motherEducation,
         String motherCitizen,
         Long motherIncome,
-        String phone,
-        String fullAddress,
-        String postalCode
+        String motherAddress,
+        String motherPhone
 ) implements Serializable {
 
     public ParentModel(
@@ -32,15 +33,16 @@ public record ParentModel(
             String fatherJob,
             String fatherCitizen,
             Long fatherIncome,
+            String fatherAddress,
+            String fatherPhone,
             String motherName,
             LocalDateTime motherDateBirth,
             String motherNik,
             String motherEducation,
             String motherCitizen,
             Long motherIncome,
-            String phone,
-            String fullAddress,
-            String postalCode
+            String motherAddress,
+            String motherPhone
     ){
         this(
                 null,
@@ -51,15 +53,16 @@ public record ParentModel(
                 fatherJob,
                 fatherCitizen,
                 fatherIncome,
+                fatherAddress,
+                fatherPhone,
                 motherName,
                 motherDateBirth,
                 motherNik,
                 motherEducation,
                 motherCitizen,
                 motherIncome,
-                phone,
-                fullAddress,
-                postalCode
+                motherAddress,
+                motherPhone
 
         );
     }

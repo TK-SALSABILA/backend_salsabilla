@@ -18,15 +18,16 @@ public interface ParentLogsMapper {
                 .fatherJob(entity.fatherJob())
                 .fatherCitizen(entity.fatherCitizen())
                 .fatherIncome(entity.fatherIncome())
+                .fatherAddress(entity.fatherAddress())
+                .fatherPhone(entity.fatherPhone())
                 .motherName(entity.motherName())
                 .motherDateBirth(entity.motherDateBirth())
                 .motherNik(entity.motherNik())
                 .motherEducation(entity.motherEducation())
                 .motherCitizen(entity.motherCitizen())
                 .motherIncome(entity.motherIncome())
-                .phone(entity.phone())
-                .fullAddress(entity.fullAddress())
-                .postalCode(entity.postalCode()).build();
+                .motherAddress(entity.motherAddress())
+                .motherPhone(entity.motherPhone()).build();
     }
 
     static List<ParentModel> convertModelsToEntity(final List<ParentLogs> recordEntities) {
@@ -39,15 +40,16 @@ public interface ParentLogsMapper {
                 entity.getFatherJob(),
                 entity.getFatherCitizen(),
                 entity.getFatherIncome(),
+                entity.getFatherAddress(),
+                entity.getFatherPhone(),
                 entity.getMotherName(),
                 entity.getMotherDateBirth(),
                 entity.getMotherNik(),
                 entity.getMotherEducation(),
                 entity.getMotherCitizen(),
                 entity.getMotherIncome(),
-                entity.getPhone(),
-                entity.getFullAddress(),
-                entity.getPostalCode()
+                entity.getMotherAddress(),
+                entity.getMotherPhone()
         )));
         return parentRecordEntities;
     }
@@ -62,15 +64,16 @@ public interface ParentLogsMapper {
                     entity.get().getFatherJob(),
                     entity.get().getFatherCitizen(),
                     entity.get().getFatherIncome(),
+                    entity.get().getFatherAddress(),
+                    entity.get().getFatherPhone(),
                     entity.get().getMotherName(),
                     entity.get().getMotherDateBirth(),
                     entity.get().getMotherNik(),
                     entity.get().getMotherEducation(),
                     entity.get().getMotherCitizen(),
                     entity.get().getMotherIncome(),
-                    entity.get().getPhone(),
-                    entity.get().getFullAddress(),
-                    entity.get().getPostalCode()
+                    entity.get().getMotherAddress(),
+                    entity.get().getMotherPhone()
             ));
         } else {
             return Optional.empty();

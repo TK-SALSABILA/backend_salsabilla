@@ -16,15 +16,16 @@ public class ParentMapper {
                 entities.fatherJob(),
                 entities.fatherCitizen(),
                 entities.fatherIncome(),
+                entities.fatherAddress(),
+                entities.fatherPhone(),
                 entities.motherName(),
                 parseDate(entities.motherDateBirth()),
                 entities.motherNik(),
                 entities.motherEducation(),
                 entities.motherCitizen(),
                 entities.motherIncome(),
-                entities.phone(),
-                entities.fullAddress(),
-                entities.postalCode()
+                entities.motherAddress(),
+                entities.motherPhone()
         );
     }
 }

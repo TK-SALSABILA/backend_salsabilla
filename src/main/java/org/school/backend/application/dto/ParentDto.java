@@ -15,15 +15,16 @@ public record ParentDto(
         String fatherJob,
         String fatherCitizen,
         Long fatherIncome,
+        String fatherAddress,
+        String fatherPhone,
         String motherName,
         String motherDateBirth,
         String motherNik,
         String motherEducation,
         String motherCitizen,
         Long motherIncome,
-        String phone,
-        String fullAddress,
-        String postalCode
+        String motherAddress,
+        String motherPhone
 ) {
     public ParentDto(ParentModel record){
         this(
@@ -35,15 +36,16 @@ public record ParentDto(
                 record.fatherJob(),
                 record.fatherCitizen(),
                 record.fatherIncome(),
+                record.fatherAddress(),
+                record.fatherPhone(),
                 record.motherName(),
                 toStringFormat(record.motherDateBirth()),
                 record.motherNik(),
                 record.motherEducation(),
                 record.motherCitizen(),
                 record.motherIncome(),
-                record.phone(),
-                record.fullAddress(),
-                record.postalCode()
+                record.motherAddress(),
+                record.motherPhone()
         );
     }
 }

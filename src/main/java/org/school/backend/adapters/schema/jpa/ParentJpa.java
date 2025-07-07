@@ -44,6 +44,12 @@ public class ParentJpa {
     @Column(name = "FATHER_INCOME")
     private Long fatherIncome;
 
+    @Column(name = "FATHER_ADDRESS")
+    private String fatherAddress;
+
+    @Column(name = "FATHER_PHONE")
+    private String fatherPhone;
+
     @Column(name = "MOTHER_NAME")
     private String motherName;
 
@@ -62,14 +68,11 @@ public class ParentJpa {
     @Column(name = "MOTHER_INCOME")
     private Long motherIncome;
 
-    @Column(name = "PHONE")
-    private String phone;
+    @Column(name = "MOTHER_ADDRESS")
+    private String motherAddress;
 
-    @Column(name = "FULL_ADDRESS")
-    private String fullAddress;
-
-    @Column(name = "POSTAL_CODE")
-    private String postalCode;
+    @Column(name = "MOTHER_PHONE")
+    private String motherPhone;
 
     @Column(name = "STUDENT_ID")
     private UUID studentId;
@@ -82,15 +85,16 @@ public class ParentJpa {
             String fatherJob,
             String fatherCitizen,
             Long fatherIncome,
+            String fatherAddress,
+            String fatherPhone,
             String motherName,
             LocalDateTime motherDateBirth,
             String motherNik,
             String motherEducation,
             String motherCitizen,
             Long motherIncome,
-            String phone,
-            String fullAddress,
-            String postalCode,
+            String motherAddress,
+            String motherPhone,
             UUID studentId
     ) {
         this.fatherName = fatherName;
@@ -100,15 +104,16 @@ public class ParentJpa {
         this.fatherJob = fatherJob;
         this.fatherCitizen =fatherCitizen;
         this.fatherIncome = fatherIncome;
+        this.fatherAddress = fatherAddress;
+        this.fatherPhone = fatherPhone;
         this.motherName = motherName;
         this.motherDateBirth = motherDateBirth;
         this.motherNik = motherNik;
         this.motherEducation = motherEducation;
         this.motherCitizen = motherCitizen;
         this.motherIncome = motherIncome;
-        this.phone = phone;
-        this.fullAddress = fullAddress;
-        this.postalCode = postalCode;
+        this.motherAddress = motherAddress;
+        this.motherPhone = motherPhone;
         this.studentId = studentId;
     }
 

@@ -170,15 +170,16 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
                     parentDto.fatherJob(),
                     parentDto.fatherCitizen(),
                     parentDto.fatherIncome(),
+                    parentDto.fatherAddress(),
+                    parentDto.fatherPhone(),
                     parentDto.motherName(),
                     parseDate(parentDto.motherDateBirth()),
                     parentDto.motherNik(),
                     parentDto.motherEducation(),
                     parentDto.motherCitizen(),
                     parentDto.motherIncome(),
-                    parentDto.phone(),
-                    parentDto.fullAddress(),
-                    parentDto.postalCode(),
+                    parentDto.motherAddress(),
+                    parentDto.motherPhone(),
                     studentData.getId()
             );
             jpaParentRepository.save(parentData);

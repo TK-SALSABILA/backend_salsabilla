@@ -34,15 +34,16 @@ public class ParentRepositoryImpl implements ParentRepository{
                         resultJpa.get().getFatherJob(),
                         resultJpa.get().getFatherCitizen(),
                         resultJpa.get().getFatherIncome(),
+                        resultJpa.get().getFatherAddress(),
+                        resultJpa.get().getFatherPhone(),
                         resultJpa.get().getMotherName(),
                         resultJpa.get().getMotherDateBirth(),
                         resultJpa.get().getMotherNik(),
                         resultJpa.get().getMotherEducation(),
                         resultJpa.get().getMotherCitizen(),
                         resultJpa.get().getMotherIncome(),
-                        resultJpa.get().getPhone(),
-                        resultJpa.get().getFullAddress(),
-                        resultJpa.get().getPostalCode()
+                        resultJpa.get().getMotherAddress(),
+                        resultJpa.get().getMotherPhone()
                 );
             }
             default -> throw new IllegalArgumentException("Unsupported database: " + applicationConfigProperties.getDatabaseDefault());

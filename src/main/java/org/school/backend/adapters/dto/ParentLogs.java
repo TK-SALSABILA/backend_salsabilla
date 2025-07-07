@@ -2,7 +2,6 @@ package org.school.backend.adapters.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -18,13 +17,14 @@ public class ParentLogs {
     String fatherJob;
     String fatherCitizen;
     Long fatherIncome;
+    String fatherAddress;
+    String fatherPhone;
     String motherName;
     LocalDateTime motherDateBirth;
     String motherNik;
     String motherEducation;
     String motherCitizen;
     Long motherIncome;
-    String phone;
-    String fullAddress;
-    String postalCode;
+    String motherAddress;
+    String motherPhone;
 }
