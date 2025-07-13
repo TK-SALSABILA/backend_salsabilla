@@ -1,6 +1,5 @@
 package org.school.backend.application.mappers;
 
-import org.school.backend.application.dto.GradeDto;
 import org.school.backend.application.dto.ParentDto;
 import org.school.backend.domain.model.ParentModel;
 

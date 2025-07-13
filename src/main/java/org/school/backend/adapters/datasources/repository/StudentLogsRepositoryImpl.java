@@ -7,14 +7,17 @@ import org.school.backend.adapters.dto.StudentLogs;
 import org.school.backend.adapters.dto.StudentRequest;
 import org.school.backend.adapters.schema.jpa.GradeJpa;
 import org.school.backend.adapters.schema.jpa.ParentJpa;
+import org.school.backend.adapters.schema.jpa.StudentGradeJpa;
 import org.school.backend.adapters.schema.jpa.StudentLogJpa;
 import org.school.backend.application.dto.GradeDto;
+import org.school.backend.application.dto.StudentGradeDto;
 import org.school.backend.application.dto.ParentDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.school.backend.application.utils.DateTimeFormatterConfig.parseDate;
 
@@ -24,6 +27,7 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
     final ApplicationConfigProperties applicationConfigProperties;
     final JpaStudentLogsRepository jpaStudentLogsRepository;
     final JpaGradeRepository jpaGradeRepository;
+    final JpaStudentGradeRepository jpaStudentGradeRepository;
     final JpaParentRepository jpaParentRepository;
     final  ElasticSearchRepository elasticSearchRepository;
 
@@ -31,12 +35,14 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
             ApplicationConfigProperties applicationConfigProperties,
             final JpaStudentLogsRepository jpaStudentLogsRepository,
             final JpaGradeRepository jpaGradeRepository,
+            final JpaStudentGradeRepository jpaStudentGradeRepository,
             final JpaParentRepository jpaParentRepository,
             ElasticSearchRepository elasticSearchRepository
     ){
         this.applicationConfigProperties =applicationConfigProperties;
         this.jpaStudentLogsRepository = jpaStudentLogsRepository;
         this.jpaGradeRepository = jpaGradeRepository;
+        this.jpaStudentGradeRepository = jpaStudentGradeRepository;
         this.jpaParentRepository = jpaParentRepository;
         this.elasticSearchRepository = elasticSearchRepository;
     }
@@ -103,14 +109,14 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
 
     @Override
     public Optional<StudentDetails> findById(Object id) {
-        StudentDetails studentDetails = null;
-        GradeDto academicGrades;
+        StudentDetails studentDetails;
 
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
             case "postgresql" -> {
-                Optional<StudentLogJpa> resultJpa = jpaStudentLogsRepository.findById((Integer) id);
+                Optional<StudentLogJpa> resultJpa = jpaStudentLogsRepository.findById((UUID) id);
                 if (resultJpa.isPresent()) {
                     StudentLogJpa studentJpa = resultJpa.get();
+
                     studentDetails = new StudentDetails();
                     studentDetails.fullName = studentJpa.getFullName();
                     studentDetails.nickName = studentJpa.getNickName();
@@ -123,8 +129,22 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
                     studentDetails.height = studentJpa.getHeight();
                     studentDetails.weight = studentJpa.getWeight();
 
-                    academicGrades = jpaGradeRepository.findByStudentId(studentJpa.getId());
-                    studentDetails.gradeClass = academicGrades;
+                    jpaStudentGradeRepository.findByStudentId(studentJpa.getId()).ifPresent(gradeJpa -> {
+                        jpaGradeRepository.findById(gradeJpa.getGradeId()).ifPresent(gradeEntity -> {
+                            GradeDto gradeDto = new GradeDto(
+                                    gradeJpa.getGradeId(),
+                                    gradeEntity.getGradeLevel()
+                            );
+
+                            StudentGradeDto academicGrades = new StudentGradeDto(
+                                    gradeJpa.getAcademicYear(),
+                                    gradeJpa.getIsCurrent(),
+                                    gradeDto
+                            );
+
+                            studentDetails.gradeClass = academicGrades;
+                        });
+                    });
                 } else {
                     return Optional.empty();
                 }
@@ -132,8 +152,9 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
             default -> throw new IllegalArgumentException("Unsupported database: " + applicationConfigProperties.getDatabaseDefault());
         }
 
-        return Optional.of(studentDetails);
+        return Optional.ofNullable(studentDetails);
     }
+
 
     @Override
     @Transactional
@@ -153,13 +174,14 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
             );
             jpaStudentLogsRepository.save(studentData);
 
-            GradeDto gradeDto = record.getGradeClass();
-            GradeJpa gradeData = new GradeJpa(
-                    gradeDto.gradeLevel(),
+            StudentGradeDto gradeDto = record.getGradeClass();
+            StudentGradeJpa gradeData = new StudentGradeJpa(
                     gradeDto.academicYear(),
-                    studentData.getId()
+                    gradeDto.isCurrent(),
+                    studentData.getId(),
+                    gradeDto.gradeLog().id()
             );
-            jpaGradeRepository.save(gradeData);
+            jpaStudentGradeRepository.save(gradeData);
 
             ParentDto parentDto = record.getParent();
             ParentJpa parentData = new ParentJpa(

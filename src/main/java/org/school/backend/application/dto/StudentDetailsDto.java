@@ -1,7 +1,6 @@
 package org.school.backend.application.dto;
 
-import org.school.backend.application.mappers.GradeMapper;
-import org.school.backend.domain.model.GradeModel;
+import org.school.backend.application.mappers.StudentGradeMapper;
 import org.school.backend.domain.model.StudentModel;
 
 import java.io.Serializable;
@@ -21,7 +20,7 @@ public record StudentDetailsDto(
         String address,
         String height,
         String weight,
-        GradeDto gradeClass
+        StudentGradeDto gradeClass
 ) implements Serializable {
     public StudentDetailsDto(StudentModel entity) {
         this(
@@ -36,7 +35,7 @@ public record StudentDetailsDto(
                 entity.address(),
                 entity.height(),
                 entity.weight(),
-                GradeMapper.toDto(entity.gradeClass())
+                StudentGradeMapper.toDto(entity.gradeClass())
         );
     }
 }

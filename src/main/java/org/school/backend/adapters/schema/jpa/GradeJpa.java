@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.school.backend.application.dto.GradeDto;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
@@ -18,27 +18,20 @@ import java.util.UUID;
 public class GradeJpa {
 
     @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "ID",columnDefinition = "uuid", updatable = false,nullable = false)
+    @GeneratedValue
+    @UuidGenerator
+    private UUID id;
 
     @Column(name = "GRADE_LEVEL")
     private String gradeLevel;
 
-    @Column(name = "ACADEMIC_YEAR")
-    private String academicYear;
-
-    @Column(name = "STUDENT_ID")
-    private UUID studentId;
 
     public GradeJpa(
-            String gradeLevel,
-            String academicYear,
-            UUID studentId
+            String gradeLevel
     ){
-        this.academicYear = academicYear;
         this.gradeLevel = gradeLevel;
-        this.studentId = studentId;
+
     }
 
 

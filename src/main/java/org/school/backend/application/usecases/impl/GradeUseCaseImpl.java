@@ -1,11 +1,11 @@
 package org.school.backend.application.usecases.impl;
 
-import org.school.backend.application.dto.GradeDto;
+import org.school.backend.application.dto.StudentGradeDto;
 import org.school.backend.application.exception.GradeDataNotFoundException;
-import org.school.backend.application.mappers.GradeMapper;
+import org.school.backend.application.mappers.StudentGradeMapper;
 import org.school.backend.application.usecases.GradeUseCase;
 import org.school.backend.domain.gateaway.GradeLogGateAway;
-import org.school.backend.domain.model.GradeModel;
+import org.school.backend.domain.model.StudentGradeModel;
 
 import java.util.Optional;
 
@@ -19,8 +19,8 @@ public class GradeUseCaseImpl implements GradeUseCase {
     }
 
     @Override
-    public Optional<GradeDto> findByStudentId(Integer id){
-        Optional<GradeModel> gradeModel = Optional.ofNullable(this.gradeLogGateAway.findByStudentId(id).orElseThrow(GradeDataNotFoundException::new));
-        return Optional.of(GradeMapper.toDto(gradeModel.get()));
+    public Optional<StudentGradeDto> findByStudentId(Integer id){
+        Optional<StudentGradeModel> gradeModel = Optional.ofNullable(this.gradeLogGateAway.findByStudentId(id).orElseThrow(GradeDataNotFoundException::new));
+        return Optional.of(StudentGradeMapper.toDto(gradeModel.get()));
     }
 }

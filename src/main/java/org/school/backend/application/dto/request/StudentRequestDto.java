@@ -1,8 +1,8 @@
 package org.school.backend.application.dto.request;
 
-import org.school.backend.application.dto.GradeDto;
+import org.school.backend.application.dto.StudentGradeDto;
 import org.school.backend.application.dto.ParentDto;
-import org.school.backend.application.mappers.GradeMapper;
+import org.school.backend.application.mappers.StudentGradeMapper;
 import org.school.backend.application.mappers.ParentMapper;
 import org.school.backend.domain.model.StudentModel;
 
@@ -21,7 +21,7 @@ public record StudentRequestDto(
         String address,
         String height,
         String weight,
-        GradeDto gradeClass,
+        StudentGradeDto gradeClass,
         ParentDto parent
 ) implements Serializable {
 
@@ -37,7 +37,7 @@ public record StudentRequestDto(
                 entity.address(),
                 entity.height(),
                 entity.weight(),
-                GradeMapper.toDto( entity.gradeClass()),
+                StudentGradeMapper.toDto( entity.gradeClass()),
                 ParentMapper.toDto(entity.parent())
         );
     }

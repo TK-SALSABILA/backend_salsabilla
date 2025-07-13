@@ -19,7 +19,7 @@ public class StudentRequestMapper {
                 request.address(),
                 request.height(),
                 request.weight(),
-                GradeMapper.toModel(request.gradeClass()),
+                StudentGradeMapper.toModel(request.gradeClass()),
                 ParentMapper.toModel(request.parent())
         );
     }

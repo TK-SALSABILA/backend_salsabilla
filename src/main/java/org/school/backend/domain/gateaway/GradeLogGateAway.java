@@ -1,9 +1,9 @@
 package org.school.backend.domain.gateaway;
 
-import org.school.backend.domain.model.GradeModel;
+import org.school.backend.domain.model.StudentGradeModel;
 
 import java.util.Optional;
 
 public interface GradeLogGateAway {
-    Optional<GradeModel> findByStudentId(Object id);
+    Optional<StudentGradeModel> findByStudentId(Object id);
 }

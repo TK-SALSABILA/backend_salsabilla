@@ -1,9 +1,10 @@
 package org.school.backend.domain.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public record GradeModel(
-    String gradeLevel,
-    String academicYear
+        UUID id,
+        String gradeLevel
 ) implements Serializable {
 }

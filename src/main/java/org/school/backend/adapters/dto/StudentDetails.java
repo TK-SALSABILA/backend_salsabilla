@@ -1,7 +1,7 @@
 package org.school.backend.adapters.dto;
 
 import lombok.*;
-import org.school.backend.application.dto.GradeDto;
+import org.school.backend.application.dto.StudentGradeDto;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +21,6 @@ public class StudentDetails {
     public String address;
     public String height;
     public String weight;
-    public GradeDto gradeClass;
+    public StudentGradeDto gradeClass;
 
 }

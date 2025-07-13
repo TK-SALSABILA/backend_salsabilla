@@ -2,16 +2,17 @@ package org.school.backend.application.dto;
 
 import org.school.backend.domain.model.GradeModel;
 
-import java.io.Serializable;
+import java.util.UUID;
 
 public record GradeDto(
-        String gradeLevel,
-        String academicYear
-) implements Serializable {
-    public GradeDto(GradeModel gradeRecordModel) {
+        UUID id,
+        String gradeLevel
+) {
+
+    public GradeDto(GradeModel entities){
         this(
-                gradeRecordModel.gradeLevel(),
-                gradeRecordModel.academicYear()
+                entities.id(),
+                entities.gradeLevel()
         );
     }
 }

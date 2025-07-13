@@ -16,7 +16,7 @@ public record StudentModel(
         String address,
         String height,
         String weight,
-        GradeModel gradeClass,
+        StudentGradeModel gradeClass,
         ParentModel parent
 ) implements Serializable {
 }
