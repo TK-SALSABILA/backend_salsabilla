@@ -1,7 +1,6 @@
 package org.school.backend.adapters.datasources.repository;
 
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
-import org.school.backend.adapters.dto.StudentLogs;
 import org.school.backend.adapters.dto.SubjectLogs;
 import org.school.backend.adapters.schema.jpa.SubjectLogJpa;
 import org.springframework.stereotype.Component;

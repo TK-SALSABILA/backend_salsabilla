@@ -26,7 +26,6 @@ public class GradeJpa {
     @Column(name = "GRADE_LEVEL")
     private String gradeLevel;
 
-
     public GradeJpa(
             String gradeLevel
     ){

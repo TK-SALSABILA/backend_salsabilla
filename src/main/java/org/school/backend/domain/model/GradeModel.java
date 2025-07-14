@@ -7,4 +7,11 @@ public record GradeModel(
         UUID id,
         String gradeLevel
 ) implements Serializable {
+
+    public GradeModel(String gradeLevel){
+        this(
+                null,
+                gradeLevel
+        );
+    }
 }

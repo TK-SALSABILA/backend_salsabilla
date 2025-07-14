@@ -1,6 +1,5 @@
 package org.school.backend.adapters.infrastructure.configuration;
 
-import org.school.backend.application.dto.ParentDto;
 import org.school.backend.application.usecases.GradeUseCase;
 import org.school.backend.application.usecases.ParentUseCase;
 import org.school.backend.application.usecases.StudentLogsUseCase;
@@ -9,15 +8,13 @@ import org.school.backend.application.usecases.impl.GradeUseCaseImpl;
 import org.school.backend.application.usecases.impl.ParentUseCaseImpl;
 import org.school.backend.application.usecases.impl.StudentLogsUseCaseImpl;
 import org.school.backend.application.usecases.impl.SubjectLogsUseCaseImpl;
-import org.school.backend.domain.gateaway.GradeLogGateAway;
+import org.school.backend.domain.gateaway.GradeLogGateaway;
 import org.school.backend.domain.gateaway.ParentLogGateaway;
 import org.school.backend.domain.gateaway.StudentLogGateaway;
 import org.school.backend.domain.gateaway.SubjectLogGateaway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Optional;
 
 @Configuration
 public class ComponentConfiguration {
@@ -31,8 +28,11 @@ public class ComponentConfiguration {
     @Autowired
     SubjectLogGateaway subjectRecordRepository;
 
-//    @Autowired
-//    GradeLogGateAway graderRecordsRepository;
+    @Autowired
+    GradeLogGateaway gradeRecordRepository;
+
+//    @Autowireds
+//    StudentGradeLogGateAway graderRecordsRepository;
 
     @Bean
     public StudentLogsUseCase studentService(){
@@ -47,7 +47,10 @@ public class ComponentConfiguration {
         return new SubjectLogsUseCaseImpl(subjectRecordRepository);
     }
 
+    @Bean
+    public GradeUseCase gradeService(){return new GradeUseCaseImpl(gradeRecordRepository);
+    }
 //    @Bean
-//    public GradeUseCase gradeService(){return new GradeUseCaseImpl(graderRecordsRepository);
+//    public StudentGradeUseCase gradeService(){return new StudentGradeUseCaseImpl(graderRecordsRepository);
 //    }
 }
