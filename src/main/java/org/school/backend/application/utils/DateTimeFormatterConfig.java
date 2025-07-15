@@ -1,5 +1,4 @@
 package org.school.backend.application.utils;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

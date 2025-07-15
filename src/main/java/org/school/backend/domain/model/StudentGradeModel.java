@@ -11,7 +11,6 @@ public record StudentGradeModel(
 ) implements Serializable {
 
     public StudentGradeModel(
-
             String academicYear,
             Boolean isCurrent,
             GradeModel gradeLog
