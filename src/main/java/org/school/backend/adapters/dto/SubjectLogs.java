@@ -10,7 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubjectLogs {
-//   public UUID id;
+   public UUID id;
    public String subjectName;
    public String subjectCode;
    public String gradeLevel;

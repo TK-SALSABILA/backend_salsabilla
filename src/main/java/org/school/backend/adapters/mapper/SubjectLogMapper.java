@@ -21,6 +21,7 @@ public interface SubjectLogMapper {
     static List<SubjectModel> convertModelsToEntity(final List<SubjectLogs> recordEntities) {
         List<SubjectModel> subjectReocrdEntities = new ArrayList<>();
         recordEntities.forEach((entity) -> subjectReocrdEntities.add(new SubjectModel(
+                entity.getId(),
                 entity.getSubjectName(),
                 entity.getSubjectCode(),
                 entity.getGradeLevel(),

@@ -31,7 +31,7 @@ public class SubjectLogRepositoryImpl implements SubjectLogRepository{
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case "postgresql" -> jpaSubjectRepository.findAll()
                     .forEach(entity-> results.add(new SubjectLogs(
-//                            entity.getId(),
+                            entity.getId(),
                             entity.getSubjectName(),
                             entity.getSubjectCode(),
                             entity.getGradeLevel(),
@@ -61,6 +61,7 @@ public class SubjectLogRepositoryImpl implements SubjectLogRepository{
             case "postgresql" -> {
                 Optional<SubjectLogJpa> resultsJpa = jpaSubjectRepository.findById((UUID) id);
                 result = new SubjectLogs(
+                        resultsJpa.get().getId(),
                         resultsJpa.get().getSubjectName(),
                         resultsJpa.get().getSubjectCode(),
                         resultsJpa.get().getGradeLevel(),

@@ -24,15 +24,16 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
     }
 
     @Override
-    public Optional<List<StudentsLogsOutputDto>> findAll(int rpp, int page){
-        Optional<List<StudentModel>> studentModels = Optional.ofNullable(this.studentLogGateaway.findAll(rpp,page)).orElseThrow(StudentDataNotFoundException::new);
+    public Optional<List<StudentsLogsOutputDto>> findAll(int rpp, int page) {
+        Optional<List<StudentModel>> studentModels = Optional.ofNullable(this.studentLogGateaway.findAll(rpp, page)).orElseThrow(StudentDataNotFoundException::new);
         return Optional.of(StudentLogsMapper.toListDto(studentModels.get()));
     }
 
     @Override
     public Optional<StudentDetailsDto> findById(UUID id){
-        Optional<StudentModel> studentModel = Optional.ofNullable(this.studentLogGateaway.findById(id)).orElseThrow(StudentDataNotFoundException::new);
-        return Optional.of(StudentDetailMapper.toDto(studentModel.get()));
+        StudentModel studentModel = studentLogGateaway.findById(id)
+                .orElseThrow(() -> new StudentDataNotFoundException("Student with id not found"));
+        return Optional.of(StudentDetailMapper.toDto(studentModel));
     }
 
     @Override

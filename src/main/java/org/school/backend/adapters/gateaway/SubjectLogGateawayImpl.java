@@ -41,5 +41,4 @@ public class SubjectLogGateawayImpl implements SubjectLogGateaway {
         subjectDataSource.create(convertEntityToModel(record));
     }
 
-
 }
