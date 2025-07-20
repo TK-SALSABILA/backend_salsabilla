@@ -32,6 +32,14 @@ public class SubjectLogController extends BaseController{
         return responseDefault.build(subjectReocrdService.findById(id).get(), timeStamp,HttpStatus.OK);
     }
 
+    @RequestMapping(value = "subject/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteById(@PathVariable("id") UUID id){
+        boolean isDeleted = subjectReocrdService.deleteById(id);
+        if(isDeleted)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @RequestMapping(value = "subject/create", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody SubjectLogsDto record){
         subjectReocrdService.create(record);

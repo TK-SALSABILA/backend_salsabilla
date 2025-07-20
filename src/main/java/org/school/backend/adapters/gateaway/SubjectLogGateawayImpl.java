@@ -1,7 +1,6 @@
 package org.school.backend.adapters.gateaway;
 
 import org.school.backend.adapters.datasources.SubjectDataSource;
-import org.school.backend.adapters.dto.SubjectLogs;
 import org.school.backend.adapters.mapper.SubjectLogMapper;
 import org.school.backend.domain.gateaway.SubjectLogGateaway;
 import org.school.backend.domain.model.SubjectModel;
@@ -28,6 +27,11 @@ public class SubjectLogGateawayImpl implements SubjectLogGateaway {
     @Override
     public Optional<SubjectModel> findById(Object id){
         return SubjectLogMapper.convertModelToEntity(subjectDataSource.findById(id));
+    }
+
+    @Override
+    public void deleteById(Object id){
+        subjectDataSource.deleteById(id);
     }
 
     @Override

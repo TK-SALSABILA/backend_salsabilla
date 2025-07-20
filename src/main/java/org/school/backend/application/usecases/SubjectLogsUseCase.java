@@ -9,6 +9,7 @@ import java.util.UUID;
 public interface SubjectLogsUseCase {
     Optional<List<SubjectLogsDto>> findAll(int page, int rpp);
     Optional<SubjectLogsDto> findById(UUID id);
+    boolean deleteById(UUID id);
     void update(UUID id, SubjectLogsDto record);
     void create(SubjectLogsDto record);
 }

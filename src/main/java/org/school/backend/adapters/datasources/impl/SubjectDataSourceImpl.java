@@ -28,6 +28,10 @@ public class SubjectDataSourceImpl implements SubjectDataSource {
     }
 
     @Override
+    public void deleteById(Object id){
+        this.subjectLogRepository.deleteById(id);
+    }
+    @Override
     public void update(Object id,SubjectLogs record){
         this.subjectLogRepository.update(id,record);
     }

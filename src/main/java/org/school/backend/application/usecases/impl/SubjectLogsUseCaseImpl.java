@@ -34,6 +34,22 @@ public class SubjectLogsUseCaseImpl implements SubjectLogsUseCase {
     }
 
     @Override
+    public boolean deleteById(UUID id){
+        try{
+            Optional<SubjectModel> subjectModel = this.subjectLogGateaway.findById(id);
+
+            if(subjectModel.isPresent()){
+                this.subjectLogGateaway.deleteById(id);
+                return true;
+            }else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void update(UUID id, SubjectLogsDto record){
         SubjectModel existing = this.subjectLogGateaway.findById(id)
                 .orElseThrow(() -> new SubjectDataNotFoundException("Subject not found with ID: " + id));
