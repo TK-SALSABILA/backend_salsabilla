@@ -29,22 +29,22 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository{
     final JpaGradeRepository jpaGradeRepository;
     final JpaStudentGradeRepository jpaStudentGradeRepository;
     final JpaParentRepository jpaParentRepository;
-    final  ElasticSearchRepository elasticSearchRepository;
+//    final  ElasticSearchRepository elasticSearchRepository;
 
     public StudentLogsRepositoryImpl(
             ApplicationConfigProperties applicationConfigProperties,
             final JpaStudentLogsRepository jpaStudentLogsRepository,
             final JpaGradeRepository jpaGradeRepository,
             final JpaStudentGradeRepository jpaStudentGradeRepository,
-            final JpaParentRepository jpaParentRepository,
-            ElasticSearchRepository elasticSearchRepository
+            final JpaParentRepository jpaParentRepository
+//            ElasticSearchRepository elasticSearchRepository
     ){
         this.applicationConfigProperties =applicationConfigProperties;
         this.jpaStudentLogsRepository = jpaStudentLogsRepository;
         this.jpaGradeRepository = jpaGradeRepository;
         this.jpaStudentGradeRepository = jpaStudentGradeRepository;
         this.jpaParentRepository = jpaParentRepository;
-        this.elasticSearchRepository = elasticSearchRepository;
+//        this.elasticSearchRepository = elasticSearchRepository;
     }
 
     @Override
