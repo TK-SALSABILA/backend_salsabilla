@@ -20,7 +20,8 @@ public class ParentUseCaseImpl implements ParentUseCase {
 
     @Override
     public Optional<ParentDto> findByStudentId(UUID id){
-        Optional<ParentModel> parentModel = Optional.ofNullable(this.parentLogGateaway.findByStudentId(id).orElseThrow(ParentDataNotFoundException::new));
-        return Optional.of(ParentMapper.toDto(parentModel.get()));
+        ParentModel parentModel = parentLogGateaway.findByStudentId(id)
+                .orElseThrow(() -> new ParentDataNotFoundException("student with id not found"));
+        return Optional.of(ParentMapper.toDto(parentModel));
     }
 }

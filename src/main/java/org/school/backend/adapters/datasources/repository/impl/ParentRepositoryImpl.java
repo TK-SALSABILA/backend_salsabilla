@@ -28,25 +28,29 @@ public class ParentRepositoryImpl implements ParentRepository {
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case "postgresql" -> {
                 Optional<ParentJpa> resultJpa = jpaParentRepository.findByStudentId((UUID) studentId);
-                parentLogs = new ParentLogs(
-                        resultJpa.get().getFatherName(),
-                        resultJpa.get().getFatherDateBirth(),
-                        resultJpa.get().getFatherNik(),
-                        resultJpa.get().getFatherEducation(),
-                        resultJpa.get().getFatherJob(),
-                        resultJpa.get().getFatherCitizen(),
-                        resultJpa.get().getFatherIncome(),
-                        resultJpa.get().getFatherAddress(),
-                        resultJpa.get().getFatherPhone(),
-                        resultJpa.get().getMotherName(),
-                        resultJpa.get().getMotherDateBirth(),
-                        resultJpa.get().getMotherNik(),
-                        resultJpa.get().getMotherEducation(),
-                        resultJpa.get().getMotherCitizen(),
-                        resultJpa.get().getMotherIncome(),
-                        resultJpa.get().getMotherAddress(),
-                        resultJpa.get().getMotherPhone()
-                );
+               if (resultJpa.isPresent()){
+                   parentLogs = new ParentLogs(
+                           resultJpa.get().getFatherName(),
+                           resultJpa.get().getFatherDateBirth(),
+                           resultJpa.get().getFatherNik(),
+                           resultJpa.get().getFatherEducation(),
+                           resultJpa.get().getFatherJob(),
+                           resultJpa.get().getFatherCitizen(),
+                           resultJpa.get().getFatherIncome(),
+                           resultJpa.get().getFatherAddress(),
+                           resultJpa.get().getFatherPhone(),
+                           resultJpa.get().getMotherName(),
+                           resultJpa.get().getMotherDateBirth(),
+                           resultJpa.get().getMotherNik(),
+                           resultJpa.get().getMotherEducation(),
+                           resultJpa.get().getMotherCitizen(),
+                           resultJpa.get().getMotherIncome(),
+                           resultJpa.get().getMotherAddress(),
+                           resultJpa.get().getMotherPhone()
+                   );
+               }else {
+                   return Optional.empty();
+               }
             }
             default -> throw new IllegalArgumentException("Unsupported database: " + applicationConfigProperties.getDatabaseDefault());
         }

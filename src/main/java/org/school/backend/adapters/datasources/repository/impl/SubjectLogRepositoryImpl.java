@@ -62,14 +62,18 @@ public class SubjectLogRepositoryImpl implements SubjectLogRepository {
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
             case "postgresql" -> {
                 Optional<SubjectLogJpa> resultsJpa = jpaSubjectRepository.findById((UUID) id);
-                result = new SubjectLogs(
-                        resultsJpa.get().getId(),
-                        resultsJpa.get().getSubjectName(),
-                        resultsJpa.get().getSubjectCode(),
-                        resultsJpa.get().getGradeLevel(),
-                        resultsJpa.get().getIsMandatory(),
-                        resultsJpa.get().getDescription()
-                );
+                if(resultsJpa.isPresent()){
+                    result = new SubjectLogs(
+                            resultsJpa.get().getId(),
+                            resultsJpa.get().getSubjectName(),
+                            resultsJpa.get().getSubjectCode(),
+                            resultsJpa.get().getGradeLevel(),
+                            resultsJpa.get().getIsMandatory(),
+                            resultsJpa.get().getDescription()
+                    );
+                }else {
+                    return Optional.empty();
+                }
             }
 //            case "elasticsearch" -> {
 //                Optional<FlightLogsEs> resultEs = elasticSearchRepository.findById(String.valueOf(id));

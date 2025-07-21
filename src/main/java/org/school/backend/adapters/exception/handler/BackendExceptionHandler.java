@@ -26,9 +26,9 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(StudentDataNotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public @ResponseBody ErrorResponseDto handleStudentDataNotFoundException(final StudentDataNotFoundException exception, final HttpServletRequest request) {
-        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(GradeDataNotFoundException.class)
@@ -38,9 +38,9 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ParentDataNotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public @ResponseBody ErrorResponseDto handleParentDataNotFoundException(final ParentDataNotFoundException exception, final HttpServletRequest request) {
-        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(StudentGradeDataNotFoundException.class)
@@ -50,8 +50,8 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(SubjectDataNotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public @ResponseBody ErrorResponseDto handleSubjectDataNotFoundException(final SubjectDataNotFoundException exception, final HttpServletRequest request) {
-        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.NOT_FOUND);
     }
 }

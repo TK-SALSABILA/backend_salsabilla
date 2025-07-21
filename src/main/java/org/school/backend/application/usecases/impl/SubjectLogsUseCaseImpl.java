@@ -2,6 +2,7 @@ package org.school.backend.application.usecases.impl;
 
 import org.school.backend.adapters.schema.jpa.SubjectLogJpa;
 import org.school.backend.application.dto.response.SubjectLogsDto;
+import org.school.backend.application.exception.StudentDataNotFoundException;
 import org.school.backend.application.exception.SubjectDataNotFoundException;
 import org.school.backend.application.mappers.SubjectLogsMapper;
 import org.school.backend.application.usecases.SubjectLogsUseCase;
@@ -29,8 +30,8 @@ public class SubjectLogsUseCaseImpl implements SubjectLogsUseCase {
 
     @Override
     public Optional<SubjectLogsDto> findById(UUID id){
-        Optional<SubjectModel> subjectModel = Optional.ofNullable(this.subjectLogGateaway.findById(id)).orElseThrow(SubjectDataNotFoundException::new);
-        return Optional.of(SubjectLogsMapper.toDto(subjectModel.get()));
+        SubjectModel subjectModel = this.subjectLogGateaway.findById(id).orElseThrow(() -> new SubjectDataNotFoundException("Subject Not found"));
+        return Optional.of(SubjectLogsMapper.toDto(subjectModel));
     }
 
     @Override
@@ -45,7 +46,7 @@ public class SubjectLogsUseCaseImpl implements SubjectLogsUseCase {
                 return false;
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new StudentDataNotFoundException(e);
         }
     }
 
