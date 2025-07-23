@@ -1,17 +1,8 @@
 package org.school.backend.adapters.infrastructure.configuration;
 
-import org.school.backend.application.usecases.GradeUseCase;
-import org.school.backend.application.usecases.ParentUseCase;
-import org.school.backend.application.usecases.StudentLogsUseCase;
-import org.school.backend.application.usecases.SubjectLogsUseCase;
-import org.school.backend.application.usecases.impl.GradeUseCaseImpl;
-import org.school.backend.application.usecases.impl.ParentUseCaseImpl;
-import org.school.backend.application.usecases.impl.StudentLogsUseCaseImpl;
-import org.school.backend.application.usecases.impl.SubjectLogsUseCaseImpl;
-import org.school.backend.domain.gateaway.GradeLogGateaway;
-import org.school.backend.domain.gateaway.ParentLogGateaway;
-import org.school.backend.domain.gateaway.StudentLogGateaway;
-import org.school.backend.domain.gateaway.SubjectLogGateaway;
+import org.school.backend.application.usecases.*;
+import org.school.backend.application.usecases.impl.*;
+import org.school.backend.domain.gateaway.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +22,9 @@ public class ComponentConfiguration {
     @Autowired
     GradeLogGateaway gradeRecordRepository;
 
+    @Autowired
+    SavingLogGateaway savingRecordRepository;
+
 //    @Autowireds
 //    StudentGradeLogGateAway graderRecordsRepository;
 
@@ -49,6 +43,10 @@ public class ComponentConfiguration {
 
     @Bean
     public GradeUseCase gradeService(){return new GradeUseCaseImpl(gradeRecordRepository);
+    }
+
+    @Bean
+    public SavingLogsUseCase savingService(){return new SavingLogsUseCaseImpl(savingRecordRepository,studentRecordsRepository);
     }
 //    @Bean
 //    public StudentGradeUseCase gradeService(){return new StudentGradeUseCaseImpl(graderRecordsRepository);

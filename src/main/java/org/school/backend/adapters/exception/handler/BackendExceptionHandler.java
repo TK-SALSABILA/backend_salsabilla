@@ -4,11 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.school.backend.adapters.exception.dto.ErrorResponseDto;
 import org.school.backend.adapters.exception.error.ErrorBuilder;
 import org.school.backend.adapters.exception.message.ErrorMessage;
-import org.school.backend.application.exception.GradeDataNotFoundException;
-import org.school.backend.application.exception.ParentDataNotFoundException;
-import org.school.backend.application.exception.StudentDataNotFoundException;
-import org.school.backend.application.exception.StudentGradeDataNotFoundException;
-import org.school.backend.application.exception.SubjectDataNotFoundException;
+import org.school.backend.application.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,6 +48,11 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(SubjectDataNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public @ResponseBody ErrorResponseDto handleSubjectDataNotFoundException(final SubjectDataNotFoundException exception, final HttpServletRequest request) {
+        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(SavingDataNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public @ResponseBody ErrorResponseDto handleSavingDataNotFoundException(final SavingDataNotFoundException exception, final HttpServletRequest request) {
         return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.NOT_FOUND);
     }
 }

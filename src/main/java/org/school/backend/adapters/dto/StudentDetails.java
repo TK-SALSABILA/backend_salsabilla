@@ -4,6 +4,7 @@ import lombok.*;
 import org.school.backend.application.dto.StudentGradeDto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Builder
 @Getter
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDetails {
+    public UUID id;
     public String fullName;
     public String nickName;
     public String nik;
