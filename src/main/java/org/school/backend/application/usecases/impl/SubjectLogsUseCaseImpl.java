@@ -1,6 +1,5 @@
 package org.school.backend.application.usecases.impl;
 
-import org.school.backend.adapters.schema.jpa.SubjectLogJpa;
 import org.school.backend.application.dto.response.SubjectLogsDto;
 import org.school.backend.application.exception.StudentDataNotFoundException;
 import org.school.backend.application.exception.SubjectDataNotFoundException;

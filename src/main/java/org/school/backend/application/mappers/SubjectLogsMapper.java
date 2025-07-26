@@ -1,6 +1,5 @@
 package org.school.backend.application.mappers;
 
-import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 import org.school.backend.application.dto.response.SubjectLogsDto;
 import org.school.backend.domain.model.SubjectModel;
 

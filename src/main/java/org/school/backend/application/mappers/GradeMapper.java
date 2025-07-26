@@ -1,10 +1,6 @@
 package org.school.backend.application.mappers;
 
 import org.school.backend.application.dto.GradeDto;
-import org.school.backend.application.dto.StudentGradeDto;
-import org.school.backend.application.dto.response.SubjectLogsDto;
-import org.school.backend.domain.model.GradeModel;
-import org.school.backend.domain.model.StudentGradeModel;
 import org.school.backend.domain.model.GradeModel;
 
 import java.util.ArrayList;

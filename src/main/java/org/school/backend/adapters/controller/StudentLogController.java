@@ -1,6 +1,5 @@
 package org.school.backend.adapters.controller;
 
-import org.school.backend.adapters.dto.StudentRequest;
 import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.usecases.StudentLogsUseCase;
 import org.springframework.http.HttpStatus;

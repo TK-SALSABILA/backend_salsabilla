@@ -20,7 +20,6 @@ public class SavingLogGateawayImpl implements SavingLogGateaway {
     }
     @Override
     public Optional<List<SavingModel>> findAll(int page, int rpp) {
-        System.out.println(savingDataSource.findAll(page,rpp) + "ini savbing log gateawayimpl");
         return Optional.of(convertModelsToEntity(savingDataSource.findAll(page,rpp)));
     }
 

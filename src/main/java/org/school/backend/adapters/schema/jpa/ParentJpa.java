@@ -27,7 +27,7 @@ public class ParentJpa {
     private String fatherName;
 
     @Column(name = "FATHER_DATE_BIRTH")
-    private  LocalDateTime fatherDateBirth;
+    private LocalDateTime fatherDateBirth;
 
     @Column(name = "FATHER_NIK")
     private String fatherNik;

@@ -1,12 +1,12 @@
 package org.school.backend.application.usecases.impl;
 
-import org.school.backend.adapters.mapper.StudentRequestMapper;
 import org.school.backend.application.dto.StudentDetailsDto;
 import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 import org.school.backend.application.exception.StudentDataNotFoundException;
 import org.school.backend.application.mappers.StudentDetailMapper;
 import org.school.backend.application.mappers.StudentLogsMapper;
+import org.school.backend.application.mappers.StudentRequestMapper;
 import org.school.backend.application.usecases.StudentLogsUseCase;
 import org.school.backend.domain.gateaway.StudentLogGateaway;
 import org.school.backend.domain.model.StudentModel;

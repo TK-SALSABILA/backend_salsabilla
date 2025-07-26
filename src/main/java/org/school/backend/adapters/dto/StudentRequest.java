@@ -2,7 +2,6 @@ package org.school.backend.adapters.dto;
 
 
 import lombok.*;
-import org.school.backend.application.dto.StudentGradeDto;
 import org.school.backend.application.dto.ParentDto;
 
 import java.time.LocalDateTime;
@@ -23,6 +22,6 @@ public class StudentRequest {
     public String address;
     public String height;
     public String weight;
-    public StudentGradeDto gradeClass;
-    public ParentDto parent;
+    public StudentGrade gradeClass;
+    public ParentLogs parent;
 }

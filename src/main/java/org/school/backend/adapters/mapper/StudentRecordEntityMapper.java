@@ -3,9 +3,10 @@ package org.school.backend.adapters.mapper;
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
 import org.school.backend.adapters.dto.StudentRequest;
-import org.school.backend.application.mappers.StudentGradeMapper;
 import org.school.backend.application.mappers.ParentMapper;
 import org.school.backend.domain.model.StudentModel;
+
+import static org.school.backend.adapters.mapper.StudentGradeMapper.toDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,8 @@ public interface StudentRecordEntityMapper {
                 .address(entity.address())
                 .height(entity.height())
                 .weight(entity.weight())
-                .gradeClass(StudentGradeMapper.toDto(entity.gradeClass()))
-                .parent(ParentMapper.toDto(entity.parent()))
+                .gradeClass(toDto(entity.gradeClass()))
+                .parent(ParentLogsMapper.convertEntityToModel(entity.parent()))
                 .build();
     }
 
@@ -64,7 +65,7 @@ public interface StudentRecordEntityMapper {
                     entity.get().address,
                     entity.get().height,
                     entity.get().weight,
-                    StudentGradeMapper.toGradeModel(entity.get().gradeClass),
+                    StudentGradeMapper.convertModelToEntity(entity.get().gradeClass),
                     null
             ));
         } else {

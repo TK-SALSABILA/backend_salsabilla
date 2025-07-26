@@ -1,7 +1,6 @@
 package org.school.backend.application.usecases.impl;
 
 import org.school.backend.application.dto.StudentGradeDto;
-import org.school.backend.application.exception.GradeDataNotFoundException;
 import org.school.backend.application.exception.StudentGradeDataNotFoundException;
 import org.school.backend.application.mappers.StudentGradeMapper;
 import org.school.backend.application.usecases.StudentGradeUseCase;

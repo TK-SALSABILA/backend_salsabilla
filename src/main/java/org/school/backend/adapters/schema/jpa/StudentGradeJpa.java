@@ -41,8 +41,8 @@ public class StudentGradeJpa {
         UUID studentId,
         UUID gradeId
     ){
-        this.academicYear =academicYear;
-        this.isCurrent =isCurrent;
+        this.academicYear = academicYear;
+        this.isCurrent = isCurrent;
         this.studentId = studentId;
         this.gradeId = gradeId;
     }

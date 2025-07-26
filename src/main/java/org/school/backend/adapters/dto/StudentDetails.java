@@ -23,6 +23,6 @@ public class StudentDetails {
     public String address;
     public String height;
     public String weight;
-    public StudentGradeDto gradeClass;
+    public StudentGrade gradeClass;
 
 }

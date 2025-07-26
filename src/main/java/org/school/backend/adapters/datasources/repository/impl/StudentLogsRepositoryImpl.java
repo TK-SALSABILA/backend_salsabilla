@@ -3,9 +3,7 @@ package org.school.backend.adapters.datasources.repository.impl;
 import jakarta.transaction.Transactional;
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.datasources.repository.*;
-import org.school.backend.adapters.dto.StudentDetails;
-import org.school.backend.adapters.dto.StudentLogs;
-import org.school.backend.adapters.dto.StudentRequest;
+import org.school.backend.adapters.dto.*;
 import org.school.backend.adapters.schema.jpa.ParentJpa;
 import org.school.backend.adapters.schema.jpa.StudentGradeJpa;
 import org.school.backend.adapters.schema.jpa.StudentLogJpa;
@@ -131,12 +129,12 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
 
                     jpaStudentGradeRepository.findByStudentId(studentJpa.getId()).ifPresent(gradeJpa -> {
                         jpaGradeRepository.findById(gradeJpa.getGradeId()).ifPresent(gradeEntity -> {
-                            GradeDto gradeDto = new GradeDto(
+                            GradeLogs gradeDto = new GradeLogs(
                                     gradeJpa.getGradeId(),
                                     gradeEntity.getGradeLevel()
                             );
 
-                            StudentGradeDto academicGrades = new StudentGradeDto(
+                            StudentGrade academicGrades = new StudentGrade(
                                     gradeJpa.getAcademicYear(),
                                     gradeJpa.getIsCurrent(),
                                     gradeDto
@@ -174,34 +172,34 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
             );
             jpaStudentLogsRepository.save(studentData);
 
-            StudentGradeDto gradeDto = record.getGradeClass();
+            StudentGrade gradeDto = record.getGradeClass();
             StudentGradeJpa gradeData = new StudentGradeJpa(
-                    gradeDto.academicYear(),
-                    gradeDto.isCurrent(),
+                    gradeDto.getAcademicYear(),
+                    gradeDto.getIsCurrent(),
                     studentData.getId(),
-                    gradeDto.gradeLog().id()
+                    gradeDto.getGradeLog().getId()
             );
             jpaStudentGradeRepository.save(gradeData);
 
-            ParentDto parentDto = record.getParent();
+            ParentLogs parentDto = record.getParent();
             ParentJpa parentData = new ParentJpa(
-                    parentDto.fatherName(),
-                    parseDate(parentDto.fatherDateBirth()),
-                    parentDto.fatherNik(),
-                    parentDto.fatherEducation(),
-                    parentDto.fatherJob(),
-                    parentDto.fatherCitizen(),
-                    parentDto.fatherIncome(),
-                    parentDto.fatherAddress(),
-                    parentDto.fatherPhone(),
-                    parentDto.motherName(),
-                    parseDate(parentDto.motherDateBirth()),
-                    parentDto.motherNik(),
-                    parentDto.motherEducation(),
-                    parentDto.motherCitizen(),
-                    parentDto.motherIncome(),
-                    parentDto.motherAddress(),
-                    parentDto.motherPhone(),
+                    parentDto.getFatherName(),
+                    parentDto.getFatherDateBirth(),
+                    parentDto.getFatherNik(),
+                    parentDto.getFatherEducation(),
+                    parentDto.getFatherJob(),
+                    parentDto.getFatherCitizen(),
+                    parentDto.getFatherIncome(),
+                    parentDto.getFatherAddress(),
+                    parentDto.getFatherPhone(),
+                    parentDto.getMotherName(),
+                    parentDto.getMotherDateBirth(),
+                    parentDto.getMotherNik(),
+                    parentDto.getMotherEducation(),
+                    parentDto.getMotherCitizen(),
+                    parentDto.getMotherIncome(),
+                    parentDto.getMotherAddress(),
+                    parentDto.getMotherPhone(),
                     studentData.getId()
             );
             jpaParentRepository.save(parentData);

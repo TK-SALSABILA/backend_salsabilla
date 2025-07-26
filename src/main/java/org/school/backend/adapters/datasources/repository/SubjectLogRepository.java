@@ -3,8 +3,7 @@ package org.school.backend.adapters.datasources.repository;
 import org.school.backend.adapters.dto.SubjectLogs;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.Optional;;
 
 public interface SubjectLogRepository {
     List<SubjectLogs> findAll(int page, int rpp);

@@ -2,7 +2,7 @@ package org.school.backend.adapters.mapper;
 
 import org.school.backend.adapters.dto.SavingLogReq;
 import org.school.backend.adapters.dto.SavingLogs;
-import org.school.backend.adapters.dto.StudentDetails;
+
 import org.school.backend.domain.model.SavingModel;
 
 import java.util.ArrayList;

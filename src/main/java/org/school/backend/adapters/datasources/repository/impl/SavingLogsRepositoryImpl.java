@@ -83,7 +83,6 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
                         record.getStudentId()
                 );
                 jpaSavingLogsRepository.save(savingData);
-
             }
             default -> throw new IllegalArgumentException("Unsupported database: " + applicationConfigProperties.getDatabaseDefault());
         }
