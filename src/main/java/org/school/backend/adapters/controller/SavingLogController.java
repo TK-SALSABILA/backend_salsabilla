@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/v1")
@@ -25,8 +27,12 @@ public class SavingLogController extends BaseController {
 
     @RequestMapping(value = "saving/create", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody SavingRequestDto record){
-        System.out.println(record + " ini dari controller");
         savingLogsUseCase.create(record);
         return ResponseEntity.status(HttpStatus.CREATED).body("Saving stdent record created successfully");
+    }
+
+    @RequestMapping(value = "saving/{studentId}/balance", method = RequestMethod.GET)
+    public ResponseEntity<?> checkBalance(@PathVariable("studentId")UUID studentId){
+        return responseDefault.build(savingLogsUseCase.checkBalance(studentId),timeStamp, HttpStatus.OK);
     }
 }

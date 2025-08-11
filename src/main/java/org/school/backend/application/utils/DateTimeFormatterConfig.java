@@ -10,13 +10,15 @@ public class DateTimeFormatterConfig {
     public static String convertIsoFormat(final String dateIso) {
 
             final LocalDate date = LocalDate.parse(dateIso);
-            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy"); // contoh
+            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             return date.format(formatter);
 
     }
 
     public static String toStringFormat(LocalDateTime localDateTime) {
-        return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return localDateTime != null
+                ? localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                : null;
     }
 
     public static LocalDateTime parseDate(String dateStr) {

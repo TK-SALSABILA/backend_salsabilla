@@ -116,6 +116,7 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
                     StudentLogJpa studentJpa = resultJpa.get();
 
                     studentDetails = new StudentDetails();
+                    studentDetails.id = studentJpa.getId();
                     studentDetails.fullName = studentJpa.getFullName();
                     studentDetails.nickName = studentJpa.getNickName();
                     studentDetails.nik = studentJpa.getNik();

@@ -25,6 +25,12 @@ public class ComponentConfiguration {
     @Autowired
     SavingLogGateaway savingRecordRepository;
 
+    @Autowired
+    GradeStudentLogGateaway gradeStudentLogRepository;
+
+    @Autowired
+    TuitionFeeLogGateaway tuitionFeeRecordRepository;
+
 //    @Autowireds
 //    StudentGradeLogGateAway graderRecordsRepository;
 
@@ -48,6 +54,10 @@ public class ComponentConfiguration {
     @Bean
     public SavingLogsUseCase savingService(){return new SavingLogsUseCaseImpl(savingRecordRepository,studentRecordsRepository);
     }
+
+    @Bean
+    public TuitionFeeUseCase tuitionFeeService(){return new TuitonFeeUseCaseImpl(tuitionFeeRecordRepository,gradeStudentLogRepository,studentRecordsRepository,savingRecordRepository);};
+
 //    @Bean
 //    public StudentGradeUseCase gradeService(){return new StudentGradeUseCaseImpl(graderRecordsRepository);
 //    }

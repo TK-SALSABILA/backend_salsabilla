@@ -54,7 +54,7 @@ public interface StudentRecordEntityMapper {
     static Optional<StudentModel> convertModelToEntity(Optional<StudentDetails> entity){
         if(entity.isPresent()){
             return Optional.of(new StudentModel(
-                    null,
+                    entity.get().id,
                     entity.get().fullName,
                     entity.get().nickName,
                     entity.get().nik,

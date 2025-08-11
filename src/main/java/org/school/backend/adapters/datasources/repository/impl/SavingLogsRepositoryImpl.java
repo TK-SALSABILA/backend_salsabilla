@@ -10,6 +10,7 @@ import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.schema.jpa.SavingLogJpa;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +74,6 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
     public void create(SavingLogReq record) {
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case"postgresql" -> {
-                System.out.println("ini repository" + record);
                 SavingLogJpa savingData = new SavingLogJpa(
                         record.getPaymentType(),
                         record.getTransactionType(),
@@ -85,6 +85,40 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
                 jpaSavingLogsRepository.save(savingData);
             }
             default -> throw new IllegalArgumentException("Unsupported database: " + applicationConfigProperties.getDatabaseDefault());
+        }
+    }
+
+    @Override
+    public Integer getBalance(UUID studentId) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
+            case "postgresql" -> {
+                return jpaSavingLogsRepository.sumAmountByStudentId(studentId);
+            }
+            default -> throw new IllegalArgumentException(
+                    "Unsupported database: " + applicationConfigProperties.getDatabaseDefault()
+            );
+        }
+    }
+
+
+    @Override
+    public void withDrawSaving(UUID studentId, Integer amount, String description) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
+            case "postgresql" -> {
+                SavingLogJpa withdraw = new SavingLogJpa(
+                        "TABUNGAN",
+                        "WITHDRAW",
+                        LocalDateTime.now(),
+                        -amount,
+                        description,
+                        studentId
+                );
+
+                jpaSavingLogsRepository.save(withdraw);
+            }
+            default -> throw new IllegalArgumentException(
+                    "Unsupported database: " + applicationConfigProperties.getDatabaseDefault()
+            );
         }
     }
 }

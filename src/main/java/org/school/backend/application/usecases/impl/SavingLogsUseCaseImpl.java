@@ -54,6 +54,11 @@ public class SavingLogsUseCaseImpl implements SavingLogsUseCase {
        this.savingLogGateaway.create(savingModel);
     }
 
+    @Override
+    public Integer checkBalance(UUID studentId) {
+        return this.savingLogGateaway.reduction(studentId);
+    }
+
     private List<SavingLogOutputDto> mapLatestSavingToDto(List<SavingModel> savings) {
         return getLatestSavingsByStudent(savings).values().stream()
                 .map(this::mapToDto)

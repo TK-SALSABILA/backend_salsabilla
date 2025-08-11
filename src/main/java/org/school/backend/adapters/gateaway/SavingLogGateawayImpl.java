@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.school.backend.adapters.mapper.SavingLogsMapper.convertModelsToEntity;
 
@@ -26,5 +27,15 @@ public class SavingLogGateawayImpl implements SavingLogGateaway {
     @Override
     public void create(SavingModel record) {
         savingDataSource.create(SavingLogsMapper.convertEntityToModel(record));
+    }
+
+    @Override
+    public Integer reduction(UUID studentId) {
+      return savingDataSource.getBalance(studentId);
+    }
+
+    @Override
+    public void withDrawSaving(UUID studentId, Integer amount, String description) {
+         savingDataSource.withDrawSaving(studentId,amount,description);
     }
 }

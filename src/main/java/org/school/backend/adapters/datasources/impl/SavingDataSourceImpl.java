@@ -7,6 +7,7 @@ import org.school.backend.adapters.dto.SavingLogs;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class SavingDataSourceImpl implements SavingDataSource {
@@ -23,5 +24,15 @@ public class SavingDataSourceImpl implements SavingDataSource {
     @Override
     public void create(SavingLogReq record) {
         savingLogsRepository.create(record);
+    }
+
+    @Override
+    public Integer getBalance(UUID studentId) {
+        return savingLogsRepository.getBalance(studentId);
+    }
+
+    @Override
+    public void withDrawSaving(UUID studentId, Integer amount, String description) {
+        savingLogsRepository.withDrawSaving(studentId,amount,description);
     }
 }
