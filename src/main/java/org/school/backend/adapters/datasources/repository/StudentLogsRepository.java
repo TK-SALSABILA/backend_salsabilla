@@ -6,6 +6,8 @@ import org.school.backend.adapters.dto.StudentRequest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 public interface StudentLogsRepository {
 
@@ -13,4 +15,5 @@ public interface StudentLogsRepository {
     List<StudentLogs> findAll(int rpp,int page);
     Optional<StudentDetails> findById(Object id);
     void create(StudentRequest record);
+    List<StudentLogs> findAllStudentId(Set<UUID> id);
 }

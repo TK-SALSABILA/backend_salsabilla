@@ -7,14 +7,13 @@ import org.school.backend.adapters.datasources.repository.StudentLogsRepository;
 import org.school.backend.adapters.dto.SavingLogReq;
 import org.school.backend.adapters.dto.SavingLogs;
 import org.school.backend.adapters.dto.StudentDetails;
+import org.school.backend.adapters.dto.StudentLogs;
 import org.school.backend.adapters.schema.jpa.SavingLogJpa;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class SavingLogsRepositoryImpl implements SavingLogsRepository {
@@ -40,21 +39,35 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
 
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
             case "postgresql" -> {
+                // get all dulu semua log saving
                 List<SavingLogJpa> logs = jpaSavingLogsRepository.findAll();
 
+                // get list all studentID unik
+                Set<UUID> studentIds = logs.stream()
+                        .map(SavingLogJpa::getStudentId)
+                        .collect(Collectors.toSet());
+
+                //Batch fetch student name
+                Map<UUID, String> studentNameMap = studentLogsRepository.findAllStudentId(studentIds).stream()
+                        .collect(Collectors.toMap(
+                                StudentLogs::getId,
+                                StudentLogs::getFullName
+                        ));
+
+                Map<UUID, Integer> balanceMap = jpaSavingLogsRepository.sumAmountByStudentIdIn(studentIds).stream()
+                        .collect(Collectors.toMap(
+                                entry -> (UUID) entry[0],
+                                entry -> (Integer) entry[1]
+                        ));
 
                 for (SavingLogJpa entity : logs) {
-
-                    UUID studentId = entity.getStudentId();
-                    Optional<StudentDetails> studentDetails = studentLogsRepository.findById(studentId);
-                    if (studentDetails.isEmpty()) continue;
-
-                    Integer totalAmount = jpaSavingLogsRepository.sumAmountByStudentId(studentId);
+                    String studentName = studentNameMap.getOrDefault(entity.getStudentId(),"Siswa Tidak Dikenal");
+                    Integer totalAmount = balanceMap.getOrDefault(entity.getStudentId(),0);
 
                     SavingLogs savingLog = new SavingLogs(
                             entity.getId(),
                             entity.getStudentId(),
-                            studentDetails.get().getFullName(),
+                            studentName,
                             entity.getPaymentType(),
                             totalAmount,
                             entity.getTransactionDate(),

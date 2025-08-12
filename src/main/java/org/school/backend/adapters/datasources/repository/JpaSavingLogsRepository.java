@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
 @Repository
 @Transactional
 public interface JpaSavingLogsRepository extends JpaRepository<SavingLogJpa, UUID> {
@@ -22,7 +23,7 @@ public interface JpaSavingLogsRepository extends JpaRepository<SavingLogJpa, UUI
     Integer sumAmountByStudentId(UUID studentId);
 
     @Query("""
-    SELECT s.studentId, COALESCE(SUM(s.amount), 0)
+    SELECT s.studentId, COALESCE(CAST(SUM(s.amount) AS INTEGER), 0)
     FROM SavingLogJpa s
     WHERE s.studentId IN :studentIds
     GROUP BY s.studentId

@@ -60,7 +60,7 @@ public class TuitonFeeUseCaseImpl implements TuitionFeeUseCase {
             status = "SUCCESS";
         }
 
-        if("Withdraw".equals(record.paymentType())){
+        if("WITHDRAW".equals(record.paymentType())){
             savingLogGateaway.withDrawSaving(
                     studentId,
                     amount,
@@ -114,7 +114,7 @@ public class TuitonFeeUseCaseImpl implements TuitionFeeUseCase {
                                 "PENDING",
                                 null,
                                 month,
-                                500000
+                                200000
                         )))
                 .collect(Collectors.toList());
 

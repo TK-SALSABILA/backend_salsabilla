@@ -12,10 +12,7 @@ import org.school.backend.application.dto.StudentGradeDto;
 import org.school.backend.application.dto.ParentDto;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.school.backend.application.utils.DateTimeFormatterConfig.parseDate;
 
@@ -209,5 +206,33 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
         }
     }
 
+    @Override
+    public List<StudentLogs> findAllStudentId(Set<UUID> id) {
+        List<StudentLogs> results = new ArrayList<>();
 
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> jpaStudentLogsRepository.findAllById(id)
+                    .forEach(entity-> results.add(new StudentLogs(
+                            entity.getId(),
+                            entity.getFullName(),
+                            entity.getNickName(),
+                            entity.getNik(),
+                            entity.getGender(),
+                            entity.getDateBirth(),
+                            entity.getBirthOrder()
+                    )));
+//            case "elasticsearch" -> elasticSearchRepository.findAll()
+//                    .forEach(entity-> results.add(new StudentLogs(
+//                            entity.getId(),
+//                            entity.getFullName(),
+//                            entity.getNickName(),
+//                            entity.getNik(),
+//                            entity.getGender(),
+//                            entity.getDateBirth(),
+//                            entity.getBirthOrder()
+//                    )));
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+        return  results;
+    }
 }
