@@ -2,7 +2,6 @@ package org.school.backend.adapters.dto;
 
 
 import lombok.*;
-import org.school.backend.application.dto.ParentDto;
 
 import java.time.LocalDateTime;
 

@@ -22,6 +22,7 @@ import static org.school.backend.application.mappers.TuitionResMapper.toListDto;
 import static org.school.backend.application.utils.DateTimeFormatterConfig.parseDate;
 
 public class TuitonFeeUseCaseImpl implements TuitionFeeUseCase {
+
     final TuitionFeeLogGateaway tuitionFeeLogGateaway;
     final GradeStudentLogGateaway gradeStudentLogGateaway;
     final StudentLogGateaway studentLogGateaway;
