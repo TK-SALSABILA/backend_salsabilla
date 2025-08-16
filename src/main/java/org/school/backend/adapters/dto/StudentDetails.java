@@ -24,5 +24,4 @@ public class StudentDetails {
     public String height;
     public String weight;
     public StudentGrade gradeClass;
-
 }

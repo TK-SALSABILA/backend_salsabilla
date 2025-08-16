@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface ParentLogGateaway {
     Optional<ParentModel> findByStudentId(Object id);
+    void update(Object id, ParentModel record);
+
 }

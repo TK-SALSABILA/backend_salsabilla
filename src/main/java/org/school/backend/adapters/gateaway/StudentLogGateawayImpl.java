@@ -1,6 +1,7 @@
 package org.school.backend.adapters.gateaway;
 
 import org.school.backend.adapters.datasources.StudentDataSource;
+import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.domain.gateaway.StudentLogGateaway;
 import org.school.backend.domain.model.StudentModel;
 import org.springframework.stereotype.Component;
@@ -32,5 +33,11 @@ public class StudentLogGateawayImpl implements StudentLogGateaway {
     @Override
     public void create(StudentModel record){
         studentRecordDataSource.create(convertEntityToModel(record));
+    }
+
+    @Override
+    public void update(Object id, StudentModel record) {
+        StudentDetails data = convertEntityToModelsDetails(record);
+        studentRecordDataSource.update(id,data);
     }
 }

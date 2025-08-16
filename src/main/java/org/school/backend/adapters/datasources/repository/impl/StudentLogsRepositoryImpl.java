@@ -207,6 +207,36 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
     }
 
     @Override
+    public void update(Object id, StudentDetails record) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> {
+                Optional<StudentLogJpa> optionalEntity = jpaStudentLogsRepository.findById((UUID) id);
+                System.out.println(optionalEntity + "<<<<<<<<<<<<<<<<<><><<><><>");
+
+                if (optionalEntity.isPresent()){
+                    StudentLogJpa entity = optionalEntity.get();
+
+                    entity.setFullName(record.getFullName());
+                    entity.setNickName(record.getNickName());
+                    entity.setNik(record.getNik());
+                    entity.setGender(record.getGender());
+                    entity.setDateBirth(record.getDateBirth());
+                    entity.setBirthOrder(record.getBirthOrder());
+                    entity.setTribe(record.getTribe());
+                    entity.setAddress(record.getAddress());
+                    entity.setHeight(record.getHeight());
+                    entity.setWeight(record.getWeight());
+
+                    jpaStudentLogsRepository.save(entity);
+                }else {
+                    throw new RuntimeException("Student not found with id: " + id);
+                }
+            }
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+    }
+
+    @Override
     public List<StudentLogs> findAllStudentId(Set<UUID> id) {
         List<StudentLogs> results = new ArrayList<>();
 

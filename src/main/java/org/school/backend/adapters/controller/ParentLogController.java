@@ -1,5 +1,6 @@
 package org.school.backend.adapters.controller;
 
+import org.school.backend.application.dto.ParentDto;
 import org.school.backend.application.usecases.ParentUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,4 +24,14 @@ public class ParentLogController extends BaseController{
         return  responseDefault.build(parentService.findByStudentId(studentId).get(),timeStamp, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "parent/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> updateByStudentId(
+            @PathVariable UUID id,
+            @RequestBody ParentDto payload
+    ){
+        parentService.updateByStudentId(id,payload);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Record updated successfully");
+    }
 }

@@ -32,4 +32,9 @@ public class StudentDataSourceImpl implements StudentDataSource {
     public void create(StudentRequest record){
          studentLogsRepository.create(record);
     }
+
+    @Override
+    public void update(Object id, StudentDetails record) {
+        studentLogsRepository.update(id, record);
+    }
 }

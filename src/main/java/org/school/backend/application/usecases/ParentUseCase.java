@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface ParentUseCase {
     Optional<ParentDto> findByStudentId(UUID id);
+    void updateByStudentId(Object id, ParentDto record);
 }

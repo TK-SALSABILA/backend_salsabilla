@@ -56,4 +56,39 @@ public class ParentRepositoryImpl implements ParentRepository {
         }
         return Optional.of(parentLogs);
     };
+
+    @Override
+    public void updateByStudentId(Object id, ParentLogs record) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
+            case "postgresql" -> {
+                Optional<ParentJpa> optionalParentJpa = jpaParentRepository.findByStudentId((UUID) id);
+
+                if (optionalParentJpa.isPresent()) {
+                    ParentJpa entity = optionalParentJpa.get();
+
+                    entity.setFatherName(record.getFatherName());
+                    entity.setFatherDateBirth(record.getFatherDateBirth());
+                    entity.setFatherNik(record.getFatherNik());
+                    entity.setFatherEducation(record.getFatherEducation());
+                    entity.setFatherJob(record.getFatherJob());
+                    entity.setFatherCitizen(record.getFatherCitizen());
+                    entity.setFatherIncome(record.getFatherIncome());
+                    entity.setFatherAddress(record.getFatherAddress());
+                    entity.setFatherPhone(record.getFatherPhone());
+
+                    entity.setMotherName(record.getMotherName());
+                    entity.setMotherDateBirth(record.getMotherDateBirth());
+                    entity.setMotherNik(record.getMotherNik());
+                    entity.setMotherEducation(record.getMotherEducation());
+                    entity.setMotherCitizen(record.getMotherCitizen());
+                    entity.setMotherIncome(record.getMotherIncome());
+                    entity.setMotherAddress(record.getMotherAddress());
+                    entity.setMotherPhone(record.getMotherPhone());
+
+                    jpaParentRepository.save(entity);
+                }
+            }
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+    }
 }

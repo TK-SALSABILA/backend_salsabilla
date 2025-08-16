@@ -15,5 +15,6 @@ public interface StudentLogsRepository {
     List<StudentLogs> findAll(int rpp,int page);
     Optional<StudentDetails> findById(Object id);
     void create(StudentRequest record);
+    void update(Object id, StudentDetails record);
     List<StudentLogs> findAllStudentId(Set<UUID> id);
 }

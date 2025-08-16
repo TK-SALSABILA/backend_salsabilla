@@ -36,7 +36,7 @@ public class ComponentConfiguration {
 
     @Bean
     public StudentLogsUseCase studentService(){
-        return new StudentLogsUseCaseImpl(studentRecordsRepository);
+        return new StudentLogsUseCaseImpl(studentRecordsRepository, parentRecordRepository);
     }
 
     @Bean

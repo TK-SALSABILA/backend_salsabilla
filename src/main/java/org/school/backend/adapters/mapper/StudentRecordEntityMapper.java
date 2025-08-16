@@ -3,7 +3,6 @@ package org.school.backend.adapters.mapper;
 import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
 import org.school.backend.adapters.dto.StudentRequest;
-import org.school.backend.application.mappers.ParentMapper;
 import org.school.backend.domain.model.StudentModel;
 
 import static org.school.backend.adapters.mapper.StudentGradeMapper.toDto;
@@ -28,6 +27,21 @@ public interface StudentRecordEntityMapper {
                 .weight(entity.weight())
                 .gradeClass(toDto(entity.gradeClass()))
                 .parent(ParentLogsMapper.convertEntityToModel(entity.parent()))
+                .build();
+    }
+
+    static StudentDetails convertEntityToModelsDetails(final StudentModel entity){
+        return StudentDetails.builder()
+                .fullName(entity.fullName())
+                .nickName(entity.nickName())
+                .nik(entity.nik())
+                .gender(entity.gender())
+                .dateBirth(entity.dateBirth())
+                .birthOrder(entity.birthOrder())
+                .tribe(entity.tribe())
+                .address(entity.address())
+                .height(entity.height())
+                .weight(entity.weight())
                 .build();
     }
 

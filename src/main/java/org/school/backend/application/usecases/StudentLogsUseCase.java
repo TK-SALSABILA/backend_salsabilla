@@ -12,4 +12,5 @@ public interface StudentLogsUseCase {
     Optional<List<StudentsLogsOutputDto>> findAll(int rpp,int page);
     Optional<StudentDetailsDto> findById(UUID id);
     void create(StudentRequestDto record);
+    void updateStudent(Object id, StudentDetailsDto record);
 }

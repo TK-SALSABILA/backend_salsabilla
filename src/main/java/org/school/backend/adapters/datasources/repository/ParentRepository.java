@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface ParentRepository {
     Optional<ParentLogs> findByStudentId(Object id);
+    void updateByStudentId(Object id,ParentLogs record);
 }

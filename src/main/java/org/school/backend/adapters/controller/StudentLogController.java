@@ -1,5 +1,6 @@
 package org.school.backend.adapters.controller;
 
+import org.school.backend.application.dto.StudentDetailsDto;
 import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.usecases.StudentLogsUseCase;
 import org.springframework.http.HttpStatus;
@@ -36,4 +37,17 @@ public class StudentLogController extends BaseController{
         studentRecordService.create(record);
         return ResponseEntity.status(HttpStatus.CREATED).body("Student record created successfully");
     }
+
+    @RequestMapping(value = "student/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> updateStudent(
+            @PathVariable UUID id,
+            @RequestBody StudentDetailsDto payload
+    ){
+
+        studentRecordService.updateStudent(id, payload);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Record updated successfully");
+    }
+
+
 }

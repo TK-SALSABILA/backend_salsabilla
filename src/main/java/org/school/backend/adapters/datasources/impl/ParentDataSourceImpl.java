@@ -19,4 +19,9 @@ public class ParentDataSourceImpl implements ParentDataSource {
     public Optional<ParentLogs> findByStudentId(Object id){
         return parentRepository.findByStudentId(id);
     }
+
+    @Override
+    public void updateByStudentId(Object id, ParentLogs record) {
+        parentRepository.updateByStudentId(id, record);
+    }
 }
