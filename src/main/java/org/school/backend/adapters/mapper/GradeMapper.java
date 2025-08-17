@@ -10,6 +10,7 @@ public interface GradeMapper {
 
     static GradeLogs convertEntityToModel(final GradeModel entity) {
         return GradeLogs.builder()
+                .id(entity.id())
                 .gradeLevel(entity.gradeLevel()).build();
 
     }

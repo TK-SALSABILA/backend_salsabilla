@@ -8,10 +8,8 @@ public record GradeModel(
         String gradeLevel
 ) implements Serializable {
 
-    public GradeModel(String gradeLevel){
-        this(
-                null,
-                gradeLevel
-        );
+    public GradeModel(UUID id, String gradeLevel){
+        this.id = id;
+        this.gradeLevel = gradeLevel;
     }
 }
