@@ -25,6 +25,7 @@ public interface GradeMapper {
 
     static GradeModel convertModelToEntity(GradeLogs entity) {
             return new GradeModel(
+                    entity.getId(),
                     entity.getGradeLevel()
             );
 
