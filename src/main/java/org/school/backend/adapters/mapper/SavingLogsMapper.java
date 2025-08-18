@@ -17,6 +17,7 @@ public interface SavingLogsMapper {
         return SavingLogReq.builder()
                 .studentId(entity.studentId())
                 .paymentType(entity.paymentType())
+                .transactionType(entity.transactionType())
                 .amount(entity.amount())
                 .transactionDate(entity.transactionDate())
                 .description(entity.description())
