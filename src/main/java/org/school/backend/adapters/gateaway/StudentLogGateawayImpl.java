@@ -26,6 +26,11 @@ public class StudentLogGateawayImpl implements StudentLogGateaway {
     }
 
     @Override
+    public Optional<List<StudentModel>> findByName(String student) {
+        return Optional.of(convertModelsToEntity(studentRecordDataSource.findByName(student)));
+    }
+
+    @Override
     public Optional<StudentModel> findById(Object id){
         return convertModelToEntity(studentRecordDataSource.findById(id));
     }

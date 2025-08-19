@@ -24,6 +24,11 @@ public class StudentDataSourceImpl implements StudentDataSource {
     }
 
     @Override
+    public List<StudentLogs> findByName(String studentName){
+        return studentLogsRepository.findByName(studentName);
+    }
+
+    @Override
     public Optional<StudentDetails> findById(Object id){
         return studentLogsRepository.findById(id);
     }

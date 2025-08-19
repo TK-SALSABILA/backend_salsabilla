@@ -21,10 +21,16 @@ public class StudentLogController extends BaseController{
     }
 
     @RequestMapping(value = "student/record", method = RequestMethod.GET)
-    public ResponseEntity<?> findAll(@RequestParam(name = "page", defaultValue = "0") int page,
-                                     @RequestParam(name = "rpp", defaultValue = "1") int rpp){
-        return responseDefault.build(studentRecordService.findAll(rpp,page).get(),timeStamp, HttpStatus.OK);
+    public ResponseEntity<?> findAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "rpp", defaultValue = "1") int rpp,
+            @RequestParam(name = "q", required = false) String q
+    ){
 
+        if (q != null && !q.isEmpty()) {
+            return responseDefault.build(studentRecordService.findByName(q).get(), timeStamp, HttpStatus.OK);
+        }
+        return responseDefault.build(studentRecordService.findAll(rpp,page).get(),timeStamp, HttpStatus.OK);
     }
 
     @RequestMapping(value = "student/{id}", method = RequestMethod.GET)

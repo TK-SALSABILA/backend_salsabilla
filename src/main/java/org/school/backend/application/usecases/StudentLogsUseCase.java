@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public interface StudentLogsUseCase {
     Optional<List<StudentsLogsOutputDto>> findAll(int rpp,int page);
+    Optional<List<StudentsLogsOutputDto>> findByName(String studentName);
     Optional<StudentDetailsDto> findById(UUID id);
     void create(StudentRequestDto record);
     void updateStudent(Object id, StudentDetailsDto record);

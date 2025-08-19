@@ -103,6 +103,35 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
     }
 
     @Override
+    public List<StudentLogs> findByName(String StudentName) {
+        List<StudentLogs> results = new ArrayList<>();
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> jpaStudentLogsRepository.findByFullNameLike(StudentName)
+                    .forEach(entity-> results.add(new StudentLogs(
+                            entity.getId(),
+                            entity.getFullName(),
+                            entity.getNickName(),
+                            entity.getNik(),
+                            entity.getGender(),
+                            entity.getDateBirth(),
+                            entity.getBirthOrder()
+                    )));
+//            case "elasticsearch" -> elasticSearchRepository.findAll()
+//                    .forEach(entity-> results.add(new StudentLogs(
+//                            entity.getId(),
+//                            entity.getFullName(),
+//                            entity.getNickName(),
+//                            entity.getNik(),
+//                            entity.getGender(),
+//                            entity.getDateBirth(),
+//                            entity.getBirthOrder()
+//                    )));
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+        return results;
+    }
+
+    @Override
     public Optional<StudentDetails> findById(Object id) {
         StudentDetails studentDetails;
 
