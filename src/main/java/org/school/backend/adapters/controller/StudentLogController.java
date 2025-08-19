@@ -1,6 +1,7 @@
 package org.school.backend.adapters.controller;
 
 import org.school.backend.application.dto.StudentDetailsDto;
+import org.school.backend.application.dto.request.StudentParamDto;
 import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.usecases.StudentLogsUseCase;
 import org.springframework.http.HttpStatus;
@@ -20,17 +21,26 @@ public class StudentLogController extends BaseController{
         this.studentRecordService = studentRecordService;
     }
 
+//    @RequestMapping(value = "student/record", method = RequestMethod.GET)
+//    public ResponseEntity<?> findAll(
+//            @RequestParam(name = "page", defaultValue = "0") int page,
+//            @RequestParam(name = "rpp", defaultValue = "1") int rpp,
+//            @RequestParam(name = "q", required = false) String q
+//    ){
+//
+//        if (q != null && !q.isEmpty()) {
+//            return responseDefault.build(studentRecordService.findByName(q).get(), timeStamp, HttpStatus.OK);
+//        }
+//        return responseDefault.build(studentRecordService.findAll(rpp,page).get(),timeStamp, HttpStatus.OK);
+//    }
     @RequestMapping(value = "student/record", method = RequestMethod.GET)
     public ResponseEntity<?> findAll(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "rpp", defaultValue = "1") int rpp,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "rpp", defaultValue = "10") int rpp,
             @RequestParam(name = "q", required = false) String q
     ){
-
-        if (q != null && !q.isEmpty()) {
-            return responseDefault.build(studentRecordService.findByName(q).get(), timeStamp, HttpStatus.OK);
-        }
-        return responseDefault.build(studentRecordService.findAll(rpp,page).get(),timeStamp, HttpStatus.OK);
+        StudentParamDto req = new StudentParamDto(page, rpp, q);
+        return responseDefault.build(studentRecordService.findAll(req).get(),timeStamp, HttpStatus.OK);
     }
 
     @RequestMapping(value = "student/{id}", method = RequestMethod.GET)

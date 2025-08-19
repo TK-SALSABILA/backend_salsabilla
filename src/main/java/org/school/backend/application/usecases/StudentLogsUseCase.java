@@ -1,6 +1,7 @@
 package org.school.backend.application.usecases;
 
 import org.school.backend.application.dto.StudentDetailsDto;
+import org.school.backend.application.dto.request.StudentParamDto;
 import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 
@@ -9,8 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface StudentLogsUseCase {
-    Optional<List<StudentsLogsOutputDto>> findAll(int rpp,int page);
-    Optional<List<StudentsLogsOutputDto>> findByName(String studentName);
+    Optional<List<StudentsLogsOutputDto>> findAll(StudentParamDto params);
+//    Optional<List<StudentsLogsOutputDto>> findByName(String studentName);
     Optional<StudentDetailsDto> findById(UUID id);
     void create(StudentRequestDto record);
     void updateStudent(Object id, StudentDetailsDto record);

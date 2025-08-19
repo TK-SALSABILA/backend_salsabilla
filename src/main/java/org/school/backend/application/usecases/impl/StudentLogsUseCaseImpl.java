@@ -1,6 +1,7 @@
 package org.school.backend.application.usecases.impl;
 
 import org.school.backend.application.dto.StudentDetailsDto;
+import org.school.backend.application.dto.request.StudentParamDto;
 import org.school.backend.application.dto.request.StudentRequestDto;
 import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 import org.school.backend.application.exception.StudentDataNotFoundException;
@@ -10,7 +11,6 @@ import org.school.backend.application.mappers.StudentRequestMapper;
 import org.school.backend.application.usecases.StudentLogsUseCase;
 import org.school.backend.domain.gateaway.ParentLogGateaway;
 import org.school.backend.domain.gateaway.StudentLogGateaway;
-import org.school.backend.domain.model.ParentModel;
 import org.school.backend.domain.model.StudentModel;
 
 import java.util.List;
@@ -22,24 +22,34 @@ import static org.school.backend.application.utils.DateTimeFormatterConfig.parse
 public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
 
     private final StudentLogGateaway studentLogGateaway;
-    private final ParentLogGateaway parentLogGateaway;
 
     public StudentLogsUseCaseImpl(final StudentLogGateaway studentLogGateaway, final ParentLogGateaway parentLogGateaway ){
         this.studentLogGateaway = studentLogGateaway;
-        this.parentLogGateaway = parentLogGateaway;
     }
 
     @Override
-    public Optional<List<StudentsLogsOutputDto>> findAll(int rpp, int page) {
-        Optional<List<StudentModel>> studentModels = Optional.ofNullable(this.studentLogGateaway.findAll(rpp, page)).orElseThrow(StudentDataNotFoundException::new);
+    public Optional<List<StudentsLogsOutputDto>> findAll(StudentParamDto params) {
+        Optional<List<StudentModel>> studentModels;
+
+        if (params.hasKeyword()) {
+            studentModels = Optional.ofNullable(
+                    this.studentLogGateaway.findByName(params.q())
+            ).orElseThrow(StudentDataNotFoundException::new);
+        } else {
+            studentModels = Optional.ofNullable(
+                    this.studentLogGateaway.findAll(params.rpp(), params.page())
+            ).orElseThrow(StudentDataNotFoundException::new);
+        }
+
         return Optional.of(StudentLogsMapper.toListDto(studentModels.get()));
     }
 
-    @Override
-    public Optional<List<StudentsLogsOutputDto>> findByName(String studentName) {
-        Optional<List<StudentModel>> studentModels = Optional.ofNullable(this.studentLogGateaway.findByName(studentName)).orElseThrow(StudentDataNotFoundException::new);
-        return Optional.of(StudentLogsMapper.toListDto(studentModels.get()));
-    }
+
+//    @Override
+//    public Optional<List<StudentsLogsOutputDto>> findByName(String studentName) {
+//        Optional<List<StudentModel>> studentModels = Optional.ofNullable(this.studentLogGateaway.findByName(studentName)).orElseThrow(StudentDataNotFoundException::new);
+//        return Optional.of(StudentLogsMapper.toListDto(studentModels.get()));
+//    }
 
     @Override
     public Optional<StudentDetailsDto> findById(UUID id){
