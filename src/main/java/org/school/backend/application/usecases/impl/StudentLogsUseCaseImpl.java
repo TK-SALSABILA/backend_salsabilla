@@ -31,9 +31,9 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
     public Optional<List<StudentsLogsOutputDto>> findAll(StudentParamDto params) {
         Optional<List<StudentModel>> studentModels;
 
-        if (params.hasKeyword()) {
+        if (params.hasAnyFilter()) {
             studentModels = Optional.ofNullable(
-                    this.studentLogGateaway.findByName(params.q())
+                    this.studentLogGateaway.findByFilter(params.q(), params.classId())
             ).orElseThrow(StudentDataNotFoundException::new);
         } else {
             studentModels = Optional.ofNullable(
@@ -43,13 +43,6 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
 
         return Optional.of(StudentLogsMapper.toListDto(studentModels.get()));
     }
-
-
-//    @Override
-//    public Optional<List<StudentsLogsOutputDto>> findByName(String studentName) {
-//        Optional<List<StudentModel>> studentModels = Optional.ofNullable(this.studentLogGateaway.findByName(studentName)).orElseThrow(StudentDataNotFoundException::new);
-//        return Optional.of(StudentLogsMapper.toListDto(studentModels.get()));
-//    }
 
     @Override
     public Optional<StudentDetailsDto> findById(UUID id){

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class StudentDataSourceImpl implements StudentDataSource {
@@ -24,8 +25,8 @@ public class StudentDataSourceImpl implements StudentDataSource {
     }
 
     @Override
-    public List<StudentLogs> findByName(String studentName){
-        return studentLogsRepository.findByName(studentName);
+    public List<StudentLogs> findByFilter(String studentName, UUID classId){
+        return studentLogsRepository.findByFilter(studentName,classId);
     }
 
     @Override

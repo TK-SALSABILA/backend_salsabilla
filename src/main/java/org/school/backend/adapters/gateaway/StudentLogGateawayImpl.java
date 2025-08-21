@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.school.backend.adapters.mapper.StudentRecordEntityMapper.*;
 
@@ -26,8 +27,8 @@ public class StudentLogGateawayImpl implements StudentLogGateaway {
     }
 
     @Override
-    public Optional<List<StudentModel>> findByName(String student) {
-        return Optional.of(convertModelsToEntity(studentRecordDataSource.findByName(student)));
+    public Optional<List<StudentModel>> findByFilter(String student,  UUID classId) {
+        return Optional.of(convertModelsToEntity(studentRecordDataSource.findByFilter(student, classId)));
     }
 
     @Override

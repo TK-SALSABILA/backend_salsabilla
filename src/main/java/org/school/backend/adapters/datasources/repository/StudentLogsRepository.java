@@ -13,7 +13,7 @@ public interface StudentLogsRepository {
 
     List<StudentLogs> findAll();
     List<StudentLogs> findAll(int rpp,int page);
-    List<StudentLogs> findByName(String StudentName);
+    List<StudentLogs> findByFilter(String StudentName,UUID classId);
     Optional<StudentDetails> findById(Object id);
     void create(StudentRequest record);
     void update(Object id, StudentDetails record);

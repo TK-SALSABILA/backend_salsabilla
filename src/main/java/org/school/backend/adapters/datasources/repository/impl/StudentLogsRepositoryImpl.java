@@ -3,18 +3,15 @@ package org.school.backend.adapters.datasources.repository.impl;
 import jakarta.transaction.Transactional;
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.datasources.repository.*;
+import org.school.backend.adapters.datasources.specification.StudentSpecification;
 import org.school.backend.adapters.dto.*;
 import org.school.backend.adapters.schema.jpa.ParentJpa;
 import org.school.backend.adapters.schema.jpa.StudentGradeJpa;
 import org.school.backend.adapters.schema.jpa.StudentLogJpa;
-import org.school.backend.application.dto.GradeDto;
-import org.school.backend.application.dto.StudentGradeDto;
-import org.school.backend.application.dto.ParentDto;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-
-import static org.school.backend.application.utils.DateTimeFormatterConfig.parseDate;
 
 @Component
 public class StudentLogsRepositoryImpl implements StudentLogsRepository {
@@ -103,32 +100,44 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
     }
 
     @Override
-    public List<StudentLogs> findByName(String StudentName) {
+    public List<StudentLogs> findByFilter(String studentName, UUID classId) {
         List<StudentLogs> results = new ArrayList<>();
-        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
-            case "postgresql" -> jpaStudentLogsRepository.findByFullNameLike(StudentName)
-                    .forEach(entity-> results.add(new StudentLogs(
-                            entity.getId(),
-                            entity.getFullName(),
-                            entity.getNickName(),
-                            entity.getNik(),
-                            entity.getGender(),
-                            entity.getDateBirth(),
-                            entity.getBirthOrder()
-                    )));
-//            case "elasticsearch" -> elasticSearchRepository.findAll()
-//                    .forEach(entity-> results.add(new StudentLogs(
-//                            entity.getId(),
-//                            entity.getFullName(),
-//                            entity.getNickName(),
-//                            entity.getNik(),
-//                            entity.getGender(),
-//                            entity.getDateBirth(),
-//                            entity.getBirthOrder()
-//                    )));
+        List<UUID> studentIds;
+        if (classId != null) {
+            studentIds = jpaStudentGradeRepository.findStudentIdsByClassId(classId);
+            if (studentIds.isEmpty()) {
+                return results;
+            }
+        } else {
+            studentIds = null;
+        }
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
+            case "postgresql" -> {
+
+                Specification<StudentLogJpa> spec =
+                        StudentSpecification.fullNameContains(studentName)
+                                .and((root, query, cb) -> {
+                                    if (studentIds == null || studentIds.isEmpty()) {
+                                        return cb.conjunction();
+                                    }
+                                    return root.get("id").in(studentIds);
+                                });
+
+                jpaStudentLogsRepository.findAll(spec)
+                        .forEach(entity -> results.add(new StudentLogs(
+                                entity.getId(),
+                                entity.getFullName(),
+                                entity.getNickName(),
+                                entity.getNik(),
+                                entity.getGender(),
+                                entity.getDateBirth(),
+                                entity.getBirthOrder()
+                        )));
+                return results;
+            }
+            // case "elasticsearch" -> ...
             default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
         }
-        return results;
     }
 
     @Override
@@ -240,7 +249,6 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case "postgresql" -> {
                 Optional<StudentLogJpa> optionalEntity = jpaStudentLogsRepository.findById((UUID) id);
-                System.out.println(optionalEntity + "<<<<<<<<<<<<<<<<<><><<><><>");
 
                 if (optionalEntity.isPresent()){
                     StudentLogJpa entity = optionalEntity.get();

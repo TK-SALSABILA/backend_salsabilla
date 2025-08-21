@@ -37,9 +37,10 @@ public class StudentLogController extends BaseController{
     public ResponseEntity<?> findAll(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "rpp", defaultValue = "10") int rpp,
-            @RequestParam(name = "q", required = false) String q
+            @RequestParam(name = "q", required = false) String q,
+            @RequestParam(name = "classId", required = false) UUID classId
     ){
-        StudentParamDto req = new StudentParamDto(page, rpp, q);
+        StudentParamDto req = new StudentParamDto(page, rpp, q ,classId);
         return responseDefault.build(studentRecordService.findAll(req).get(),timeStamp, HttpStatus.OK);
     }
 
