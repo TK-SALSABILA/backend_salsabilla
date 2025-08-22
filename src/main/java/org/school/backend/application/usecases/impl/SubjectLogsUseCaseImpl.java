@@ -1,5 +1,6 @@
 package org.school.backend.application.usecases.impl;
 
+import org.school.backend.application.dto.request.SubjectParamDto;
 import org.school.backend.application.dto.response.SubjectLogsDto;
 import org.school.backend.application.exception.StudentDataNotFoundException;
 import org.school.backend.application.exception.SubjectDataNotFoundException;
@@ -22,9 +23,21 @@ public class SubjectLogsUseCaseImpl implements SubjectLogsUseCase {
     }
 
     @Override
-    public Optional<List<SubjectLogsDto>> findAll(int page,int rpp){
-        Optional<List<SubjectModel>> subjectModels = Optional.ofNullable(this.subjectLogGateaway.findAll(page, rpp)).orElseThrow(SubjectDataNotFoundException::new);
-        return Optional.of(SubjectLogsMapper.toListDto(subjectModels.get()));
+    public Optional<List<SubjectLogsDto>> findAll(SubjectParamDto params){
+      Optional<List<SubjectModel>> subjectLogsDtos;
+
+      if (params.hasKeyword() || params.hasMandatory())
+      {
+          subjectLogsDtos = Optional.ofNullable(
+                  this.subjectLogGateaway.findByFilter(params.q(),params.isMandatory())
+          ).orElseThrow(SubjectDataNotFoundException::new);
+      }else {
+          subjectLogsDtos = Optional.ofNullable(
+                  this.subjectLogGateaway.findAll(params.page(), params.rpp())
+          ).orElseThrow(SubjectDataNotFoundException::new);
+      }
+
+      return Optional.of(SubjectLogsMapper.toListDto(subjectLogsDtos.get()));
     }
 
     @Override

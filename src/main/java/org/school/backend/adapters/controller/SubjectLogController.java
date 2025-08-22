@@ -1,6 +1,7 @@
 package org.school.backend.adapters.controller;
 
 
+import org.school.backend.application.dto.request.SubjectParamDto;
 import org.school.backend.application.dto.response.SubjectLogsDto;
 import org.school.backend.application.usecases.SubjectLogsUseCase;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,14 @@ public class SubjectLogController extends BaseController{
     }
 
     @RequestMapping(value = "subject/record", method = RequestMethod.GET)
-    public ResponseEntity<?> findAll(@RequestParam(name = "page", defaultValue = "0") int page,
-                                     @RequestParam(name = "rpp", defaultValue = "1") int rpp){
-        return responseDefault.build(subjectReocrdService.findAll(rpp,page).get(),timeStamp, HttpStatus.OK);
+    public ResponseEntity<?> findAll(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "rpp", defaultValue = "10") int rpp,
+            @RequestParam(name = "q", required = false) String q,
+            @RequestParam(name = "isMandatory", required = false) Boolean isMandatory
+    ){
+        SubjectParamDto req = new SubjectParamDto(page,rpp,q, isMandatory);
+        return responseDefault.build(subjectReocrdService.findAll(req).get(),timeStamp, HttpStatus.OK);
 
     }
 

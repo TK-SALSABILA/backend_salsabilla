@@ -22,6 +22,12 @@ public class SubjectDataSourceImpl implements SubjectDataSource {
     {
         return this.subjectLogRepository.findAll(page,rpp);
     }
+
+    @Override
+    public List<SubjectLogs> findByFilter(String subject,Boolean isMandatory) {
+        return this.subjectLogRepository.findByFilter(subject,isMandatory);
+    }
+
     @Override
     public Optional<SubjectLogs> findById(Object id){
         return this.subjectLogRepository.findById(id);
@@ -31,6 +37,7 @@ public class SubjectDataSourceImpl implements SubjectDataSource {
     public void deleteById(Object id){
         this.subjectLogRepository.deleteById(id);
     }
+
     @Override
     public void update(Object id,SubjectLogs record){
         this.subjectLogRepository.update(id,record);

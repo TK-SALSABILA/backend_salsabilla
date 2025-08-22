@@ -3,8 +3,10 @@ package org.school.backend.adapters.datasources.repository.impl;
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.datasources.repository.JpaSubjectRepository;
 import org.school.backend.adapters.datasources.repository.SubjectLogRepository;
+import org.school.backend.adapters.datasources.specification.SubjectSpecification;
 import org.school.backend.adapters.dto.SubjectLogs;
 import org.school.backend.adapters.schema.jpa.SubjectLogJpa;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -40,6 +42,39 @@ public class SubjectLogRepositoryImpl implements SubjectLogRepository {
                             entity.getIsMandatory(),
                             entity.getDescription()
                     )));
+//            case "elasticsearch" -> elasticSearchRepository.findAll()
+//                    .forEach(entity-> results.add(new StudentLogs(
+//                            entity.getId(),
+//                            entity.getFullName(),
+//                            entity.getNickName(),
+//                            entity.getNik(),
+//                            entity.getGender(),
+//                            entity.getDateBirth(),
+//                            entity.getBirthOrder()
+//                    )));
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+        return  results;
+    }
+
+    @Override
+    public List<SubjectLogs> findByFilter(String subject,Boolean isMandatory) {
+        List<SubjectLogs> results = new ArrayList<>();
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> {
+                Specification<SubjectLogJpa> spec=
+                        SubjectSpecification.findSubject(subject)
+                                .and(SubjectSpecification.findMandatory(isMandatory));
+                jpaSubjectRepository.findAll(spec)
+                        .forEach(entity-> results.add(new SubjectLogs(
+                                entity.getId(),
+                                entity.getSubjectName(),
+                                entity.getSubjectCode(),
+                                entity.getGradeLevel(),
+                                entity.getIsMandatory(),
+                                entity.getDescription()
+                        )));
+            }
 //            case "elasticsearch" -> elasticSearchRepository.findAll()
 //                    .forEach(entity-> results.add(new StudentLogs(
 //                            entity.getId(),

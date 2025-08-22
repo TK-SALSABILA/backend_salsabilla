@@ -25,6 +25,11 @@ public class SubjectLogGateawayImpl implements SubjectLogGateaway {
     }
 
     @Override
+    public Optional<List<SubjectModel>> findByFilter(String subject,Boolean isMandatory) {
+        return Optional.of(SubjectLogMapper.convertModelsToEntity(subjectDataSource.findByFilter(subject,isMandatory)));
+    }
+
+    @Override
     public Optional<SubjectModel> findById(Object id){
         return SubjectLogMapper.convertModelToEntity(subjectDataSource.findById(id));
     }
