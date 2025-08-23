@@ -1,9 +1,9 @@
 package org.school.backend.application.usecases.impl;
 
+import org.school.backend.application.dto.request.SavingParamDto;
 import org.school.backend.application.dto.request.SavingRequestDto;
 import org.school.backend.application.dto.response.SavingLogOutputDto;
 import org.school.backend.application.exception.SavingDataNotFoundException;
-import org.school.backend.application.exception.StudentDataNotFoundException;
 import org.school.backend.application.mappers.SavingMapper;
 import org.school.backend.application.usecases.SavingLogsUseCase;
 import org.school.backend.domain.gateaway.SavingLogGateaway;
@@ -31,15 +31,14 @@ public class SavingLogsUseCaseImpl implements SavingLogsUseCase {
     }
 
     @Override
-    public Optional<List<SavingLogOutputDto>> findAll(int page, int rpp) {
-        List<SavingModel> savings = savingLogGateaway.findAll(page, rpp)
-                .orElseThrow(SavingDataNotFoundException::new);
+    public Optional<List<SavingLogOutputDto>> findAll(SavingParamDto params) {
+        List<SavingModel> savings = savingLogGateaway.findSavings(params.page(), params.rpp(), params.q(), params.status(), params.month(), params.classId())
+                .orElseThrow(SavingDataNotFoundException::new); ;
 
         List<SavingLogOutputDto> result = mapLatestSavingToDto(savings);
 
         return Optional.of(result);
     }
-
 
     @Override
     public void create(final SavingRequestDto record) {

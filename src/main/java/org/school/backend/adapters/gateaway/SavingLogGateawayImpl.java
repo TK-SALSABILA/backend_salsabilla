@@ -19,9 +19,15 @@ public class SavingLogGateawayImpl implements SavingLogGateaway {
     public SavingLogGateawayImpl(final SavingDataSource savingDataSource){
         this.savingDataSource = savingDataSource;
     }
+
     @Override
     public Optional<List<SavingModel>> findAll(int page, int rpp) {
         return Optional.of(convertModelsToEntity(savingDataSource.findAll(page,rpp)));
+    }
+
+    @Override
+    public Optional<List<SavingModel>> findSavings(int page, int rpp,String studentName, String status, String month, UUID classId) {
+        return Optional.of(convertModelsToEntity(savingDataSource.findSaving(page, rpp, studentName,status,month,classId)));
     }
 
     @Override

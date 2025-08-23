@@ -22,6 +22,11 @@ public class SavingDataSourceImpl implements SavingDataSource {
     }
 
     @Override
+    public List<SavingLogs> findSaving(int page, int rpp, String studentName, String status, String month, UUID classId) {
+        return savingLogsRepository.findSaving(page, rpp,studentName,status,month,classId);
+    }
+
+    @Override
     public void create(SavingLogReq record) {
         savingLogsRepository.create(record);
     }

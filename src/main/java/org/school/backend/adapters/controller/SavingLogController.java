@@ -1,5 +1,6 @@
 package org.school.backend.adapters.controller;
 
+import org.school.backend.application.dto.request.SavingParamDto;
 import org.school.backend.application.dto.request.SavingRequestDto;
 import org.school.backend.application.usecases.SavingLogsUseCase;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,16 @@ public class SavingLogController extends BaseController {
     }
 
     @RequestMapping(value = "saving/record", method = RequestMethod.GET)
-    public ResponseEntity<?> findAll(@RequestParam(name = "page", defaultValue = "0") int page,
-                                     @RequestParam(name = "rpp", defaultValue = "1") int rpp){
-        return responseDefault.build(savingLogsUseCase.findAll(rpp,page).get(),timeStamp, HttpStatus.OK);
+    public ResponseEntity<?> findAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "rpp", defaultValue = "1") int rpp,
+            @RequestParam(name = "q",required = false) String q,
+            @RequestParam(name = "status",required = false) String status,
+            @RequestParam(name = "month",required = false) String month,
+            @RequestParam(name = "classId",required = false) UUID classId
+    ){
+        SavingParamDto req = new SavingParamDto(page, rpp, q, status, month, classId);
+        return responseDefault.build(savingLogsUseCase.findAll(req).get(),timeStamp, HttpStatus.OK);
 
     }
 

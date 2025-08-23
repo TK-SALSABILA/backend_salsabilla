@@ -4,11 +4,12 @@ import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.datasources.repository.JpaSavingLogsRepository;
 import org.school.backend.adapters.datasources.repository.SavingLogsRepository;
 import org.school.backend.adapters.datasources.repository.StudentLogsRepository;
+import org.school.backend.adapters.datasources.specification.SavingSpecification;
 import org.school.backend.adapters.dto.SavingLogReq;
 import org.school.backend.adapters.dto.SavingLogs;
-import org.school.backend.adapters.dto.StudentDetails;
 import org.school.backend.adapters.dto.StudentLogs;
 import org.school.backend.adapters.schema.jpa.SavingLogJpa;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -82,6 +83,64 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
         return result;
     }
 
+    @Override
+    public List<SavingLogs> findSaving(int page, int rpp, String studentName, String status, String month, UUID classId) {
+        List<SavingLogs> result = new ArrayList<>();
+
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
+            case "postgresql" -> {
+                Specification<SavingLogJpa> spec = SavingSpecification.hasStudentName(studentName)
+                        .and(SavingSpecification.hasStatus(status))
+                        .and(SavingSpecification.hasMonth(month))
+                        .and(SavingSpecification.hasClassId(classId));
+
+                List<SavingLogJpa> filteredLogs = jpaSavingLogsRepository.findAll(spec);
+
+                if (filteredLogs.isEmpty()) {
+                    return result;
+                }
+
+                // Ambil semua studentId dari hasil filter
+                Set<UUID> studentIds = filteredLogs.stream()
+                        .map(SavingLogJpa::getStudentId)
+                        .collect(Collectors.toSet());
+
+                // Batch fetch nama siswa
+                Map<UUID, String> studentNameMap = studentLogsRepository.findAllStudentId(studentIds).stream()
+                        .collect(Collectors.toMap(
+                                StudentLogs::getId,
+                                StudentLogs::getFullName,
+                                (a, b) -> a // handle duplicate key
+                        ));
+
+                // Batch fetch total balance per student
+                Map<UUID, Integer> balanceMap = jpaSavingLogsRepository.sumAmountByStudentIdIn(studentIds).stream()
+                        .collect(Collectors.toMap(
+                                entry -> (UUID) entry[0],
+                                entry -> (Integer) entry[1]
+                        ));
+
+                // Konversi ke DTO
+                for (SavingLogJpa entity : filteredLogs) {
+                    String fullName = studentNameMap.getOrDefault(entity.getStudentId(), "Siswa Tidak Dikenal");
+                    Integer totalAmount = balanceMap.getOrDefault(entity.getStudentId(), 0);
+
+                    result.add(new SavingLogs(
+                            entity.getId(),
+                            entity.getStudentId(),
+                            fullName,
+                            entity.getPaymentType(),
+                            totalAmount,
+                            entity.getTransactionDate(),
+                            entity.getDescription()
+                    ));
+                }
+                return result;
+            }
+            default ->
+                    throw new IllegalArgumentException("Database tidak didukung: " + applicationConfigProperties.getDatabaseDefault());
+        }
+    }
 
     @Override
     public void create(SavingLogReq record) {
