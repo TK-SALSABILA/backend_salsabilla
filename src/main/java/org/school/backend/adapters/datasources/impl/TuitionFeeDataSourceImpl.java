@@ -19,6 +19,11 @@ public class TuitionFeeDataSourceImpl implements TuitionFeeDataSource {
     }
 
     @Override
+    public List<TuitionFeeLogs> findTuition(int page, int rpp, String studentName, String status, String month, UUID classId) {
+        return  this.tuitionFeeRepository.findTuition(page,rpp,studentName,status,month,classId);
+    }
+
+    @Override
     public List<TuitionFeeLogs> findByStudentIdsAndMonthAndStatus(List<UUID> studentIds, String month) {
         return this.tuitionFeeRepository.findByStudentIdsAndMonthAndStatus(studentIds,month);
     }

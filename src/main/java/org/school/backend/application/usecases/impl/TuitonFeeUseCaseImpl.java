@@ -1,5 +1,6 @@
 package org.school.backend.application.usecases.impl;
 
+import org.school.backend.application.dto.request.TuitionParamDto;
 import org.school.backend.application.dto.request.TuitonFeeReqDto;
 import org.school.backend.application.dto.response.StudentsLogsOutputDto;
 import org.school.backend.application.dto.response.TuitonFeeResDto;
@@ -49,6 +50,39 @@ public class TuitonFeeUseCaseImpl implements TuitionFeeUseCase {
         List<TuitionFeeModel> fees = getOrCreateTuitionFees(studentIds, month);
 
         // 4. Mapping ke DTO (bisa dipindah ke mapper layer jika mau lebih clean lagi)
+        return Optional.of(toListDto(fees, studentMap));
+//        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<TuitonFeeResDto>> findTuition(TuitionParamDto param) {
+
+//        System.out.println(param + "params><><><><>");
+
+        // 1. Dapatkan studentId dari classId
+        List<UUID> studentIds = getStudentIdsByClass(param.classId());
+
+        if (studentIds.isEmpty()) {
+            return Optional.of(List.of());
+        }
+
+        // 2. Pastikan ada tuition fee PENDING untuk bulan ini
+        ensureTuitionFeesExist(studentIds, param.month());
+
+        // 3. Ambil semua tuition fee dengan filter (Specification)
+        List<TuitionFeeModel> fees = tuitionFeeLogGateaway.findTuition(
+                param.page(),
+                param.rpp(),
+                param.q(),
+                param.status(),
+                param.month(),
+                param.classId()
+        ).orElse(List.of());
+
+        // 4. Ambil data siswa satu per satu (karena tidak ada findAllById)
+        Map<UUID, StudentsLogsOutputDto> studentMap = buildStudentMap(studentIds);
+
+        // 5. Mapping ke DTO
         return Optional.of(toListDto(fees, studentMap));
     }
 
@@ -130,6 +164,33 @@ public class TuitonFeeUseCaseImpl implements TuitionFeeUseCase {
         }
 
         return allFees;
+    }
+
+    private void ensureTuitionFeesExist(List<UUID> studentIds, String month) {
+        List<TuitionFeeModel> existing = tuitionFeeLogGateaway
+                .findByStudentIdsAndMonthAndStatus(studentIds, month)
+                .orElse(List.of());
+
+        Map<UUID, TuitionFeeModel> existingMap = existing.stream()
+                .collect(Collectors.toMap(TuitionFeeModel::studentId, fee -> fee));
+
+        List<TuitionFeeModel> newPendingFees = studentIds.stream()
+                .filter(id -> !existingMap.containsKey(id))
+                .map(id -> new TuitionFeeModel(
+                        UUID.randomUUID(),
+                        id,
+                        "TUITION",
+                        "INCOMING",
+                        "PENDING",
+                        null,
+                        month,
+                        200000
+                ))
+                .toList();
+
+        if (!newPendingFees.isEmpty()) {
+            tuitionFeeLogGateaway.saveAll(newPendingFees);
+        }
     }
 
 

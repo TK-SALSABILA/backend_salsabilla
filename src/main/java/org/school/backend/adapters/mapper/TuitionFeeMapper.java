@@ -47,7 +47,7 @@ public interface TuitionFeeMapper {
             TuitionFeeModel model = new TuitionFeeModel(
                     entity.getId(),
                     entity.getStudentId(),
-                    null,
+                    entity.getPaymentType(),
                     null,
                     entity.getStatus(),
                     entity.getTransactionDate(),

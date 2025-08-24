@@ -1,6 +1,7 @@
 package org.school.backend.adapters.controller;
 
 import org.school.backend.adapters.dto.TuitionFeeLogReq;
+import org.school.backend.application.dto.request.TuitionParamDto;
 import org.school.backend.application.dto.request.TuitonFeeReqDto;
 import org.school.backend.application.usecases.TuitionFeeUseCase;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,19 @@ public class TuitionFeeLogController extends BaseController{
                 timeStamp,
                 HttpStatus.OK
         );
+    }
+
+    @RequestMapping(value = "/tuition/record",method = RequestMethod.GET)
+    public ResponseEntity<?> findAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "rpp", defaultValue = "1") int rpp,
+            @RequestParam(name = "q",required = false) String q,
+            @RequestParam(name = "status",required = false) String status,
+            @RequestParam(name = "month") String month,
+            @RequestParam(name = "classId") UUID classId
+    ){
+        TuitionParamDto req = new TuitionParamDto(page, rpp, q, status, month, classId);
+        return responseDefault.build(tuitionFeeUseCase.findTuition(req),timeStamp,HttpStatus.OK);
     }
 
     @RequestMapping(value = "tuition/create", method = RequestMethod.POST)

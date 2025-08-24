@@ -16,5 +16,6 @@ public class TuitionFeeLogs {
     String month;
     Integer amount;
     String status;
+    String paymentType;
     LocalDateTime transactionDate;
 }

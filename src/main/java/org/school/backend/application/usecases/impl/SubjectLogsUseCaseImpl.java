@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-public class SubjectLogsUseCaseImpl implements SubjectLogsUseCase {
+public class  SubjectLogsUseCaseImpl implements SubjectLogsUseCase {
 
     private final SubjectLogGateaway subjectLogGateaway;
 

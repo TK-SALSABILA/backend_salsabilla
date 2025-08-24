@@ -2,13 +2,11 @@ package org.school.backend.adapters.datasources.repository.impl;
 
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.datasources.repository.*;
-import org.school.backend.adapters.dto.SavingLogs;
-import org.school.backend.adapters.dto.StudentDetails;
+import org.school.backend.adapters.datasources.specification.TuitionSpecification;
 import org.school.backend.adapters.dto.TuitionFeeLogReq;
 import org.school.backend.adapters.dto.TuitionFeeLogs;
-import org.school.backend.adapters.schema.jpa.SavingLogJpa;
-import org.school.backend.adapters.schema.jpa.StudentGradeJpa;
 import org.school.backend.adapters.schema.jpa.TuitionFeeJpa;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -34,6 +32,36 @@ public class TuitionFeeRepositoryImpl implements TuitionFeeRepository {
     }
 
     @Override
+    public List<TuitionFeeLogs> findTuition(int page, int rpp, String studentName, String status, String month, UUID classId) {
+        List<TuitionFeeLogs> result = new ArrayList<>();
+
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> {
+                Specification<TuitionFeeJpa> spec = TuitionSpecification.hasStudentName(studentName)
+                        .and(TuitionSpecification.hasStatus(status))
+                        .and(TuitionSpecification.hasMonth(month))
+                        .and(TuitionSpecification.hasClassId(classId));
+
+                jpaTuitionFeeRepository.findAll(spec)
+                        .forEach(entity -> result.add(new TuitionFeeLogs(
+                                entity.getId(),
+                                entity.getStudentId(),
+                                entity.getMonth(),
+                                entity.getAmount(),
+                                entity.getStatus(),
+                                entity.getPaymentType(),
+                                entity.getTransactionDate()
+                        )));
+            }
+
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+//        System.out.println(result + "results");
+
+        return (result);
+    }
+
+    @Override
     public List<TuitionFeeLogs> findByStudentIdsAndMonthAndStatus(List<UUID> studentIds, String month) {
         List<TuitionFeeLogs> result = new ArrayList<>();
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
@@ -44,6 +72,7 @@ public class TuitionFeeRepositoryImpl implements TuitionFeeRepository {
                             entity.getMonth(),
                             entity.getAmount(),
                             entity.getStatus(),
+                            entity.getPaymentType(),
                             entity.getTransactionDate()
                     )));
 

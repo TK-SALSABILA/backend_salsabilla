@@ -15,10 +15,17 @@ import static org.school.backend.adapters.mapper.TuitionFeeMapper.convertModelsT
 
 @Component
 public class TuitionFeeLogGateawayImpl implements TuitionFeeLogGateaway {
+
     final TuitionFeeDataSource tuitionFeeDataSource;
 
     public TuitionFeeLogGateawayImpl(final TuitionFeeDataSource tuitionFeeDataSource){
         this.tuitionFeeDataSource = tuitionFeeDataSource;
+    }
+
+    @Override
+    public Optional<List<TuitionFeeModel>> findTuition(int page, int rpp, String studentName, String status, String month, UUID classId) {
+        return Optional.of(convertModelsToEntity(tuitionFeeDataSource.findTuition(page,rpp,studentName,status,month,classId)));
+
     }
 
     @Override
