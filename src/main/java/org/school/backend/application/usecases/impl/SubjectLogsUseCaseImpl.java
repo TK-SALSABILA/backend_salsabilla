@@ -29,18 +29,10 @@ public class  SubjectLogsUseCaseImpl implements SubjectLogsUseCase {
     @Override
     public Optional<List<SubjectLogsDto>> findAll(SubjectParamDto params){
         logger.info("[subject use case] - Method Find All Started: {} ", params.toString());
-      Optional<List<SubjectModel>> subjectLogsDtos;
+      Optional<List<SubjectModel>> subjectLogsDtos = Optional.ofNullable(
+                  this.subjectLogGateaway.getSubject(params.page(), params.rpp(),params.q(),params.isMandatory())
+          ).orElseThrow(SubjectDataNotFoundException::new);
 
-      if (params.hasKeyword() || params.hasMandatory())
-      {
-          subjectLogsDtos = Optional.ofNullable(
-                  this.subjectLogGateaway.findByFilter(params.q(),params.isMandatory())
-          ).orElseThrow(SubjectDataNotFoundException::new);
-      }else {
-          subjectLogsDtos = Optional.ofNullable(
-                  this.subjectLogGateaway.findAll(params.page(), params.rpp())
-          ).orElseThrow(SubjectDataNotFoundException::new);
-      }
 
       return Optional.of(SubjectLogsMapper.toListDto(subjectLogsDtos.get()));
     }

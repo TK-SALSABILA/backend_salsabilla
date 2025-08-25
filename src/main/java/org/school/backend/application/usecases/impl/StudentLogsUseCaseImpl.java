@@ -33,17 +33,10 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
     @Override
     public Optional<List<StudentsLogsOutputDto>> findAll(StudentParamDto params) {
         logger.info("[student use case] - Method Find All Started: {} ", params.toString());
-        Optional<List<StudentModel>> studentModels;
+        Optional<List<StudentModel>> studentModels = Optional.ofNullable(
+                    this.studentLogGateaway.getStudent(params.page(), params.rpp(), params.q(), params.classId())
+            ).orElseThrow(StudentDataNotFoundException::new);
 
-        if (params.hasAnyFilter()) {
-            studentModels = Optional.ofNullable(
-                    this.studentLogGateaway.findByFilter(params.q(), params.classId())
-            ).orElseThrow(StudentDataNotFoundException::new);
-        } else {
-            studentModels = Optional.ofNullable(
-                    this.studentLogGateaway.findAll(params.rpp(), params.page())
-            ).orElseThrow(StudentDataNotFoundException::new);
-        }
 
         return Optional.of(StudentLogsMapper.toListDto(studentModels.get()));
     }

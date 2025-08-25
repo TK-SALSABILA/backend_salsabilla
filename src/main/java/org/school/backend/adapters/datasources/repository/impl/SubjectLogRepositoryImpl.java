@@ -58,7 +58,7 @@ public class SubjectLogRepositoryImpl implements SubjectLogRepository {
     }
 
     @Override
-    public List<SubjectLogs> findByFilter(String subject,Boolean isMandatory) {
+    public List<SubjectLogs> getSubject(int page, int rpp,String subject,Boolean isMandatory) {
         List<SubjectLogs> results = new ArrayList<>();
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case "postgresql" -> {

@@ -7,7 +7,7 @@ import java.util.Optional;;
 
 public interface SubjectLogRepository {
     List<SubjectLogs> findAll(int page, int rpp);
-    List<SubjectLogs> findByFilter(String subject,Boolean isMandatory);
+    List<SubjectLogs> getSubject(int page, int rpp,String subject,Boolean isMandatory);
     Optional<SubjectLogs> findById(Object id);
     void deleteById(Object id);
     void update(Object id,SubjectLogs record);

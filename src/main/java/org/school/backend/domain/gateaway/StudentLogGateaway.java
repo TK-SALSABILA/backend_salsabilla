@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface StudentLogGateaway {
     Optional<List<StudentModel>> findAll(int page, int rpp);
-    Optional<List<StudentModel>> findByFilter(String student,UUID classId);
+    Optional<List<StudentModel>> getStudent(int page, int rpp, String student,UUID classId);
     Optional<StudentModel> findById(Object id);
     void create(StudentModel record);
     void update(Object id,StudentModel record);

@@ -25,8 +25,8 @@ public class StudentDataSourceImpl implements StudentDataSource {
     }
 
     @Override
-    public List<StudentLogs> findByFilter(String studentName, UUID classId){
-        return studentLogsRepository.findByFilter(studentName,classId);
+    public List<StudentLogs> getStudent(int page, int rpp, String studentName, UUID classId){
+        return studentLogsRepository.getStudent(page,rpp,studentName,classId);
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface SubjectLogGateaway {
     Optional<List<SubjectModel>> findAll (int page, int rpp);
-    Optional<List<SubjectModel>> findByFilter (String subject,Boolean isMandatory);
+    Optional<List<SubjectModel>> getSubject (int page, int rpp, String subject,Boolean isMandatory);
     Optional<SubjectModel> findById(Object id);
     void deleteById(Object id);
     void update(Object id,SubjectModel record);

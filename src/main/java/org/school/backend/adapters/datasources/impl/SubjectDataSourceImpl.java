@@ -24,8 +24,8 @@ public class SubjectDataSourceImpl implements SubjectDataSource {
     }
 
     @Override
-    public List<SubjectLogs> findByFilter(String subject,Boolean isMandatory) {
-        return this.subjectLogRepository.findByFilter(subject,isMandatory);
+    public List<SubjectLogs> getSubject(int page,int rpp,String subject,Boolean isMandatory) {
+        return this.subjectLogRepository.getSubject(page, rpp,subject,isMandatory);
     }
 
     @Override

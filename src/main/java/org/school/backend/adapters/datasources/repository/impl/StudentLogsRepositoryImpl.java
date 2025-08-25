@@ -100,7 +100,7 @@ public class StudentLogsRepositoryImpl implements StudentLogsRepository {
     }
 
     @Override
-    public List<StudentLogs> findByFilter(String studentName, UUID classId) {
+    public List<StudentLogs> getStudent(int page, int rpp, String studentName, UUID classId) {
         List<StudentLogs> results = new ArrayList<>();
         List<UUID> studentIds;
         if (classId != null) {
