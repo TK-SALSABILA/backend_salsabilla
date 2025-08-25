@@ -9,6 +9,7 @@ import org.school.backend.application.mappers.StudentDetailMapper;
 import org.school.backend.application.mappers.StudentLogsMapper;
 import org.school.backend.application.mappers.StudentRequestMapper;
 import org.school.backend.application.usecases.StudentLogsUseCase;
+import org.school.backend.domain.gateaway.LoggerGateway;
 import org.school.backend.domain.gateaway.ParentLogGateaway;
 import org.school.backend.domain.gateaway.StudentLogGateaway;
 import org.school.backend.domain.model.StudentModel;
@@ -22,13 +23,16 @@ import static org.school.backend.application.utils.DateTimeFormatterConfig.parse
 public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
 
     private final StudentLogGateaway studentLogGateaway;
+    private final LoggerGateway logger;
 
-    public StudentLogsUseCaseImpl(final StudentLogGateaway studentLogGateaway, final ParentLogGateaway parentLogGateaway ){
+    public StudentLogsUseCaseImpl(final StudentLogGateaway studentLogGateaway, final LoggerGateway logger){
+        this.logger = logger;
         this.studentLogGateaway = studentLogGateaway;
     }
 
     @Override
     public Optional<List<StudentsLogsOutputDto>> findAll(StudentParamDto params) {
+        logger.info("[student use case] - Method Find All Started: {} ", params.toString());
         Optional<List<StudentModel>> studentModels;
 
         if (params.hasAnyFilter()) {
@@ -46,19 +50,28 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
 
     @Override
     public Optional<StudentDetailsDto> findById(UUID id){
+        logger.info("[student use case] - Method Find By Id Started: {} ", id.toString());
+
         StudentModel studentModel = studentLogGateaway.findById(id)
                 .orElseThrow(() -> new StudentDataNotFoundException("Student with id not found"));
+
+        logger.info("[student use case] - Find By Id response: {} ", studentModel.toString());
+
         return Optional.of(StudentDetailMapper.toDto(studentModel));
     }
 
     @Override
     public void create(StudentRequestDto record){
+        logger.info("[student use case] - Method Create  Started: {} ", record.toString());
+
         StudentModel studentRecord = StudentRequestMapper.toModel(record);
         this.studentLogGateaway.create(studentRecord);
     }
 
     @Override
     public void updateStudent(Object id,StudentDetailsDto record) {
+        logger.info("[student use case] - Method Update  Started: {} ", record.toString());
+
             StudentModel existing = studentLogGateaway.findById(id).orElseThrow(() -> new StudentDataNotFoundException("student not found"));
 
             StudentModel updated = new StudentModel(
@@ -76,6 +89,9 @@ public class StudentLogsUseCaseImpl implements StudentLogsUseCase {
                     null,
                     null
             );
+
+            logger.info("[student use case] - Updated response: {} ", updated.toString());
+
 
             studentLogGateaway.update(id,updated);
 

@@ -31,32 +31,35 @@ public class ComponentConfiguration {
     @Autowired
     TuitionFeeLogGateaway tuitionFeeRecordRepository;
 
+    @Autowired
+    LoggerGateway loggerGateway;
+
 //    @Autowireds
 //    StudentGradeLogGateAway graderRecordsRepository;
 
     @Bean
     public StudentLogsUseCase studentService(){
-        return new StudentLogsUseCaseImpl(studentRecordsRepository, parentRecordRepository);
+        return new StudentLogsUseCaseImpl(studentRecordsRepository, loggerGateway );
     }
 
     @Bean
-    public ParentUseCase parentService(){return new ParentUseCaseImpl(parentRecordRepository);}
+    public ParentUseCase parentService(){return new ParentUseCaseImpl(parentRecordRepository,loggerGateway);}
 
     @Bean
     public SubjectLogsUseCase subjectService(){
-        return new SubjectLogsUseCaseImpl(subjectRecordRepository);
+        return new SubjectLogsUseCaseImpl(subjectRecordRepository,loggerGateway);
     }
 
     @Bean
-    public GradeUseCase gradeService(){return new GradeUseCaseImpl(gradeRecordRepository);
+    public GradeUseCase gradeService(){return new GradeUseCaseImpl(gradeRecordRepository,loggerGateway);
     }
 
     @Bean
-    public SavingLogsUseCase savingService(){return new SavingLogsUseCaseImpl(savingRecordRepository,studentRecordsRepository);
+    public SavingLogsUseCase savingService(){return new SavingLogsUseCaseImpl(savingRecordRepository,studentRecordsRepository,loggerGateway);
     }
 
     @Bean
-    public TuitionFeeUseCase tuitionFeeService(){return new TuitonFeeUseCaseImpl(tuitionFeeRecordRepository,gradeStudentLogRepository,studentRecordsRepository,savingRecordRepository);};
+    public TuitionFeeUseCase tuitionFeeService(){return new TuitonFeeUseCaseImpl(tuitionFeeRecordRepository,gradeStudentLogRepository,studentRecordsRepository,savingRecordRepository,loggerGateway);};
 
 //    @Bean
 //    public StudentGradeUseCase gradeService(){return new StudentGradeUseCaseImpl(graderRecordsRepository);

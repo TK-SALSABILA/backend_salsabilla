@@ -4,6 +4,7 @@ import org.school.backend.application.dto.ParentDto;
 import org.school.backend.application.exception.ParentDataNotFoundException;
 import org.school.backend.application.mappers.ParentMapper;
 import org.school.backend.application.usecases.ParentUseCase;
+import org.school.backend.domain.gateaway.LoggerGateway;
 import org.school.backend.domain.gateaway.ParentLogGateaway;
 import org.school.backend.domain.model.ParentModel;
 
@@ -15,20 +16,29 @@ import static org.school.backend.application.utils.DateTimeFormatterConfig.parse
 public class ParentUseCaseImpl implements ParentUseCase {
 
     private final ParentLogGateaway parentLogGateaway;
+    private final LoggerGateway logger;
 
-    public ParentUseCaseImpl(final ParentLogGateaway parentLogGateaway){
+    public ParentUseCaseImpl(final ParentLogGateaway parentLogGateaway, final LoggerGateway logger){
         this.parentLogGateaway = parentLogGateaway;
+        this.logger = logger;
     }
 
     @Override
     public Optional<ParentDto> findByStudentId(UUID id){
+        logger.info("[parent use case] - Method find by student id  Started: {} ", id.toString());
+
         ParentModel parentModel = parentLogGateaway.findByStudentId(id)
                 .orElseThrow(() -> new ParentDataNotFoundException("student with id not found"));
+
+        logger.info("[parent use case] - Find By Student Id Response: {} ", parentModel.toString());
+
         return Optional.of(ParentMapper.toDto(parentModel));
     }
 
     @Override
     public void updateByStudentId(Object id, ParentDto record) {
+        logger.info("[parent use case] - Method update Started: {} ", record.toString());
+
         ParentModel existing = parentLogGateaway.findByStudentId(id)
                 .orElseThrow(() -> new ParentDataNotFoundException("student with id not found"));
 
@@ -54,6 +64,8 @@ public class ParentUseCaseImpl implements ParentUseCase {
                 record.motherAddress() != null ? record.motherAddress() : existing.motherAddress(),
                 record.motherPhone() != null ? record.motherPhone() : existing.motherPhone()
         );
+
+        logger.info("[parent use case] - Updated response: {} ", updated.toString());
 
         parentLogGateaway.update(id,updated);
     }
