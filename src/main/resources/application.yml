@@ -6,9 +6,9 @@ spring:
       mode: always
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/dockerdb
+    url: jdbc:postgresql://postgres:5432/dockerdb
     username: postgres
-    password: Fauzan2468
+    password: password
   jpa:
     properties:
       hibernate:
