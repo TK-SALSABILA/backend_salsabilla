@@ -32,6 +32,7 @@ public class TuitionFeeLogController extends BaseController{
         );
     }
 
+
     @RequestMapping(value = "/tuition/record",method = RequestMethod.GET)
     public ResponseEntity<?> findAll(
             @RequestParam(name = "page", defaultValue = "0") int page,
