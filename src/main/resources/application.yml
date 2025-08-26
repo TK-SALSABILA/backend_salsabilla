@@ -4,9 +4,9 @@ spring:
   sql.init.mode: always
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres:5432/dockerdb
+    url: jdbc:postgresql://localhost:5432/dockerdb
     username: postgres
-    password: password
+    password: Fauzan2468
   jpa:
     properties:
       hibernate:
