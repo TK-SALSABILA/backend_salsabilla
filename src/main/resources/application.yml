@@ -1,9 +1,7 @@
 spring:
   codec:
-    max-in-memory-size: 100MB
-  sql:
-    init:
-      mode: always
+    max-in-memory-size=100MB:
+  sql.init.mode: always
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://postgres:5432/dockerdb
@@ -13,9 +11,9 @@ spring:
     properties:
       hibernate:
         boot:
-          allow_jdbc_metadata_access: false
+          allow_jdbc_metadata_access=false:
     repositories:
-      enabled: true
+      enabled=true:
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -23,12 +21,9 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
-
 server:
-  port: 8080
-
+  port : 8080
 database:
   default: postgresql
-
 elasticsearch:
   url: localhost:9200
