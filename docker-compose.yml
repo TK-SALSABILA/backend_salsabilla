@@ -2,13 +2,15 @@ services:
   postgres:
     image: postgres:13-alpine
     environment:
-      POSTGRES_USER: admin_salsabilla
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: BY9j1Z30UPeIg66yhw8o
       POSTGRES_DB: dockerdb
-#    ports:
-#      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    # ports:
+    #   - "5432:5432"  # KOMENTARI UNTUK KEAMANAN
+    restart: unless-stopped
+
   app:
     container_name: backend-app
     image: backend-app
@@ -19,7 +21,9 @@ services:
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/dockerdb
-      SPRING_DATASOURCE_USERNAME: admin_salsabilla
+      SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: BY9j1Z30UPeIg66yhw8o
+    restart: unless-stopped
+
 volumes:
   postgres-data:
