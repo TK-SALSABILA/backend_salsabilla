@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- Parameter: Nama aplikasi & lokasi folder log -->
-    <property name="LOG_DIR" value="./logs/app" />
+    <property name="LOG_DIR" value="/logs/app" />
     <property name="APP_NAME" value="school-backend" />
+
+    <!-- NONAKTIFKAN WARNING PAGENOTFOUND -->
+    <logger name="org.springframework.web.servlet.PageNotFound" level="ERROR" />
 
     <!-- Membuat folder logs/app jika belum ada -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
