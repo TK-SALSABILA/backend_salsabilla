@@ -40,17 +40,14 @@ public class ClerkAuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        // ✅ Izinkan preflight request tanpa cek token
-        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
-            res.setStatus(HttpServletResponse.SC_OK);
-            // tambahkan header CORS biar aman
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-            res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-            return;
-        }
+//        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+//            res.setStatus(HttpServletResponse.SC_OK);
+//            res.setHeader("Access-Control-Allow-Origin", "*");
+//            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//            res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+//            return;
+//        }
 
-        // ambil semua header
         Map<String, List<String>> headers = new HashMap<>();
         Enumeration<String> headerNames = req.getHeaderNames();
         while (headerNames.hasMoreElements()) {
@@ -68,7 +65,7 @@ public class ClerkAuthFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            res.setHeader("Access-Control-Allow-Origin", "*"); // biar frontend tetap bisa baca responsenya
+            res.setHeader("Access-Control-Allow-Origin", "*");
             String payload = String.format(
                     "{\"error\": \"Unauthorized\", \"reason\": \"%s\"}",
                     requestState.reason()
