@@ -27,7 +27,7 @@ public class SecurityConfig {
 
             if (origin != null && (
                     origin.equals("http://localhost:3000") ||
-                            origin.equals("https://dashboard-frontend-jic8r9dt9-itsupportsalsabillas-projects.vercel.app")
+                            origin.equals("https://dashboard-frontend-five-omega.vercel.app")
             )) {
                 res.setHeader("Access-Control-Allow-Origin", origin);
             }
