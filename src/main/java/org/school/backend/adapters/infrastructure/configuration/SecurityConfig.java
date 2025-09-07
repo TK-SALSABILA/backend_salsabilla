@@ -23,9 +23,15 @@ public class SecurityConfig {
         registrationBean.setFilter((request, response, chain) -> {
             HttpServletResponse res = (HttpServletResponse) response;
             HttpServletRequest req = (HttpServletRequest) request;
+            String origin = req.getHeader("Origin");
 
-            res.setHeader("Access-Control-Allow-Origin", "https://dashboard-frontend-five-omega.vercel.app");
-            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            if (origin != null && (
+                    origin.equals("http://localhost:3000") ||
+                            origin.equals("https://dashboard-frontend-jic8r9dt9-itsupportsalsabillas-projects.vercel.app")
+            )) {
+                res.setHeader("Access-Control-Allow-Origin", origin);
+            }
+//            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
             res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
             res.setHeader("Access-Control-Allow-Credentials", "true");
 
