@@ -40,13 +40,6 @@ public class ClerkAuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-//        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
-//            res.setStatus(HttpServletResponse.SC_OK);
-//            res.setHeader("Access-Control-Allow-Origin", "*");
-//            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//            res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-//            return;
-//        }
 
         Map<String, List<String>> headers = new HashMap<>();
         Enumeration<String> headerNames = req.getHeaderNames();
@@ -71,7 +64,6 @@ public class ClerkAuthFilter implements Filter {
                     requestState.reason()
             );
             logger.warn(payload);
-            res.getWriter().write(payload);
         }
     }
 
