@@ -4,6 +4,7 @@ import org.school.backend.domain.model.StudentModel;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 public interface StudentLogGateaway {
@@ -12,5 +13,6 @@ public interface StudentLogGateaway {
     Optional<StudentModel> findById(Object id);
     void create(StudentModel record);
     void update(Object id,StudentModel record);
+    List<StudentModel> findAllById(Set<UUID> id);
 
 }

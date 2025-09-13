@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -42,5 +43,10 @@ public class StudentDataSourceImpl implements StudentDataSource {
     @Override
     public void update(Object id, StudentDetails record) {
         studentLogsRepository.update(id, record);
+    }
+
+    @Override
+    public List<StudentLogs> findAllStudentId(Set<UUID> id) {
+        return studentLogsRepository.findAllStudentId(id);
     }
 }

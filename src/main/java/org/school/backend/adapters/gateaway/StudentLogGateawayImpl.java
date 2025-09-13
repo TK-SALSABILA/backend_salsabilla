@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.school.backend.adapters.mapper.StudentRecordEntityMapper.*;
+import static org.school.backend.adapters.mapper.StudentRecordEntityMapper.convertModelsToEntity;
 
 @Component
 public class StudentLogGateawayImpl implements StudentLogGateaway {
@@ -45,5 +47,10 @@ public class StudentLogGateawayImpl implements StudentLogGateaway {
     public void update(Object id, StudentModel record) {
         StudentDetails data = convertEntityToModelsDetails(record);
         studentRecordDataSource.update(id,data);
+    }
+
+    @Override
+    public List<StudentModel> findAllById(Set<UUID> id) {
+        return convertModelsToEntity(studentRecordDataSource.findAllStudentId(id));
     }
 }

@@ -32,6 +32,9 @@ public class ComponentConfiguration {
     TuitionFeeLogGateaway tuitionFeeRecordRepository;
 
     @Autowired
+    OperationalFeeGateway operationalFeeRecordRepository;
+
+    @Autowired
     LoggerGateway loggerGateway;
 
 //    @Autowireds
@@ -60,6 +63,9 @@ public class ComponentConfiguration {
 
     @Bean
     public TuitionFeeUseCase tuitionFeeService(){return new TuitonFeeUseCaseImpl(tuitionFeeRecordRepository,gradeStudentLogRepository,studentRecordsRepository,savingRecordRepository,loggerGateway);};
+
+    @Bean
+    public OperationalFeeUseCase operationalFeeService(){return new OperationalFeeUseCaseImpl(operationalFeeRecordRepository,studentRecordsRepository,loggerGateway);}
 
 //    @Bean
 //    public StudentGradeUseCase gradeService(){return new StudentGradeUseCaseImpl(graderRecordsRepository);

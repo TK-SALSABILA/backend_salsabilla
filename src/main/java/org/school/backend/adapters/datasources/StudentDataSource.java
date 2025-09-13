@@ -6,6 +6,7 @@ import org.school.backend.adapters.dto.StudentRequest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 public interface StudentDataSource {
@@ -14,5 +15,5 @@ public interface StudentDataSource {
     Optional<StudentDetails> findById(Object id);
     void create(StudentRequest record);
     void update(Object id, StudentDetails record);
-
+    List<StudentLogs> findAllStudentId(Set<UUID> id);
 }
