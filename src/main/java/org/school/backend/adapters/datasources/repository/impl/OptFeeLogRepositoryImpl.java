@@ -45,6 +45,7 @@ public class OptFeeLogRepositoryImpl implements OptFeeLogRepository {
                                 entity.getStudentId(),
                                 entity.getPaymentType(),
                                 entity.getAmount(),
+                                entity.getStatus(),
                                 entity.getTransactionDate(),
                                 entity.getDescription()
                         )));
@@ -66,6 +67,7 @@ public class OptFeeLogRepositoryImpl implements OptFeeLogRepository {
                         record.transactionDate,
                         record.amount,
                         record.description,
+                        record.status,
                         record.studentId
                 );
                 jpaOptFeeRepository.save(feeData);

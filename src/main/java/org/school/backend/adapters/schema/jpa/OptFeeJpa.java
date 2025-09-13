@@ -38,6 +38,9 @@ public class OptFeeJpa {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "STATUS")
+    private String status;
+
     @Column(name = "STUDENT_ID")
     private UUID studentId;
 
@@ -47,6 +50,7 @@ public class OptFeeJpa {
             LocalDateTime transactionDate,
             Integer amount,
             String description,
+            String status,
             UUID studentId
     ){
         this.paymentType = paymentType;
@@ -54,6 +58,7 @@ public class OptFeeJpa {
         this.transactionDate = transactionDate;
         this.amount = amount;
         this.description = description;
+        this.status = status;
         this.studentId =studentId;
     }
 }

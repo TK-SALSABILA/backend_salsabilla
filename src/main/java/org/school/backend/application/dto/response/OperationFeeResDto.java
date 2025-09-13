@@ -14,7 +14,8 @@ public record OperationFeeResDto(
         String paymentType,
         Integer totalAmount,
         String transactionDate,
-        String description
+        String description,
+        String status
 ) implements Serializable {
 
 

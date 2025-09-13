@@ -20,6 +20,7 @@ public interface OptFeeMapper {
                 .transactionType(entity.transactionType())
                 .amount(entity.amount())
                 .description(entity.description())
+                .status(entity.status())
                 .transactionDate(entity.transactionDate())
                 .build();
     }
@@ -34,6 +35,7 @@ public interface OptFeeMapper {
                     entity.getPaymentType(),
                     null,
                     entity.getDescription(),
+                    entity.getStatus(),
                     entity.getTransactionDate(),
                     entity.getAmount()
             );

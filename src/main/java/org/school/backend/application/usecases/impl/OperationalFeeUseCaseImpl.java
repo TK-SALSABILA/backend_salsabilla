@@ -66,6 +66,7 @@ public class OperationalFeeUseCaseImpl implements OperationalFeeUseCase {
                 record.paymentType(),
                 record.transactionType(),
                 record.description(),
+                "LUNAS",
                 parseDate(record.transactionDate()),
                 record.amount()
 

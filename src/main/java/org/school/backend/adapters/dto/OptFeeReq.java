@@ -16,5 +16,6 @@ public class OptFeeReq {
     public String transactionType;
     public Integer amount;
     public String description;
+    public String status;
     public LocalDateTime transactionDate;
 }

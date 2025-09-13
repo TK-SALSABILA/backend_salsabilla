@@ -15,6 +15,7 @@ public class OptFeeLogs {
     UUID studentId;
     String paymentType;
     Integer amount;
+    String status;
     LocalDateTime transactionDate;
     String description;
 }

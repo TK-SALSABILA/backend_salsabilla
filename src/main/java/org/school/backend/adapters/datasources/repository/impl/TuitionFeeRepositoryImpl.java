@@ -56,7 +56,6 @@ public class TuitionFeeRepositoryImpl implements TuitionFeeRepository {
 
             default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
         }
-//        System.out.println(result + "results");
 
         return (result);
     }

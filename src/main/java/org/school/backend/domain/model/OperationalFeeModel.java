@@ -10,6 +10,7 @@ public record OperationalFeeModel(
         String paymentType,
         String transactionType,
         String description,
+        String status,
         LocalDateTime transactionDate,
         Integer amount
 ) implements Serializable {
@@ -21,10 +22,11 @@ public record OperationalFeeModel(
             String paymentType,
             String transactionType,
             String description,
+            String status,
             LocalDateTime transactionDate,
             Integer amount
     ){
-        this(null, studentId, paymentType, transactionType, description, transactionDate, amount);
+        this(null, studentId, paymentType, transactionType, description,status, transactionDate, amount);
     }
 
 }

@@ -16,7 +16,8 @@ public class OptfeeMapper {
                 entities.paymentType(),
                 entities.amount(),
                 toStringFormat(entities.transactionDate()),
-                entities.description()
+                entities.description(),
+                entities.status()
         );
     }
 }
