@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- Parameter: Nama aplikasi & lokasi folder log -->
-    <property name="LOG_DIR" value="/logs/app" />
+    <property name="LOG_DIR" value="logs/app" />
     <property name="APP_NAME" value="school-backend" />
 
     <!-- NONAKTIFKAN WARNING PAGENOTFOUND -->
