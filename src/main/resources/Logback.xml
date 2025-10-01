@@ -1,54 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- Parameter: Nama aplikasi & lokasi folder log -->
-    <property name="LOG_DIR" value="logs/app" />
     <property name="APP_NAME" value="school-backend" />
 
-    <!-- NONAKTIFKAN WARNING PAGENOTFOUND -->
+    <!-- Nonaktifkan warning PageNotFound -->
     <logger name="org.springframework.web.servlet.PageNotFound" level="ERROR" />
 
-    <!-- Membuat folder logs/app jika belum ada -->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- Lokasi file log utama -->
-        <file>${LOG_DIR}/${APP_NAME}.log</file>
-
-        <!-- Konfigurasi rotasi -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- Pola nama file saat di-rotate: nama.log.yyyy-MM-dd.HH-mm-ss.zip atau .log -->
-            <fileNamePattern>${LOG_DIR}/${APP_NAME}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-
-            <!-- Rotasi maksimal 5MB per file -->
-            <maxFileSize>5MB</maxFileSize>
-
-            <!-- Simpan maksimal 30 hari log -->
-            <maxHistory>30</maxHistory>
-
-            <!-- Total ukuran maksimum semua file log (opsional) -->
-            <totalSizeCap>1GB</totalSizeCap>
-
-            <!-- Jika melebihi 5MB, mulai rotate -->
-            <cleanHistoryOnStart>false</cleanHistoryOnStart>
-        </rollingPolicy>
-
-        <!-- Format log -->
+    <!-- Console Appender (untuk Docker) -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
+    <!-- Logger aplikasi Anda -->
     <logger name="org.school.backend" level="INFO" additivity="false">
-        <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" />
     </logger>
 
+    <!-- Root logger -->
     <root level="INFO">
-        <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
