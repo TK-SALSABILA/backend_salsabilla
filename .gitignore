@@ -38,4 +38,4 @@ logs/
 **/logs/
 **/*.log
 
-env.properties
+src/main/resources/env.properties

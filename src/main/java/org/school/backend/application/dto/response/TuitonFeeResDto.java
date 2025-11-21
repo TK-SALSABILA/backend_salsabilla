@@ -16,14 +16,4 @@ public record TuitonFeeResDto(
         String paymentDate,
         StudentsLogsOutputDto student
 ) implements Serializable {
-//    public TuitonFeeResDto(TuitionFeeModel entities){
-//        this(
-//                entities.id(),
-//                toStringFormat(entities.transactionDate()),
-//                entities.amount(),
-//                entities.status(),
-//                toStringFormat(entities.transactionDate()),
-//                entities.
-//        );
-//    }
 }

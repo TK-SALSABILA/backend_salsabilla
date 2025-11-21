@@ -2,10 +2,12 @@ package org.school.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @SpringBootApplication
+@PropertySource("classpath:env.properties")
 public class BackendApplication {
 
 	public static void main(String[] args) {
