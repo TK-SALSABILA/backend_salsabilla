@@ -1,5 +1,6 @@
 package org.school.backend.adapters.controller;
 
+import org.school.backend.application.dto.request.ActivityPaymentRequest;
 import org.school.backend.application.dto.request.ActivityRequestDto;
 import org.school.backend.application.usecases.ActivityStudentParticipantUseCase;
 import org.school.backend.application.usecases.ActivityUseCase;
@@ -44,6 +45,12 @@ public class ActivityController extends BaseController {
     @RequestMapping(value = "activity/create",method = RequestMethod.POST)
     public ResponseEntity<?> createActivity( @RequestBody ActivityRequestDto request){
         activityUseCase.createActivity(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Activity Student record created successfully");
+        return responseDefault.meta(HttpStatus.CREATED, "Activity Student record created successfully");
+    }
+
+    @RequestMapping(value = "activity/student/payment",method = RequestMethod.POST)
+    public ResponseEntity<?> createPayment( @RequestBody  ActivityPaymentRequest request){
+        activityStudentParticipantUseCase.createPaymentStudent(request);
+        return responseDefault.meta(HttpStatus.CREATED,"Student Already Paid");
     }
 }

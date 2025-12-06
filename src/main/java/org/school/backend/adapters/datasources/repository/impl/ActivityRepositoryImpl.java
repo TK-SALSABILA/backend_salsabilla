@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class ActivityRepositoryImpl implements ActivityRepository {
@@ -72,6 +74,20 @@ public class ActivityRepositoryImpl implements ActivityRepository {
                 );
             }
             default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+    }
+
+    @Override
+    public void updateActivity(UUID activityId, int amount) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()) {
+            case "postgresql" -> {
+                ActivityJpa data = jpaActivityRepository.findById(activityId)
+                        .orElseThrow(() -> new IllegalArgumentException("Activity not found"));
+
+                data.setTotalFundRaised(data.getTotalFundRaised() + amount);
+                jpaActivityRepository.save(data);
+            }
+            default -> throw new UnsupportedOperationException("Database not supported");
         }
     }
 }

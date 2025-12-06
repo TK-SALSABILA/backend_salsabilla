@@ -73,4 +73,15 @@ public class ResponseBuilderImpl implements ResponseBuilder {
 
         return new ResponseEntity<>(response, status);
     }
+
+    public ResponseEntity<Object> meta(HttpStatus status,String message){
+        Response<Object> response = new Response<>();
+        Meta meta = new Meta();
+        meta.setMessage(message);
+        meta.setVersion("0.0.1");
+
+        response.setMeta(meta);
+        response.setData(null);
+        return new ResponseEntity<>(response,status);
+    }
 }

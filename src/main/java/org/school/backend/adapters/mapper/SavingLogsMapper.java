@@ -51,6 +51,7 @@ public interface SavingLogsMapper {
             return Optional.of(new SavingModel(
                     log.getId(),
                     log.getStudentId(),
+                    null,
                     log.getPaymentType(),
                     null,
                     log.getTransactionDate(),

@@ -7,6 +7,7 @@ import java.util.UUID;
 public record SavingModel(
         UUID id,
         UUID studentId,
+        UUID activityId,
         String paymentType,
         String transactionType,
         LocalDateTime transactionDate,
@@ -16,6 +17,7 @@ public record SavingModel(
 
     public SavingModel(
             UUID studentId,
+            UUID activityId,
             String paymentType,
             String transactionType,
             LocalDateTime transactionDate,
@@ -24,6 +26,7 @@ public record SavingModel(
     ){
         this(
                 null,
+                activityId,
                 studentId,
                 paymentType,
                 transactionType,

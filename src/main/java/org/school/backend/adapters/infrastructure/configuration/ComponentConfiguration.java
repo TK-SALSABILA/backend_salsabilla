@@ -46,6 +46,9 @@ public class ComponentConfiguration {
     @Autowired
     ActivityClassParticipantGateway activityClassParticipantGateway;
 
+    @Autowired
+    ActivityPaymentGateway activityPaymentGateway;
+
 //    @Autowireds
 //    StudentGradeLogGateAway graderRecordsRepository;
 
@@ -82,8 +85,8 @@ public class ComponentConfiguration {
     }
 
     @Bean
-    public ActivityStudentParticipantUseCase activityStudentParticipantService(){return  new ActivityStudentParticipantUseCaseImpl(activityStudentParticipantGateway);}
-//    @Bean
-//    public StudentGradeUseCase gradeService(){return new StudentGradeUseCaseImpl(graderRecordsRepository);
-//    }
+    public ActivityStudentParticipantUseCase activityStudentParticipantService(){
+        return  new ActivityStudentParticipantUseCaseImpl(activityStudentParticipantGateway,savingRecordRepository,activityPaymentGateway, activityGateway);
+    }
+
 }

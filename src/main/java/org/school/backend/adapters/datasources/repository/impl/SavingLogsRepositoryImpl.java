@@ -152,7 +152,8 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
                         record.getTransactionDate(),
                         record.getAmount(),
                         record.getDescription(),
-                        record.getStudentId()
+                        record.getStudentId(),
+                        null
                 );
                 jpaSavingLogsRepository.save(savingData);
             }
@@ -183,7 +184,8 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
                         LocalDateTime.now(),
                         -amount,
                         description,
-                        studentId
+                        studentId,
+                        null
                 );
 
                 jpaSavingLogsRepository.save(withdraw);

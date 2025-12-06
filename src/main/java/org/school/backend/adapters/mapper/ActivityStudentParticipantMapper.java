@@ -8,6 +8,23 @@ import java.util.List;
 
 public interface ActivityStudentParticipantMapper {
 
+    static ActivityStudentParticipantModel convertEntityToModel(ActivityStudentParticipant entity){
+        return new ActivityStudentParticipantModel(
+                entity.getId(),
+                entity.getActivityId(),
+                entity.getStudentId(),
+                entity.getGradeId(),
+                entity.getStudentName(),
+                entity.getStudentNis(),
+                entity.getGradeName(),
+                entity.getAmountRequired(),
+                entity.getAmountPaid(),
+                entity.getAmountRequired() - entity.getAmountPaid(),
+                entity.getPaymentStatus(),
+                entity.getLastPaymentDate()
+        );
+    }
+
     static List<ActivityStudentParticipantModel> toModel(List<ActivityStudentParticipant> record){
         List<ActivityStudentParticipantModel> resultData = new ArrayList<>();
         record.forEach((entity) -> resultData.add(
@@ -27,6 +44,7 @@ public interface ActivityStudentParticipantMapper {
             )));
         return resultData;
     }
+
 
     static List<ActivityStudentParticipant> convertModelsToEntities(List<ActivityStudentParticipantModel> record){
         List<ActivityStudentParticipant> resultData = new ArrayList<>();

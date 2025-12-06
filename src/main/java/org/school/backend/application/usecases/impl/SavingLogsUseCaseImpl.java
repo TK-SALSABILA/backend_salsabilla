@@ -57,6 +57,7 @@ public class SavingLogsUseCaseImpl implements SavingLogsUseCase {
         logger.info("[saving use case] - Method Create Started: {}", record.toString());
        final SavingModel savingModel =  new SavingModel(
                record.studentId(),
+               null,
                record.paymentType(),
                record.transactionType(),
                parseDate(record.transactionDate()),

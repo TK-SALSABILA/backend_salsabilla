@@ -8,6 +8,7 @@ import org.school.backend.domain.model.ActivityModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class ActivityDataSourceImpl implements ActivityDataSource {
@@ -24,5 +25,10 @@ public class ActivityDataSourceImpl implements ActivityDataSource {
     @Override
     public ActivityModel createActivity(ActivityRequest request) {
        return   activityRepository.createActivity(request);
+    }
+
+    @Override
+    public void updateActivity(UUID activityId, int amount) {
+        activityRepository.updateActivity(activityId,amount);
     }
 }

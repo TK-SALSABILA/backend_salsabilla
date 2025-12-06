@@ -21,6 +21,7 @@ public class ActivityStudentParticipantMapper {
 
             resultData.add(new ActivityStudentParticipantResponseDto(
                     entity.id(),
+                    entity.activityId(),
                     entity.studentId(),
                     entity.gradeId(),
                     entity.studentName(),

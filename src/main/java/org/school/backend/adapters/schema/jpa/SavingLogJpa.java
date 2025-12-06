@@ -41,13 +41,17 @@ public class SavingLogJpa {
     @Column(name = "STUDENT_ID")
     private UUID studentId;
 
+    @Column(name = "ACTIVITY_ID")
+    private UUID activityId;
+
     public SavingLogJpa(
             String paymentType,
             String transactionType,
             LocalDateTime transactionDate,
             Integer amount,
             String description,
-            UUID studentId
+            UUID studentId,
+            UUID activityId
     ){
         this.paymentType = paymentType;
         this.transactionType = transactionType;
@@ -55,5 +59,6 @@ public class SavingLogJpa {
         this.amount = amount;
         this.description = description;
         this.studentId =studentId;
+        this.activityId = activityId;
     }
 }

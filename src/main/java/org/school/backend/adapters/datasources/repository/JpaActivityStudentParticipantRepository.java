@@ -12,4 +12,5 @@ import java.util.UUID;
 @Transactional
 public interface JpaActivityStudentParticipantRepository extends JpaRepository<ActivityStudentSummaryJpa, UUID> {
     List<ActivityStudentSummaryJpa> findByActivityId(UUID activityId);
+    ActivityStudentSummaryJpa findByActivityIdAndStudentId(UUID activityId, UUID studentId);
 }

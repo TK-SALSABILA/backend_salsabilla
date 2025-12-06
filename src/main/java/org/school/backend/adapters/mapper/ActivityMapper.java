@@ -69,7 +69,7 @@ public interface ActivityMapper {
                   .activityName(request.activityName())
                   .activityDate(request.activityDate())
                   .description(request.description())
-                  .totalFundsRequired(request.totalFundRaised())
+                  .totalFundsRequired(request.totalFundsRequired())
                   .isActive(request.isActive())
                   .build();
     }

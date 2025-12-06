@@ -7,6 +7,7 @@ import org.school.backend.adapters.dto.ActivityStudentParticipant;
 import org.school.backend.adapters.schema.jpa.ActivityStudentSummaryJpa;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +51,29 @@ public class ActivityStudentParticipantRepositoryImpl implements ActivityStudent
     }
 
     @Override
+    public ActivityStudentParticipant getStudentById(UUID activityId, UUID studentId) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> {
+                ActivityStudentSummaryJpa dataRepository = jpaActivityStudentParticipantRepository.findByActivityIdAndStudentId(activityId,studentId);
+                return new ActivityStudentParticipant(
+                        dataRepository.getId(),
+                        dataRepository.getActivityId(),
+                        dataRepository.getStudentId(),
+                        dataRepository.getGradeId(),
+                        dataRepository.getStudentName(),
+                        dataRepository.getStudentNis(),
+                        dataRepository.getGradeName(),
+                        dataRepository.getAmountRequired(),
+                        dataRepository.getAmountPaid(),
+                        dataRepository.getPaymentStatus(),
+                        dataRepository.getLastPaymentDate()
+                );
+            }
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+    }
+
+    @Override
     public void createActivityStudents(List<ActivityStudentParticipant> request) {
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case "postgresql" -> {
@@ -68,6 +92,19 @@ public class ActivityStudentParticipantRepositoryImpl implements ActivityStudent
                         )).collect(Collectors.toList());
 
                 jpaActivityStudentParticipantRepository.saveAll(entities);
+            }
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
+    }
+
+    @Override
+    public void updateActivityStudents(UUID activityId, UUID studentId, int amount) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> {
+                ActivityStudentSummaryJpa dataRepository = jpaActivityStudentParticipantRepository.findByActivityIdAndStudentId(activityId,studentId);
+                dataRepository.setAmountPaid(dataRepository.getAmountPaid() + amount);
+                dataRepository.setLastPaymentDate(LocalDateTime.now());
+                jpaActivityStudentParticipantRepository.save(dataRepository);
             }
             default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
         }

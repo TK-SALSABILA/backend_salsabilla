@@ -28,7 +28,7 @@ public class ActivityGatewayImpl implements ActivityGateway {
     }
 
     @Override
-    public void updateActivity(UUID activityId, ActivityModel record) {
-        // TODO: implement update activity datasource
+    public void updateActivity(UUID activityId, int amount) {
+        activityDataSource.updateActivity(activityId,amount);
     }
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public record ActivityStudentParticipantResponseDto(
         UUID id,
+        UUID activityId,
         UUID studentId,
         UUID gradeId,
         String studentName,

@@ -6,10 +6,10 @@ import org.school.backend.domain.model.ActivityStudentParticipantModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-import static org.school.backend.adapters.mapper.ActivityStudentParticipantMapper.convertModelsToEntities;
-import static org.school.backend.adapters.mapper.ActivityStudentParticipantMapper.toModel;
+import static org.school.backend.adapters.mapper.ActivityStudentParticipantMapper.*;
 
 @Component
 public class ActivityStudentParticipantGatewayImpl implements ActivityStudentParticipantGateway {
@@ -25,7 +25,17 @@ public class ActivityStudentParticipantGatewayImpl implements ActivityStudentPar
     }
 
     @Override
+    public Optional<ActivityStudentParticipantModel> getStudentById(UUID activityId, UUID studentId) {
+        return Optional.of(convertEntityToModel(activityStudentParticipantDataSource.getStudentById(activityId,studentId)));
+    }
+
+    @Override
     public void createActivityStudents(List<ActivityStudentParticipantModel> request) {
         activityStudentParticipantDataSource.createActivityStudents(convertModelsToEntities(request));
+    }
+
+    @Override
+    public void updateActivityStudents(UUID activityId, UUID studentId, int amount) {
+        activityStudentParticipantDataSource.updateActivityStudents(activityId,studentId,amount);
     }
 }

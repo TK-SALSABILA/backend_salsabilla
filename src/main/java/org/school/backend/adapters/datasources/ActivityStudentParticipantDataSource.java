@@ -7,5 +7,7 @@ import java.util.UUID;
 
 public interface ActivityStudentParticipantDataSource {
     List<ActivityStudentParticipant> getListStudent(UUID activityId, int page, int rpp);
+    ActivityStudentParticipant getStudentById(UUID activityId, UUID studentId);
     void createActivityStudents(List<ActivityStudentParticipant> request);
+    void updateActivityStudents(UUID activityId, UUID studentId, int amount);
 }
