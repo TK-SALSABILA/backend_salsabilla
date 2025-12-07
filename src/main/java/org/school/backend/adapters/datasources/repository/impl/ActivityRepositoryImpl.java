@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.school.backend.adapters.configuration.ApplicationConfigProperties;
 import org.school.backend.adapters.datasources.repository.ActivityRepository;
 import org.school.backend.adapters.datasources.repository.JpaActivityRepository;
+import org.school.backend.adapters.dto.ActivityClass;
 import org.school.backend.adapters.dto.ActivityRequest;
 import org.school.backend.adapters.dto.ActivityResponse;
 import org.school.backend.adapters.mapper.ActivityMapper;
@@ -11,10 +12,7 @@ import org.school.backend.adapters.schema.jpa.ActivityJpa;
 import org.school.backend.domain.model.ActivityModel;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class ActivityRepositoryImpl implements ActivityRepository {
@@ -47,6 +45,18 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 
         }
         return result;
+    }
+
+    @Override
+    public Optional<ActivityResponse> getActivityDetail(UUID id) {
+        switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
+            case "postgresql" -> {
+                List<Map<String, Object>> rawData = jpaActivityRepository.findActivityByIdNative(id);
+                ActivityResponse response = ActivityMapper.toActivityResponseSingle(rawData);
+                return Optional.ofNullable(response);
+            }
+            default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.school.backend.adapters.schema.jpa.ActivityJpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,4 +30,21 @@ public interface JpaActivityRepository extends JpaRepository<ActivityJpa, UUID> 
         ORDER BY a.activity_date DESC
         """, nativeQuery = true)
     List<Map<String, Object>> findAllWithClassParticipantsNative();
+
+    @Query(value = """
+        SELECT 
+            a.id,
+            a.activity_name,
+            a.activity_date,
+            a.description,
+            a.total_fund_required,
+            a.total_fund_raised,
+            a.is_active,
+            acp.grade_id,
+            acp.grade_name
+        FROM activity a
+        LEFT JOIN activity_class_participant acp ON a.id = acp.activity_id
+        WHERE a.id = :id
+        """, nativeQuery = true)
+    List<Map<String, Object>> findActivityByIdNative(@Param("id") UUID id);
 }

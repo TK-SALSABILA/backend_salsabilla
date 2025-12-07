@@ -6,6 +6,7 @@ import org.school.backend.domain.model.ActivityModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.school.backend.application.utils.DateTimeFormatterConfig.toStringFormat;
 
@@ -32,11 +33,24 @@ public class ActivityMapper {
                 entity.isActive(),
                 toStringFormat(entity.activityDate()),
                 entity.totalFundsRequired(),
-                entity.totalFundsRequired(),
+                entity.totalFundRaised(),
                 ActivityClassParticipantMapper.toDto(entity.classParticipant()),
                 entity.description()
 
         )));
         return activityResponseDatas;
+    }
+
+    public static ActivityResponseDto convertModelToResponse(Optional<ActivityModel> response){
+        return new ActivityResponseDto(
+                response.get().id(),
+                response.get().activityName(),
+                response.get().isActive(),
+                toStringFormat(response.get().activityDate()),
+                response.get().totalFundsRequired(),
+                response.get().totalFundRaised(),
+                ActivityClassParticipantMapper.toDto(response.get().classParticipant()),
+                response.get().description()
+        );
     }
 }

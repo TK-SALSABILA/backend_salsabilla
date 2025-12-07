@@ -8,6 +8,7 @@ import org.school.backend.domain.model.ActivityModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -20,6 +21,11 @@ public class ActivityDataSourceImpl implements ActivityDataSource {
     @Override
     public List<ActivityResponse> getActivityStudent(int page, int rpp) {
         return activityRepository.getActivityStudent(page,rpp);
+    }
+
+    @Override
+    public Optional<ActivityResponse> getActivityDetail(UUID id) {
+        return activityRepository.getActivityDetail(id);
     }
 
     @Override

@@ -33,6 +33,11 @@ public class ActivityController extends BaseController {
         return responseDefault.build(activityUseCase.getActivity(page, rpp), timeStamp, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "activity/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> findById( @PathVariable UUID id ){
+        return responseDefault.build(activityUseCase.getActivityDetail(id), timeStamp, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{activityId}/students", method = RequestMethod.GET)
     public ResponseEntity<?> getListStudentsActivity(
             @PathVariable UUID activityId,

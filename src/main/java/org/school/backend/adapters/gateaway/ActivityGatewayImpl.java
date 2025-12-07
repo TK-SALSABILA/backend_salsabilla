@@ -7,6 +7,7 @@ import org.school.backend.domain.model.ActivityModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -20,6 +21,11 @@ public class ActivityGatewayImpl implements ActivityGateway {
     @Override
     public List<ActivityModel> getActivityStudent(int page, int rpp) {
         return ActivityMapper.toModel(activityDataSource.getActivityStudent(page, rpp));
+    }
+
+    @Override
+    public Optional<ActivityModel> getActivityDetail(UUID id) {
+        return Optional.of(ActivityMapper.convertResponseToModel(activityDataSource.getActivityDetail(id)));
     }
 
     @Override

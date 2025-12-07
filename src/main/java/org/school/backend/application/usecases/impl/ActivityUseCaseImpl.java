@@ -41,6 +41,11 @@ public class ActivityUseCaseImpl implements ActivityUseCase {
     }
 
     @Override
+    public ActivityResponseDto getActivityDetail(UUID id) {
+        return  ActivityMapper.convertModelToResponse(activityGateway.getActivityDetail(id));
+    }
+
+    @Override
     public void createActivity(ActivityRequestDto record) {
         // 1. Create activity
         ActivityModel activityModel = activityGateway.createActivity(ActivityMapper.convertEntityToModel(record));
