@@ -10,6 +10,7 @@ public record ActivityStudentParticipantResponseDto(
         UUID studentId,
         UUID gradeId,
         String studentName,
+        String studentNis,
         String gradeName,
         Integer amountRequired,
         Integer amountPaid,

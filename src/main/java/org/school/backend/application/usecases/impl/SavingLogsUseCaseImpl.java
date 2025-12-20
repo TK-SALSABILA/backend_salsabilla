@@ -75,9 +75,10 @@ public class SavingLogsUseCaseImpl implements SavingLogsUseCase {
         logger.info("[saving use case] - Method Check Balance Started: studentId={}", studentId.toString());
 
         Integer balance = this.savingLogGateaway.reduction(studentId);
+        Integer safeBalance = balance != null ? balance : 0;
 
-        logger.info("[saving use case] - Balance checked for student ID : {}", balance.toString());
-        return balance;
+        logger.info("[saving use case] - Balance checked for student ID : {}", safeBalance.toString());
+        return safeBalance;
     }
 
     private List<SavingLogOutputDto> mapLatestSavingToDto(List<SavingModel> savings) {

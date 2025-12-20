@@ -153,7 +153,7 @@ public class SavingLogsRepositoryImpl implements SavingLogsRepository {
                         record.getAmount(),
                         record.getDescription(),
                         record.getStudentId(),
-                        null
+                        record.getActivityId()
                 );
                 jpaSavingLogsRepository.save(savingData);
             }

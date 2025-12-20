@@ -25,6 +25,7 @@ public class ActivityStudentParticipantMapper {
                     entity.studentId(),
                     entity.gradeId(),
                     entity.studentName(),
+                    entity.studentNis(),
                     entity.gradeName(),
                     entity.amountRequired(),
                     entity.amountPaid(),

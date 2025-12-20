@@ -3,6 +3,7 @@ package org.school.backend.application.usecases.impl;
 import org.school.backend.application.dto.request.ActivityPaymentRequest;
 import org.school.backend.application.dto.request.ActivityStudentParticipantRequestDto;
 import org.school.backend.application.dto.response.ActivityStudentParticipantResponseDto;
+import org.school.backend.application.exception.InvalidPaymentException;
 import org.school.backend.application.mappers.ActivityStudentParticipantMapper;
 import org.school.backend.application.usecases.ActivityStudentParticipantUseCase;
 import org.school.backend.domain.gateaway.ActivityGateway;
@@ -56,28 +57,24 @@ public class ActivityStudentParticipantUseCaseImpl implements ActivityStudentPar
 
     @Override
     public void createPaymentStudent(ActivityPaymentRequest request) {
-        // 1. Find student data
+
         ActivityStudentParticipantModel student = activityStudentParticipantGateway
                 .getStudentById(request.activityId(), request.studentId())
                 .orElseThrow(() -> new IllegalArgumentException("Student not found in this activity"));
 
-        // 2. Validate payment amount
+
         if (request.amount() > student.remainingAmount()) {
-            throw new IllegalArgumentException(
-                    "Payment amount (" + request.amount() +
-                            ") exceeds remaining amount (" + student.remainingAmount() + ")"
-            );
+            throw new InvalidPaymentException("Payment amount (" + request.amount() +
+                    ") exceeds remaining amount (" + student.remainingAmount() + ")");
         }
 
-        // 3. If payment from Tabungan
         if ("TABUNGAN".equals(request.paymentType())) {
             Integer saldo = savingLogGateway.reduction(request.studentId());
 
             if (saldo < request.amount()) {
-                throw new IllegalArgumentException(
-                        "Insufficient balance. Saldo: " + saldo + ", Payment: " + request.amount()
-                );
+                throw new InvalidPaymentException("Insufficient balance. Saldo: " + saldo + ", Payment: " + request.amount());
             }
+
             SavingModel savingRecord = new SavingModel(
                     request.studentId(),
                     request.activityId(),
@@ -87,11 +84,9 @@ public class ActivityStudentParticipantUseCaseImpl implements ActivityStudentPar
                     -request.amount(),
                     request.description()
             );
-
             savingLogGateway.create(savingRecord);
         }
 
-        // 4. Record payment to activity_payment
         ActivityPaymentModel dataPayment = new ActivityPaymentModel(
                 request.activityId(),
                 request.studentId(),
@@ -102,7 +97,6 @@ public class ActivityStudentParticipantUseCaseImpl implements ActivityStudentPar
         );
         activityPaymentGateway.createPayment(dataPayment);
 
-        // 5. Update activity_student_summary
         activityStudentParticipantGateway.updateActivityStudents(
                 request.activityId(),
                 request.studentId(),
@@ -113,7 +107,6 @@ public class ActivityStudentParticipantUseCaseImpl implements ActivityStudentPar
                 request.activityId(),
                 request.amount()
         );
-
     }
 }
 

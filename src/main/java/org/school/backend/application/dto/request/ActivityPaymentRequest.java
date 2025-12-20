@@ -7,7 +7,6 @@ public record ActivityPaymentRequest(
         UUID studentId,
         UUID activityId,
         String paymentType,
-        String transactionType,
         Integer amount,
         String description,
         String transactionDate

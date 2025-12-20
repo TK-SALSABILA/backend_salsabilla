@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class SavingLogReq {
     public UUID studentId;
+    public UUID activityId;
     public String paymentType;
     public String transactionType;
     public Integer amount;

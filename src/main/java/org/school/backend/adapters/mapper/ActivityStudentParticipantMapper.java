@@ -30,11 +30,11 @@ public interface ActivityStudentParticipantMapper {
         record.forEach((entity) -> resultData.add(
             new ActivityStudentParticipantModel(
                     entity.getId(),
-                    null,
+                    entity.getActivityId(),
                     entity.getStudentId(),
                     entity.getGradeId(),
                     entity.getStudentName(),
-                    null,
+                    entity.getStudentNis(),
                     entity.getGradeName(),
                     entity.getAmountRequired(),
                     entity.getAmountPaid(),

@@ -55,4 +55,17 @@ public class BackendExceptionHandler extends ResponseEntityExceptionHandler {
     public @ResponseBody ErrorResponseDto handleSavingDataNotFoundException(final SavingDataNotFoundException exception, final HttpServletRequest request) {
         return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ActivityDataNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public @ResponseBody ErrorResponseDto handleActivityDataNotFoundException(final SavingDataNotFoundException exception, final HttpServletRequest request) {
+        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidPaymentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponseDto handleInvalidPaymentException(final InvalidPaymentException exception, final HttpServletRequest request) {
+        return errorBuilder.createError(ErrorMessage.exchangeRequestError(exception.getMessage()), exception.getClass().getName(), HttpStatus.BAD_REQUEST);
+    }
+
 }

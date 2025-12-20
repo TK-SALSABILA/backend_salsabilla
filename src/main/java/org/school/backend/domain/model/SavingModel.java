@@ -26,8 +26,8 @@ public record SavingModel(
     ){
         this(
                 null,
-                activityId,
                 studentId,
+                activityId,
                 paymentType,
                 transactionType,
                 transactionDate,

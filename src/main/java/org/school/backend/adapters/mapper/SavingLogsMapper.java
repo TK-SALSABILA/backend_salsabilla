@@ -16,6 +16,7 @@ public interface SavingLogsMapper {
     ) {
         return SavingLogReq.builder()
                 .studentId(entity.studentId())
+                .activityId(entity.activityId())
                 .paymentType(entity.paymentType())
                 .transactionType(entity.transactionType())
                 .amount(entity.amount())
@@ -32,6 +33,7 @@ public interface SavingLogsMapper {
             SavingModel model = new SavingModel(
                     entity.getId(),
                     entity.getStudentId(),
+                    null,
                     entity.getPaymentType(),
                     null,
                     entity.getTransactionDate(),

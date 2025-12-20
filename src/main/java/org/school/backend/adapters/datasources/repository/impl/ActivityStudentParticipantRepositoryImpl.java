@@ -37,7 +37,7 @@ public class ActivityStudentParticipantRepositoryImpl implements ActivityStudent
                             entity.getStudentId(),
                             entity.getGradeId(),
                             entity.getStudentName(),
-                            null,
+                            entity.getStudentNis(),
                             entity.getGradeName(),
                             entity.getAmountRequired(),
                             entity.getAmountPaid(),
@@ -101,10 +101,19 @@ public class ActivityStudentParticipantRepositoryImpl implements ActivityStudent
     public void updateActivityStudents(UUID activityId, UUID studentId, int amount) {
         switch (applicationConfigProperties.getDatabaseDefault().toLowerCase()){
             case "postgresql" -> {
-                ActivityStudentSummaryJpa dataRepository = jpaActivityStudentParticipantRepository.findByActivityIdAndStudentId(activityId,studentId);
-                dataRepository.setAmountPaid(dataRepository.getAmountPaid() + amount);
-                dataRepository.setLastPaymentDate(LocalDateTime.now());
-                jpaActivityStudentParticipantRepository.save(dataRepository);
+                ActivityStudentSummaryJpa data = jpaActivityStudentParticipantRepository.findByActivityIdAndStudentId(activityId,studentId);
+
+                int newAmountPaid = data.getAmountPaid() + amount;
+                data.setAmountPaid(newAmountPaid);
+                data.setLastPaymentDate(LocalDateTime.now());
+                data.setUpdatedAt(LocalDateTime.now());
+
+                if (newAmountPaid >= data.getAmountRequired()) {
+                    data.setPaymentStatus("LUNAS");
+                } else {
+                    data.setPaymentStatus("BELUM_LUNAS");
+                }
+                jpaActivityStudentParticipantRepository.save(data);
             }
             default -> throw new IllegalArgumentException(applicationConfigProperties.getDatabaseDefault().toLowerCase());
         }
